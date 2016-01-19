@@ -1,0 +1,33 @@
+{
+  "name": "Assignment",
+  "base": "PersistedModel",
+  "idInjection": true,
+  "options": {},
+  "mixins": {
+    "TimeStamp": true
+  },
+  "properties": {
+    "openDate": {
+      "type": "date",
+      "required": true
+    },
+    "closeDate": {
+      "type": "date",
+      "required": true
+    },
+    "pointsPossible": {
+      "type": "number",
+      "required": true
+    }
+  },
+  "validations": [],
+  "relations": {
+    "project": {
+      "type": "hasOne",
+      "model": "Project",
+      "foreignKey": ""
+    }
+  },
+  "acls": [],
+  "methods": {}
+}

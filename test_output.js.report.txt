@@ -1,0 +1,993 @@
+/root/thilenius/closure/externs/angular.js:50: WARNING - Type annotation references non-existent type angular.JQLite.
+ * @typedef {(Window|Document|Element|Array.<Element>|string|!angular.JQLite|
+                                                              ^
+
+/root/thilenius/closure/externs/angular.js:72: WARNING - Type annotation references non-existent type angular.$injector.
+ * @return {!angular.$injector}
+             ^
+
+/root/thilenius/closure/externs/angular.js:87: WARNING - Type annotation references non-existent type angular.JQLite.
+ * @return {!angular.JQLite}
+             ^
+
+/root/thilenius/closure/externs/angular.js:127: WARNING - Type annotation references non-existent type angular.$injector.
+ * @return {!angular.$injector}
+             ^
+
+/root/thilenius/closure/externs/angular.js:197: WARNING - Type annotation references non-existent type angular.Module.
+ * @return {!angular.Module}
+             ^
+
+/root/thilenius/closure/externs/angular.js:271: WARNING - Type annotation references non-existent type angular.Scope.
+ * @param {!angular.Scope=} scope
+            ^
+
+/root/thilenius/closure/externs/angular.js:272: WARNING - Type annotation references non-existent type angular.JQLite.
+ * @param {!angular.JQLite=} iElement
+            ^
+
+/root/thilenius/closure/externs/angular.js:273: WARNING - Type annotation references non-existent type angular.Attributes.
+ * @param {!angular.Attributes=} iAttrs
+            ^
+
+/root/thilenius/closure/externs/angular.js:279: WARNING - Type annotation references non-existent type angular.Scope.
+ * @param {!angular.Scope=} scope
+            ^
+
+/root/thilenius/closure/externs/angular.js:280: WARNING - Type annotation references non-existent type angular.JQLite.
+ * @param {!angular.JQLite=} iElement
+            ^
+
+/root/thilenius/closure/externs/angular.js:281: WARNING - Type annotation references non-existent type angular.Attributes.
+ * @param {!angular.Attributes=} iAttrs
+            ^
+
+/root/thilenius/closure/externs/angular.js:294: WARNING - Bad type annotation. Unknown type angular.Scope
+ *       !angular.Scope=, !angular.JQLite=, !angular.Attributes=,
+          ^
+
+/root/thilenius/closure/externs/angular.js:315: WARNING - Type annotation references non-existent type angular.JQLite.
+ * @param {!angular.JQLite=} tElement
+            ^
+
+/root/thilenius/closure/externs/angular.js:316: WARNING - Type annotation references non-existent type angular.Attributes.
+ * @param {!angular.Attributes=} tAttrs
+            ^
+
+/root/thilenius/closure/externs/angular.js:318: WARNING - Type annotation references non-existent type angular.LinkingFunctions.
+ * @return {Function|angular.LinkingFunctions|undefined}
+                     ^
+
+/root/thilenius/closure/externs/angular.js:436: WARNING - Type annotation references non-existent type angular.JQLite.
+ * @return {!angular.JQLite}
+             ^
+
+/root/thilenius/closure/externs/angular.js:442: WARNING - Type annotation references non-existent type angular.JQLite.
+ * @return {!angular.JQLite}
+             ^
+
+/root/thilenius/closure/externs/angular.js:448: WARNING - Type annotation references non-existent type angular.JQLite.
+ * @return {!angular.JQLite}
+             ^
+
+/root/thilenius/closure/externs/angular.js:455: WARNING - Type annotation references non-existent type angular.JQLite.
+ * @return {!angular.JQLite|string|boolean}
+             ^
+
+/root/thilenius/closure/externs/angular.js:462: WARNING - Type annotation references non-existent type angular.JQLite.
+ * @return {!angular.JQLite}
+             ^
+
+/root/thilenius/closure/externs/angular.js:467: WARNING - Type annotation references non-existent type angular.JQLite.
+ * @return {!angular.JQLite}
+             ^
+
+/root/thilenius/closure/externs/angular.js:472: WARNING - Type annotation references non-existent type angular.JQLite.
+ * @return {!angular.JQLite}
+             ^
+
+/root/thilenius/closure/externs/angular.js:477: WARNING - Type annotation references non-existent type angular.JQLite.
+ * @return {!angular.JQLite}
+             ^
+
+/root/thilenius/closure/externs/angular.js:490: WARNING - Type annotation references non-existent type angular.JQLite.
+ * @return {!angular.JQLite|string}
+             ^
+
+/root/thilenius/closure/externs/angular.js:503: WARNING - Type annotation references non-existent type angular.JQLite.
+ * @return {!angular.JQLite}
+             ^
+
+/root/thilenius/closure/externs/angular.js:509: WARNING - Type annotation references non-existent type angular.JQLite.
+ * @return {!angular.JQLite}
+             ^
+
+/root/thilenius/closure/externs/angular.js:521: WARNING - Type annotation references non-existent type angular.JQLite.
+ * @return {!angular.JQLite|string}
+             ^
+
+/root/thilenius/closure/externs/angular.js:533: WARNING - Type annotation references non-existent type angular.$injector.
+ * @return {!angular.$injector}
+             ^
+
+/root/thilenius/closure/externs/angular.js:541: WARNING - Type annotation references non-existent type angular.JQLite.
+ * @return {!angular.JQLite}
+             ^
+
+/root/thilenius/closure/externs/angular.js:548: WARNING - Type annotation references non-existent type angular.JQLite.
+ * @return {!angular.JQLite}
+             ^
+
+/root/thilenius/closure/externs/angular.js:555: WARNING - Type annotation references non-existent type angular.JQLite.
+ * @return {!angular.JQLite}
+             ^
+
+/root/thilenius/closure/externs/angular.js:560: WARNING - Type annotation references non-existent type angular.JQLite.
+ * @return {!angular.JQLite}
+             ^
+
+/root/thilenius/closure/externs/angular.js:566: WARNING - Type annotation references non-existent type angular.JQLite.
+ * @return {!angular.JQLite}
+             ^
+
+/root/thilenius/closure/externs/angular.js:579: WARNING - Type annotation references non-existent type angular.JQLite.
+ * @return {!angular.JQLite}
+             ^
+
+/root/thilenius/closure/externs/angular.js:584: WARNING - Type annotation references non-existent type angular.JQLite.
+ * @return {!angular.JQLite}
+             ^
+
+/root/thilenius/closure/externs/angular.js:590: WARNING - Type annotation references non-existent type angular.JQLite.
+ * @return {!angular.JQLite}
+             ^
+
+/root/thilenius/closure/externs/angular.js:596: WARNING - Type annotation references non-existent type angular.JQLite.
+ * @return {!angular.JQLite}
+             ^
+
+/root/thilenius/closure/externs/angular.js:601: WARNING - Type annotation references non-existent type angular.JQLite.
+ * @return {!angular.JQLite}
+             ^
+
+/root/thilenius/closure/externs/angular.js:607: WARNING - Type annotation references non-existent type angular.JQLite.
+ * @return {!angular.JQLite}
+             ^
+
+/root/thilenius/closure/externs/angular.js:612: WARNING - Type annotation references non-existent type angular.Scope.
+ * @return {!angular.Scope}
+             ^
+
+/root/thilenius/closure/externs/angular.js:618: WARNING - Type annotation references non-existent type angular.JQLite.
+ * @return {!angular.JQLite|string}
+             ^
+
+/root/thilenius/closure/externs/angular.js:625: WARNING - Type annotation references non-existent type angular.JQLite.
+ * @return {!angular.JQLite}
+             ^
+
+/root/thilenius/closure/externs/angular.js:632: WARNING - Type annotation references non-existent type angular.JQLite.
+ * @return {!angular.JQLite}
+             ^
+
+/root/thilenius/closure/externs/angular.js:639: WARNING - Type annotation references non-existent type angular.JQLite.
+ * @return {!angular.JQLite}
+             ^
+
+/root/thilenius/closure/externs/angular.js:645: WARNING - Type annotation references non-existent type angular.JQLite.
+ * @return {!angular.JQLite|string}
+             ^
+
+/root/thilenius/closure/externs/angular.js:651: WARNING - Type annotation references non-existent type angular.JQLite.
+ * @return {!angular.JQLite}
+             ^
+
+/root/thilenius/closure/externs/angular.js:685: WARNING - Type annotation references non-existent type angular.Module.
+ * @return {!angular.Module}
+             ^
+
+/root/thilenius/closure/externs/angular.js:692: WARNING - Type annotation references non-existent type angular.Module.
+ * @return {!angular.Module}
+             ^
+
+/root/thilenius/closure/externs/angular.js:699: WARNING - Type annotation references non-existent type angular.Module.
+ * @return {!angular.Module}
+             ^
+
+/root/thilenius/closure/externs/angular.js:706: WARNING - Type annotation references non-existent type angular.Module.
+ * @return {!angular.Module}
+             ^
+
+/root/thilenius/closure/externs/angular.js:713: WARNING - Type annotation references non-existent type angular.Module.
+ * @return {!angular.Module}
+             ^
+
+/root/thilenius/closure/externs/angular.js:720: WARNING - Type annotation references non-existent type angular.Module.
+ * @return {!angular.Module}
+             ^
+
+/root/thilenius/closure/externs/angular.js:727: WARNING - Type annotation references non-existent type angular.Module.
+ * @return {!angular.Module}
+             ^
+
+/root/thilenius/closure/externs/angular.js:733: WARNING - Type annotation references non-existent type angular.Module.
+ * @return {!angular.Module}
+             ^
+
+/root/thilenius/closure/externs/angular.js:740: WARNING - Type annotation references non-existent type angular.Module.
+ * @return {!angular.Module}
+             ^
+
+/root/thilenius/closure/externs/angular.js:747: WARNING - Type annotation references non-existent type angular.Module.
+ * @return {!angular.Module}
+             ^
+
+/root/thilenius/closure/externs/angular.js:765: WARNING - Bad type annotation. type not recognized due to syntax error
+ *   $broadcast: function(string, ...[*]),
+                                     ^
+
+/root/thilenius/closure/externs/angular.js:788: WARNING - Type annotation references non-existent type angular.Scope.
+ * @param {(string|function(!angular.Scope))=} opt_exp
+                             ^
+
+/root/thilenius/closure/externs/angular.js:826: WARNING - Type annotation references non-existent type angular.Scope.
+ * @return {!angular.Scope}
+             ^
+
+/root/thilenius/closure/externs/angular.js:832: WARNING - Bad type annotation. type not recognized due to syntax error
+ * @param {function(!angular.Scope.Event, ...[?])} listener
+                                             ^
+
+/root/thilenius/closure/externs/angular.js:860: WARNING - Bad type annotation. Unknown type angular.Scope
+ *   currentScope: !angular.Scope,
+                    ^
+
+/root/thilenius/closure/externs/angular.js:865: WARNING - Bad type annotation. Unknown type angular.Scope
+ *   targetScope: !angular.Scope
+                   ^
+
+/root/thilenius/closure/externs/angular.js:1005: WARNING - Bad type annotation. Unknown type angular.Scope
+ *       function(!angular.Scope, Function=)=, number=):
+                   ^
+
+/root/thilenius/closure/externs/angular.js:1006: WARNING - Bad type annotation. Unknown type angular.Scope
+ *           function(!angular.Scope,
+                       ^
+
+/root/thilenius/closure/externs/angular.js:1007: WARNING - Bad type annotation. Unknown type angular.Scope
+ *               function(Object, !angular.Scope=)=): Object}
+                                   ^
+
+/root/thilenius/closure/externs/angular.js:1032: WARNING - Type annotation references non-existent type angular.$cacheFactory.Cache.Info.
+ * @return {!angular.$cacheFactory.Cache.Info}
+             ^
+
+/root/thilenius/closure/externs/angular.js:1038: WARNING - Type annotation references non-existent type T.
+ * @param {T} value
+           ^
+
+/root/thilenius/closure/externs/angular.js:1044: WARNING - Type annotation references non-existent type T.
+ * @return {T}
+            ^
+
+/root/thilenius/closure/externs/angular.js:1171: WARNING - Type annotation references non-existent type angular.$http.Config.
+ * @param {angular.$http.Config=} opt_config
+           ^
+
+/root/thilenius/closure/externs/angular.js:1172: WARNING - Type annotation references non-existent type angular.$http.HttpPromise.
+ * @return {!angular.$http.HttpPromise}
+             ^
+
+/root/thilenius/closure/externs/angular.js:1178: WARNING - Type annotation references non-existent type angular.$http.Config.
+ * @param {angular.$http.Config=} opt_config
+           ^
+
+/root/thilenius/closure/externs/angular.js:1179: WARNING - Type annotation references non-existent type angular.$http.HttpPromise.
+ * @return {!angular.$http.HttpPromise}
+             ^
+
+/root/thilenius/closure/externs/angular.js:1185: WARNING - Type annotation references non-existent type angular.$http.Config.
+ * @param {angular.$http.Config=} opt_config
+           ^
+
+/root/thilenius/closure/externs/angular.js:1186: WARNING - Type annotation references non-existent type angular.$http.HttpPromise.
+ * @return {!angular.$http.HttpPromise}
+             ^
+
+/root/thilenius/closure/externs/angular.js:1193: WARNING - Type annotation references non-existent type angular.$http.Config.
+ * @param {angular.$http.Config=} opt_config
+           ^
+
+/root/thilenius/closure/externs/angular.js:1194: WARNING - Type annotation references non-existent type angular.$http.HttpPromise.
+ * @return {!angular.$http.HttpPromise}
+             ^
+
+/root/thilenius/closure/externs/angular.js:1201: WARNING - Type annotation references non-existent type angular.$http.Config.
+ * @param {angular.$http.Config=} opt_config
+           ^
+
+/root/thilenius/closure/externs/angular.js:1202: WARNING - Type annotation references non-existent type angular.$http.HttpPromise.
+ * @return {!angular.$http.HttpPromise}
+             ^
+
+/root/thilenius/closure/externs/angular.js:1215: WARNING - This property cannot be @const. The @const annotation is only allowed for properties of namespaces, prototype properties, static properties of constructors, and properties of the form this.prop declared inside constructors and prototype methods.
+angular.$http.pendingRequests;
+^
+
+/root/thilenius/closure/externs/angular.js:1240: WARNING - Type annotation references non-existent type angular.$http.Response.
+ * @param {?function(!angular.$http.Response)} successCallback
+                      ^
+
+/root/thilenius/closure/externs/angular.js:1241: WARNING - Type annotation references non-existent type angular.$http.Response.
+ * @param {?function(!angular.$http.Response)=} opt_errorCallback
+                      ^
+
+/root/thilenius/closure/externs/angular.js:1242: WARNING - Type annotation references non-existent type angular.$http.HttpPromise.
+ * @return {!angular.$http.HttpPromise}
+             ^
+
+/root/thilenius/closure/externs/angular.js:1248: WARNING - Type annotation references non-existent type angular.$http.Response.
+ * @param {?function(!angular.$http.Response)} callback
+                      ^
+
+/root/thilenius/closure/externs/angular.js:1249: WARNING - Type annotation references non-existent type angular.$http.HttpPromise.
+ * @return {!angular.$http.HttpPromise}
+             ^
+
+/root/thilenius/closure/externs/angular.js:1254: WARNING - Type annotation references non-existent type angular.$http.Response.
+ * @param {?function(!angular.$http.Response)} callback
+                      ^
+
+/root/thilenius/closure/externs/angular.js:1255: WARNING - Type annotation references non-existent type angular.$http.HttpPromise.
+ * @return {!angular.$http.HttpPromise}
+             ^
+
+/root/thilenius/closure/externs/angular.js:1260: WARNING - Type annotation references non-existent type angular.HttpCallback.
+ * @param {angular.HttpCallback} callback
+           ^
+
+/root/thilenius/closure/externs/angular.js:1261: WARNING - Type annotation references non-existent type angular.$http.HttpPromise.
+ * @return {!angular.$http.HttpPromise} Promise for chaining.
+             ^
+
+/root/thilenius/closure/externs/angular.js:1266: WARNING - Type annotation references non-existent type angular.HttpCallback.
+ * @param {angular.HttpCallback} callback
+           ^
+
+/root/thilenius/closure/externs/angular.js:1267: WARNING - Type annotation references non-existent type angular.$http.HttpPromise.
+ * @return {!angular.$http.HttpPromise} Promise for chaining.
+             ^
+
+/root/thilenius/closure/externs/angular.js:1391: WARNING - Type annotation references non-existent type angular.$location.
+ * @return {string|!angular.$location}
+                    ^
+
+/root/thilenius/closure/externs/angular.js:1413: WARNING - Type annotation references non-existent type angular.$location.
+ * @return {(!Object|angular.$location)}
+                     ^
+
+/root/thilenius/closure/externs/angular.js:1439: WARNING - Type annotation references non-existent type angular.$locationProvider.
+ * @return {string|!angular.$locationProvider}
+                    ^
+
+/root/thilenius/closure/externs/angular.js:1445: WARNING - Type annotation references non-existent type angular.$locationProvider.
+ * @return {boolean|!angular.$locationProvider}
+                     ^
+
+/root/thilenius/closure/externs/angular.js:1455: WARNING - Bad type annotation. type not recognized due to syntax error
+ *   error: function(...[*]),
+                        ^
+
+/root/thilenius/closure/externs/angular.js:1648: WARNING - Type annotation references non-existent type angular.Scope.
+ * @type {function((!angular.Scope|!Object), *)}
+                     ^
+
+/root/thilenius/closure/externs/angular.js:1725: WARNING - Type annotation references non-existent type angular.$q.Promise.
+ * @param {!Object.<!angular.$q.Promise>|Array.<!angular.$q.Promise>} promises
+                                                 ^
+
+/root/thilenius/closure/externs/angular.js:1726: WARNING - Type annotation references non-existent type angular.$q.Promise.
+ * @return {!angular.$q.Promise}
+             ^
+
+/root/thilenius/closure/externs/angular.js:1731: WARNING - Type annotation references non-existent type angular.$q.Deferred.
+ * @return {!angular.$q.Deferred}
+             ^
+
+/root/thilenius/closure/externs/angular.js:1737: WARNING - Type annotation references non-existent type angular.$q.Promise.
+ * @return {!angular.$q.Promise}
+             ^
+
+/root/thilenius/closure/externs/angular.js:1743: WARNING - Type annotation references non-existent type angular.$q.Promise.
+ * @return {!angular.$q.Promise}
+             ^
+
+/root/thilenius/closure/externs/angular.js:1782: WARNING - Type annotation references non-existent type angular.$q.Promise.
+ * @return {!angular.$q.Promise}
+             ^
+
+/root/thilenius/closure/externs/angular.js:1788: WARNING - Type annotation references non-existent type angular.$q.Promise.
+ * @return {!angular.$q.Promise}
+             ^
+
+/root/thilenius/closure/externs/angular.js:1794: WARNING - Type annotation references non-existent type angular.$q.Promise.
+ * @return {!angular.$q.Promise}
+             ^
+
+/root/thilenius/closure/externs/angular.js:1870: WARNING - Type annotation references non-existent type angular.$routeProvider.Params.
+ * @param {angular.$routeProvider.Params} params
+           ^
+
+/root/thilenius/closure/externs/angular.js:1871: WARNING - Type annotation references non-existent type angular.$routeProvider.
+ * @return {!angular.$routeProvider}
+             ^
+
+/root/thilenius/closure/externs/angular.js:1877: WARNING - Type annotation references non-existent type angular.$routeProvider.Params.
+ * @param {angular.$routeProvider.Params} route
+           ^
+
+/root/thilenius/closure/externs/angular.js:1878: WARNING - Type annotation references non-existent type angular.$routeProvider.
+ * @return {!angular.$routeProvider}
+             ^
+
+/root/thilenius/closure/externs/angular.js:1965: WARNING - This property cannot be @const. The @const annotation is only allowed for properties of namespaces, prototype properties, static properties of constructors, and properties of the form this.prop declared inside constructors and prototype methods.
+angular.$sce.HTML;
+^
+
+/root/thilenius/closure/externs/angular.js:1968: WARNING - This property cannot be @const. The @const annotation is only allowed for properties of namespaces, prototype properties, static properties of constructors, and properties of the form this.prop declared inside constructors and prototype methods.
+angular.$sce.CSS;
+^
+
+/root/thilenius/closure/externs/angular.js:1971: WARNING - This property cannot be @const. The @const annotation is only allowed for properties of namespaces, prototype properties, static properties of constructors, and properties of the form this.prop declared inside constructors and prototype methods.
+angular.$sce.URL;
+^
+
+/root/thilenius/closure/externs/angular.js:1974: WARNING - This property cannot be @const. The @const annotation is only allowed for properties of namespaces, prototype properties, static properties of constructors, and properties of the form this.prop declared inside constructors and prototype methods.
+angular.$sce.JS;
+^
+
+/root/thilenius/closure/externs/angular.js:1977: WARNING - This property cannot be @const. The @const annotation is only allowed for properties of namespaces, prototype properties, static properties of constructors, and properties of the form this.prop declared inside constructors and prototype methods.
+angular.$sce.RESOURCE_URL;
+^
+
+/root/thilenius/closure/externs/angular.js:1985: WARNING - Type annotation references non-existent type angular.$parse.Expression.
+ * @return {!angular.$parse.Expression}
+             ^
+
+/root/thilenius/closure/externs/angular.js:2005: WARNING - Type annotation references non-existent type angular.$parse.Expression.
+ * @return {!angular.$parse.Expression}
+             ^
+
+/root/thilenius/closure/externs/angular.js:2011: WARNING - Type annotation references non-existent type angular.$parse.Expression.
+ * @return {!angular.$parse.Expression}
+             ^
+
+/root/thilenius/closure/externs/angular.js:2017: WARNING - Type annotation references non-existent type angular.$parse.Expression.
+ * @return {!angular.$parse.Expression}
+             ^
+
+/root/thilenius/closure/externs/angular.js:2023: WARNING - Type annotation references non-existent type angular.$parse.Expression.
+ * @return {!angular.$parse.Expression}
+             ^
+
+/root/thilenius/closure/externs/angular.js:2029: WARNING - Type annotation references non-existent type angular.$parse.Expression.
+ * @return {!angular.$parse.Expression}
+             ^
+
+/root/thilenius/closure/externs/angular.js:2184: WARNING - Type annotation references non-existent type angular.$q.Promise.
+ * @type {function(!angular.$q.Promise):boolean}
+                    ^
+
+/root/thilenius/closure/externs/jquery.js:160: WARNING - All constants must be typed. The compiler could not infer the type of this constant. Please use an explicit type annotation.
+var $ = jQuery;
+    ^
+
+client/app/app.module.js:3: WARNING - Property module never defined on angular of type Object
+var app = angular.module('app', [
+          ^
+
+client/app/app.route.js:4: WARNING - Property module never defined on angular of type Object
+angular.module('app').config([
+^
+
+client/app/components/create_user/create_user_controller.js:2: WARNING - Property module never defined on angular of type Object
+angular.module('app').controller('createUserController', [
+^
+
+client/app/components/forge/forge_controller.js:1: WARNING - Property module never defined on angular of type Object
+var forgeApp = angular.module('app');
+               ^
+
+client/app/components/forge/forge_controller.js:14: WARNING - Property FORGE_VERSION never defined on window of type Window{Person:?, Project:?, SourceFile:?}
+    $scope.forgeVersion = window.FORGE_VERSION;
+                          ^
+
+client/app/components/forge/forge_controller.js:27: WARNING - Type annotation references non-existent type tjtowietj.
+     * @param {tjtowietj} metadata
+               ^
+
+client/app/components/forge/forge_controller.js:30: WARNING - Missing return statement. Function expected to return number.
+    $scope.mergeFilesAndFileMeta = function(project, metadata) {
+                                   ^
+
+client/app/components/forge/forge_controller.js:166: WARNING - Suspicious code. This code lacks side-effects. Is there a bug?
+            if (item.type === 'file') {
+            ^
+
+client/app/components/forge/forge_controller.js:168: WARNING - Suspicious code. This code lacks side-effects. Is there a bug?
+            } else if (item.type === 'directory') {
+                   ^
+
+client/app/components/login/login_controller.js:4: WARNING - Property module never defined on angular of type Object
+angular.module('app').controller('loginController', [
+^
+
+client/app/directives/ace_editor/ace_editor.js:16: WARNING - Property module never defined on angular of type Object
+angular.module('thilenius.ace_editor', [])
+^
+
+client/app/directives/ace_editor/ace_editor.js:25: WARNING - ace.edit is never defined
+            scope.editor = ace.edit('editor');
+                           ^
+
+client/app/directives/alerts_explorer/alerts_explorer.js:6: WARNING - Property module never defined on angular of type Object
+angular.module('thilenius.alerts_explorer', [])
+^
+
+client/app/directives/blockly_editor/blockly_editor.js:13: WARNING - Property module never defined on angular of type Object
+angular.module('thilenius.blockly_editor', [])
+^
+
+client/app/directives/blockly_editor/blockly_spark_blocks.js:5: WARNING - Blockly.Blocks is never defined
+Blockly.Blocks.spark_move = {
+^
+
+client/app/directives/blockly_editor/blockly_spark_blocks.js:5: WARNING - Property Blocks never defined on Blockly of type Object
+Blockly.Blocks.spark_move = {
+^
+
+client/app/directives/blockly_editor/blockly_spark_blocks.js:6: WARNING - Blockly.Blocks.spark_move.init is never defined
+  init: function() {
+  ^
+
+client/app/directives/blockly_editor/blockly_spark_blocks.js:7: WARNING - Dangerous use of the global THIS object
+    this.appendDummyInput()
+    ^
+
+client/app/directives/blockly_editor/blockly_spark_blocks.js:7: WARNING - dangerous use of the global this object
+    this.appendDummyInput()
+    ^
+
+client/app/directives/blockly_editor/blockly_spark_blocks.js:9: WARNING - Blockly.FieldDropdown is never defined
+        .appendField(new Blockly.FieldDropdown([
+                         ^
+
+client/app/directives/blockly_editor/blockly_spark_blocks.js:16: WARNING - Dangerous use of the global THIS object
+    this.setOutput(true, "Boolean");
+    ^
+
+client/app/directives/blockly_editor/blockly_spark_blocks.js:16: WARNING - dangerous use of the global this object
+    this.setOutput(true, "Boolean");
+    ^
+
+client/app/directives/blockly_editor/blockly_spark_blocks.js:17: WARNING - Dangerous use of the global THIS object
+    this.setColour(240);
+    ^
+
+client/app/directives/blockly_editor/blockly_spark_blocks.js:17: WARNING - dangerous use of the global this object
+    this.setColour(240);
+    ^
+
+client/app/directives/blockly_editor/blockly_spark_blocks.js:18: WARNING - Dangerous use of the global THIS object
+    this.setTooltip('Moves a Spark, and checks if it was able to move.');
+    ^
+
+client/app/directives/blockly_editor/blockly_spark_blocks.js:18: WARNING - dangerous use of the global this object
+    this.setTooltip('Moves a Spark, and checks if it was able to move.');
+    ^
+
+client/app/directives/blockly_editor/blockly_spark_blocks.js:22: WARNING - Blockly.Python is never defined
+Blockly.Python.spark_move = function(block) {
+^
+
+client/app/directives/blockly_editor/blockly_spark_blocks.js:25: WARNING - Blockly.Python is never defined
+  Blockly.Python.definitions_.import_anvil = importText;
+  ^
+
+client/app/directives/blockly_editor/blockly_spark_blocks.js:26: WARNING - Blockly.Python is never defined
+  return [code, Blockly.Python.ORDER_FUNCTION_CALL];
+                ^
+
+client/app/directives/blockly_editor/blockly_spark_blocks.js:30: WARNING - Blockly.Blocks is never defined
+Blockly.Blocks.spark_move_no_return = {
+^
+
+client/app/directives/blockly_editor/blockly_spark_blocks.js:31: WARNING - Blockly.Blocks.spark_move_no_return.init is never defined
+  init: function() {
+  ^
+
+client/app/directives/blockly_editor/blockly_spark_blocks.js:32: WARNING - Dangerous use of the global THIS object
+    this.appendDummyInput()
+    ^
+
+client/app/directives/blockly_editor/blockly_spark_blocks.js:32: WARNING - dangerous use of the global this object
+    this.appendDummyInput()
+    ^
+
+client/app/directives/blockly_editor/blockly_spark_blocks.js:34: WARNING - Blockly.FieldDropdown is never defined
+        .appendField(new Blockly.FieldDropdown([
+                         ^
+
+client/app/directives/blockly_editor/blockly_spark_blocks.js:41: WARNING - Dangerous use of the global THIS object
+    this.setPreviousStatement(true);
+    ^
+
+client/app/directives/blockly_editor/blockly_spark_blocks.js:41: WARNING - dangerous use of the global this object
+    this.setPreviousStatement(true);
+    ^
+
+client/app/directives/blockly_editor/blockly_spark_blocks.js:42: WARNING - Dangerous use of the global THIS object
+    this.setNextStatement(true);
+    ^
+
+client/app/directives/blockly_editor/blockly_spark_blocks.js:42: WARNING - dangerous use of the global this object
+    this.setNextStatement(true);
+    ^
+
+client/app/directives/blockly_editor/blockly_spark_blocks.js:43: WARNING - Dangerous use of the global THIS object
+    this.setColour(240);
+    ^
+
+client/app/directives/blockly_editor/blockly_spark_blocks.js:43: WARNING - dangerous use of the global this object
+    this.setColour(240);
+    ^
+
+client/app/directives/blockly_editor/blockly_spark_blocks.js:44: WARNING - Dangerous use of the global THIS object
+    this.setTooltip('Moves a Spark, ignoring if it was able to do so.');
+    ^
+
+client/app/directives/blockly_editor/blockly_spark_blocks.js:44: WARNING - dangerous use of the global this object
+    this.setTooltip('Moves a Spark, ignoring if it was able to do so.');
+    ^
+
+client/app/directives/blockly_editor/blockly_spark_blocks.js:48: WARNING - Blockly.Python is never defined
+Blockly.Python.spark_move_no_return = function(block) {
+^
+
+client/app/directives/blockly_editor/blockly_spark_blocks.js:51: WARNING - Blockly.Python is never defined
+  Blockly.Python.definitions_.import_anvil = importText;
+  ^
+
+client/app/directives/blockly_editor/blockly_spark_blocks.js:56: WARNING - Blockly.Blocks is never defined
+Blockly.Blocks.spark_turn_no_return = {
+^
+
+client/app/directives/blockly_editor/blockly_spark_blocks.js:57: WARNING - Blockly.Blocks.spark_turn_no_return.init is never defined
+  init: function() {
+  ^
+
+client/app/directives/blockly_editor/blockly_spark_blocks.js:58: WARNING - Dangerous use of the global THIS object
+    this.appendDummyInput()
+    ^
+
+client/app/directives/blockly_editor/blockly_spark_blocks.js:58: WARNING - dangerous use of the global this object
+    this.appendDummyInput()
+    ^
+
+client/app/directives/blockly_editor/blockly_spark_blocks.js:61: WARNING - Blockly.FieldDropdown is never defined
+            new Blockly
+                ^
+
+client/app/directives/blockly_editor/blockly_spark_blocks.js:64: WARNING - Dangerous use of the global THIS object
+    this.setPreviousStatement(true);
+    ^
+
+client/app/directives/blockly_editor/blockly_spark_blocks.js:64: WARNING - dangerous use of the global this object
+    this.setPreviousStatement(true);
+    ^
+
+client/app/directives/blockly_editor/blockly_spark_blocks.js:65: WARNING - Dangerous use of the global THIS object
+    this.setNextStatement(true);
+    ^
+
+client/app/directives/blockly_editor/blockly_spark_blocks.js:65: WARNING - dangerous use of the global this object
+    this.setNextStatement(true);
+    ^
+
+client/app/directives/blockly_editor/blockly_spark_blocks.js:66: WARNING - Dangerous use of the global THIS object
+    this.setColour(240);
+    ^
+
+client/app/directives/blockly_editor/blockly_spark_blocks.js:66: WARNING - dangerous use of the global this object
+    this.setColour(240);
+    ^
+
+client/app/directives/blockly_editor/blockly_spark_blocks.js:67: WARNING - Dangerous use of the global THIS object
+    this.setTooltip('Turns a Spark left or right 90 degrees.');
+    ^
+
+client/app/directives/blockly_editor/blockly_spark_blocks.js:67: WARNING - dangerous use of the global this object
+    this.setTooltip('Turns a Spark left or right 90 degrees.');
+    ^
+
+client/app/directives/blockly_editor/blockly_spark_blocks.js:71: WARNING - Blockly.Python is never defined
+Blockly.Python.spark_turn_no_return = function(block) {
+^
+
+client/app/directives/blockly_editor/blockly_spark_blocks.js:74: WARNING - Blockly.Python is never defined
+  Blockly.Python.definitions_.import_anvil = importText;
+  ^
+
+client/app/directives/blockly_editor/blockly_spark_blocks.js:79: WARNING - Blockly.Blocks is never defined
+Blockly.Blocks.spark_mine = {
+^
+
+client/app/directives/blockly_editor/blockly_spark_blocks.js:80: WARNING - Blockly.Blocks.spark_mine.init is never defined
+  init: function() {
+  ^
+
+client/app/directives/blockly_editor/blockly_spark_blocks.js:81: WARNING - Dangerous use of the global THIS object
+    this.appendDummyInput().appendField("Mine").appendField(
+    ^
+
+client/app/directives/blockly_editor/blockly_spark_blocks.js:81: WARNING - dangerous use of the global this object
+    this.appendDummyInput().appendField("Mine").appendField(
+    ^
+
+client/app/directives/blockly_editor/blockly_spark_blocks.js:82: WARNING - Blockly.FieldDropdown is never defined
+        new Blockly.FieldDropdown(
+            ^
+
+client/app/directives/blockly_editor/blockly_spark_blocks.js:85: WARNING - Dangerous use of the global THIS object
+    this.setOutput(true, "Boolean");
+    ^
+
+client/app/directives/blockly_editor/blockly_spark_blocks.js:85: WARNING - dangerous use of the global this object
+    this.setOutput(true, "Boolean");
+    ^
+
+client/app/directives/blockly_editor/blockly_spark_blocks.js:86: WARNING - Dangerous use of the global THIS object
+    this.setColour(240);
+    ^
+
+client/app/directives/blockly_editor/blockly_spark_blocks.js:86: WARNING - dangerous use of the global this object
+    this.setColour(240);
+    ^
+
+client/app/directives/blockly_editor/blockly_spark_blocks.js:87: WARNING - Dangerous use of the global THIS object
+    this.setTooltip(
+    ^
+
+client/app/directives/blockly_editor/blockly_spark_blocks.js:87: WARNING - dangerous use of the global this object
+    this.setTooltip(
+    ^
+
+client/app/directives/blockly_editor/blockly_spark_blocks.js:92: WARNING - Blockly.Python is never defined
+Blockly.Python.spark_mine = function(block) {
+^
+
+client/app/directives/blockly_editor/blockly_spark_blocks.js:95: WARNING - Blockly.Python is never defined
+  Blockly.Python.definitions_.import_anvil = importText;
+  ^
+
+client/app/directives/blockly_editor/blockly_spark_blocks.js:96: WARNING - Blockly.Python is never defined
+  return [code, Blockly.Python.ORDER_FUNCTION_CALL];
+                ^
+
+client/app/directives/blockly_editor/blockly_spark_blocks.js:100: WARNING - Blockly.Blocks is never defined
+Blockly.Blocks.spark_mine_no_return = {
+^
+
+client/app/directives/blockly_editor/blockly_spark_blocks.js:101: WARNING - Blockly.Blocks.spark_mine_no_return.init is never defined
+  init: function() {
+  ^
+
+client/app/directives/blockly_editor/blockly_spark_blocks.js:102: WARNING - Dangerous use of the global THIS object
+    this.appendDummyInput().appendField("Mine").appendField(
+    ^
+
+client/app/directives/blockly_editor/blockly_spark_blocks.js:102: WARNING - dangerous use of the global this object
+    this.appendDummyInput().appendField("Mine").appendField(
+    ^
+
+client/app/directives/blockly_editor/blockly_spark_blocks.js:103: WARNING - Blockly.FieldDropdown is never defined
+        new Blockly.FieldDropdown(
+            ^
+
+client/app/directives/blockly_editor/blockly_spark_blocks.js:106: WARNING - Dangerous use of the global THIS object
+    this.setPreviousStatement(true);
+    ^
+
+client/app/directives/blockly_editor/blockly_spark_blocks.js:106: WARNING - dangerous use of the global this object
+    this.setPreviousStatement(true);
+    ^
+
+client/app/directives/blockly_editor/blockly_spark_blocks.js:107: WARNING - Dangerous use of the global THIS object
+    this.setNextStatement(true);
+    ^
+
+client/app/directives/blockly_editor/blockly_spark_blocks.js:107: WARNING - dangerous use of the global this object
+    this.setNextStatement(true);
+    ^
+
+client/app/directives/blockly_editor/blockly_spark_blocks.js:108: WARNING - Dangerous use of the global THIS object
+    this.setColour(240);
+    ^
+
+client/app/directives/blockly_editor/blockly_spark_blocks.js:108: WARNING - dangerous use of the global this object
+    this.setColour(240);
+    ^
+
+client/app/directives/blockly_editor/blockly_spark_blocks.js:109: WARNING - Dangerous use of the global THIS object
+    this.setTooltip(
+    ^
+
+client/app/directives/blockly_editor/blockly_spark_blocks.js:109: WARNING - dangerous use of the global this object
+    this.setTooltip(
+    ^
+
+client/app/directives/blockly_editor/blockly_spark_blocks.js:114: WARNING - Blockly.Python is never defined
+Blockly.Python.spark_mine_no_return = function(block) {
+^
+
+client/app/directives/blockly_editor/blockly_spark_blocks.js:117: WARNING - Blockly.Python is never defined
+  Blockly.Python.definitions_.import_anvil = importText;
+  ^
+
+client/app/directives/blockly_editor/blockly_spark_blocks.js:122: WARNING - Blockly.Blocks is never defined
+Blockly.Blocks.spark_drop_items = {
+^
+
+client/app/directives/blockly_editor/blockly_spark_blocks.js:123: WARNING - Blockly.Blocks.spark_drop_items.init is never defined
+  init: function() {
+  ^
+
+client/app/directives/blockly_editor/blockly_spark_blocks.js:124: WARNING - Dangerous use of the global THIS object
+    this.appendDummyInput().appendField("Drop All Items In Bag");
+    ^
+
+client/app/directives/blockly_editor/blockly_spark_blocks.js:124: WARNING - dangerous use of the global this object
+    this.appendDummyInput().appendField("Drop All Items In Bag");
+    ^
+
+client/app/directives/blockly_editor/blockly_spark_blocks.js:125: WARNING - Dangerous use of the global THIS object
+    this.setPreviousStatement(true);
+    ^
+
+client/app/directives/blockly_editor/blockly_spark_blocks.js:125: WARNING - dangerous use of the global this object
+    this.setPreviousStatement(true);
+    ^
+
+client/app/directives/blockly_editor/blockly_spark_blocks.js:126: WARNING - Dangerous use of the global THIS object
+    this.setNextStatement(true);
+    ^
+
+client/app/directives/blockly_editor/blockly_spark_blocks.js:126: WARNING - dangerous use of the global this object
+    this.setNextStatement(true);
+    ^
+
+client/app/directives/blockly_editor/blockly_spark_blocks.js:127: WARNING - Dangerous use of the global THIS object
+    this.setColour(240);
+    ^
+
+client/app/directives/blockly_editor/blockly_spark_blocks.js:127: WARNING - dangerous use of the global this object
+    this.setColour(240);
+    ^
+
+client/app/directives/blockly_editor/blockly_spark_blocks.js:128: WARNING - Dangerous use of the global THIS object
+    this.setTooltip('Drops all items in the Spark\'s inventory infront of it.');
+    ^
+
+client/app/directives/blockly_editor/blockly_spark_blocks.js:128: WARNING - dangerous use of the global this object
+    this.setTooltip('Drops all items in the Spark\'s inventory infront of it.');
+    ^
+
+client/app/directives/blockly_editor/blockly_spark_blocks.js:132: WARNING - Blockly.Python is never defined
+Blockly.Python.spark_drop_items = function(block) {
+^
+
+client/app/directives/blockly_editor/blockly_spark_blocks.js:134: WARNING - Blockly.Python is never defined
+  Blockly.Python.definitions_.import_anvil = importText;
+  ^
+
+client/app/directives/blockly_editor/blockly_spark_blocks.js:139: WARNING - Blockly.Blocks is never defined
+Blockly.Blocks.spark_recall = {
+^
+
+client/app/directives/blockly_editor/blockly_spark_blocks.js:140: WARNING - Blockly.Blocks.spark_recall.init is never defined
+  init: function() {
+  ^
+
+client/app/directives/blockly_editor/blockly_spark_blocks.js:141: WARNING - Dangerous use of the global THIS object
+    this.appendDummyInput().appendField("Teleport Back To Pad");
+    ^
+
+client/app/directives/blockly_editor/blockly_spark_blocks.js:141: WARNING - dangerous use of the global this object
+    this.appendDummyInput().appendField("Teleport Back To Pad");
+    ^
+
+client/app/directives/blockly_editor/blockly_spark_blocks.js:142: WARNING - Dangerous use of the global THIS object
+    this.setPreviousStatement(true);
+    ^
+
+client/app/directives/blockly_editor/blockly_spark_blocks.js:142: WARNING - dangerous use of the global this object
+    this.setPreviousStatement(true);
+    ^
+
+client/app/directives/blockly_editor/blockly_spark_blocks.js:143: WARNING - Dangerous use of the global THIS object
+    this.setNextStatement(true);
+    ^
+
+client/app/directives/blockly_editor/blockly_spark_blocks.js:143: WARNING - dangerous use of the global this object
+    this.setNextStatement(true);
+    ^
+
+client/app/directives/blockly_editor/blockly_spark_blocks.js:144: WARNING - Dangerous use of the global THIS object
+    this.setColour(240);
+    ^
+
+client/app/directives/blockly_editor/blockly_spark_blocks.js:144: WARNING - dangerous use of the global this object
+    this.setColour(240);
+    ^
+
+client/app/directives/blockly_editor/blockly_spark_blocks.js:145: WARNING - Dangerous use of the global THIS object
+    this.setTooltip('Teleports the Spark back to it\'s pad.');
+    ^
+
+client/app/directives/blockly_editor/blockly_spark_blocks.js:145: WARNING - dangerous use of the global this object
+    this.setTooltip('Teleports the Spark back to it\'s pad.');
+    ^
+
+client/app/directives/blockly_editor/blockly_spark_blocks.js:149: WARNING - Blockly.Python is never defined
+Blockly.Python.spark_recall = function(block) {
+^
+
+client/app/directives/blockly_editor/blockly_spark_blocks.js:151: WARNING - Blockly.Python is never defined
+  Blockly.Python.definitions_.import_anvil = importText;
+  ^
+
+client/app/directives/console_window/console_window.js:4: WARNING - Property module never defined on angular of type Object
+angular.module('thilenius.console_window', [])
+^
+
+client/app/directives/content_window/content_window.js:12: WARNING - Property module never defined on angular of type Object
+angular.module('thilenius.content_window', [
+^
+
+client/app/directives/history_explorer/history_explorer.js:6: WARNING - Property module never defined on angular of type Object
+angular.module('thilenius.history_explorer', [])
+^
+
+client/app/directives/history_explorer/history_explorer.js:76: WARNING - Function parseInt: called with 1 argument(s). Function requires at least 2 argument(s) and at most 2.
+                var dateObj = new Date(parseInt(changeList.timestamp));
+                                       ^
+
+client/app/directives/history_explorer/history_explorer.js:96: WARNING - Function parseInt: called with 1 argument(s). Function requires at least 2 argument(s) and at most 2.
+                        (new Date(parseInt(cl.timestamp))).toLocaleTimeString(),
+                                  ^
+
+client/app/directives/navbar/navbar.js:4: WARNING - Property module never defined on angular of type Object
+angular.module('thilenius.navbar', [])
+^
+
+client/app/directives/settings_window/settings_window.js:7: WARNING - Property module never defined on angular of type Object
+angular.module('thilenius.settings_window', [])
+^
+
+client/app/directives/sidebar/sidebar.js:4: WARNING - Property module never defined on angular of type Object
+angular.module('thilenius.sidebar', [])
+^
+
+client/app/factories/text_dialog/text_dialog.js:4: WARNING - Property module never defined on angular of type Object
+angular.module('app').factory('atTextDialog', function($mdDialog) {
+^
+
+client/app/factories/text_dialog/text_dialog.js:31: WARNING - Property element never defined on angular of type Object
+      parent: angular.element(document.body),
+              ^
+
+client/app/services/meta_service.js:1: WARNING - Property module never defined on angular of type Object
+angular.module('app').service('meta', function() {
+^
+
+0 error(s), 248 warning(s), 66.6% typed

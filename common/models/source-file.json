@@ -1,0 +1,35 @@
+{
+  "name": "SourceFile",
+  "base": "PersistedModel",
+  "idInjection": true,
+  "options": {},
+  "mixins": {
+    "TimeStamp": true
+  },
+  "properties": {
+    "state": {
+      "type": "string",
+      "default": "active"
+    }
+  },
+  "validations": [],
+  "relations": {
+    "commits": {
+      "type": "embedsMany",
+      "model": "Commit",
+      "property": "commits"
+    },
+    "stagedCommit": {
+      "type": "embedsOne",
+      "model": "Commit",
+      "property": "stagedCommit"
+    },
+    "project": {
+      "type": "belongsTo",
+      "model": "Project",
+      "foreignKey": ""
+    }
+  },
+  "acls": [],
+  "methods": {}
+}

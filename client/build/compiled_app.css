@@ -1,0 +1,441 @@
+.createUser-backdrop {
+  background-color: rgba(41, 41, 41, 1);
+  display: table;
+  height: 100%;
+  position: absolute;
+  width: 100%;
+}
+
+.createUser-middle-align {
+  display: table-cell;
+  vertical-align: middle;
+}
+
+.createUser-window {
+  color: white;
+  margin-left: auto;
+  margin-right: auto;
+  width: 400px;
+}
+
+.createUser-button {
+  width: 100px;
+}
+
+.create-button {
+  margin-top: 8px;
+}
+
+.error-overlay {
+  clear: both;
+  float: left;
+  left: 50%;
+  margin: 10px 0;
+  position: relative;
+  text-align: left;
+  z-index: 5000;
+}
+
+.error-label {
+  border: 1px solid;
+  height: 30;
+  left: -50%;
+  margin-top: 26px;
+  padding-left: 10px;
+  padding-right: 10px;
+  position: relative;
+  text-align: left;
+}
+
+.at-navbar {
+  height: 25px;
+}
+
+.sidebar {
+  width: 250px;
+}
+
+.greyscale {
+  -webkit-filter: grayscale(100%);
+  filter: grayscale(100%);
+}
+
+.editor-footer {
+  background-color: rgba(32, 32, 32, 1);
+  border: 1px solid black;
+  box-shadow: inset 1px 1px 0px 0px rgba(48, 48, 48, 1);
+  color: grey;
+  font-size: 12px;
+  height: 24px;
+  padding-left: 5px;
+  padding-right: 5px;
+  padding-top: 4px;
+}
+
+.login-backdrop {
+  background-color: rgba(41, 41, 41, 1);
+  display: table;
+  height: 100%;
+  position: absolute;
+  width: 100%;
+}
+
+.login-middle-align {
+  display: table-cell;
+  vertical-align: middle;
+}
+
+.login-window {
+  color: white;
+  margin-left: auto;
+  margin-right: auto;
+  width: 400px;
+}
+
+.login-button {
+  width: 100px;
+}
+
+.create-button {
+  margin-top: 8px;
+}
+
+
+.alert-wrapper {
+  overflow-y: auto;
+}
+
+.alert-backdrop {
+  padding: 10px;
+  text-align: center;
+  color: darkgrey;
+}
+
+.alert-plate {
+  background-color: rgba(15, 15, 15, 1);
+  border: 1px solid black;
+  box-shadow: inset 1px 1px 0px 0px rgba(48, 48, 48, 1);
+  margin-left: 5px;
+  margin-right: 5px;
+  margin-top: 5px;
+  padding: 10px;
+  color: lightgrey;
+}
+
+.alert-header {
+  padding-bottom: 3px;
+}
+
+.alert-body {
+  padding-top: 5px;
+  color: darkgrey;
+}
+
+.blocklySvg {
+  background-color: #141414 !important;
+}
+
+.blocklyMainBackground {
+  stroke: transparent !important;
+}
+
+.blocklyFlyoutBackground {
+  fill: #232323 !important;
+  fill-opacity: 1 !important;
+}
+
+.blocklyToolboxDiv {
+  background-color: #202020 !important;
+  color: white !important;
+  border-right: 1px solid black;
+}
+
+.blocklyTreeLabel {
+  font-size: 12px !important;
+}
+
+.console-window {
+  border-top: 1px solid black;
+  box-shadow: inset 1px 1px 0px 0px rgba(48, 48, 48, 1);
+}
+
+.minimize-console {
+  height: 23px;
+}
+
+.maximize-console {
+  height: 60%;
+}
+
+.console-header {
+  background-color: rgba(41, 41, 41, 1);
+  border-bottom: 1px solid black;
+  box-shadow: inset 1px 1px 0px 0px rgba(48, 48, 48, 1);
+  color: white;
+}
+
+.console {
+  background-color: rgba(25, 25, 25, 1);
+}
+
+.console-line {
+  line-height: 14px;
+}
+
+.console-text {
+  color: white;
+  font-family: Monaco, Menlo, 'Ubuntu Mono', Consolas, source-code-pro, monospace;
+  font-size: 12px;
+  white-space: pre-wrap;
+}
+
+.toggle-region-text {
+  background-color: rgba(15, 15, 15, 1);
+  color: darkgrey;
+  font-family: Monaco, Menlo, 'Ubuntu Mono', Consolas, source-code-pro, monospace;
+  font-size: 12px;
+  line-height: 20px;
+}
+
+.dark-tab {
+  color: rgba(200, 200, 200, 1);
+  width: 120px;
+  border-radius: 0px;
+}
+
+.dark-tab:hover {
+  color: white;
+}
+
+.dark-tab.active {
+  background-color: rgba(25, 25, 25, 1);
+}
+
+.close-button {
+  background-color: transparent;
+  color: rgba(200, 200, 200, 1);
+  border-radius: 0px;
+  padding-left: 10px;
+  padding-right: 10px;
+  height: 18px;
+  font-size: 12px;
+  padding-top: 2px;
+}
+
+.close-button:hover {
+  color: white;
+}
+
+.editor-backdrop {
+  background-color: rgba(41, 41, 41, 1);
+  box-shadow: inset 1px 1px 0px 0px rgba(48, 48, 48, 1);
+  color: grey;
+  font-size: 6em;
+  padding-top: 50px;
+  text-align: center;
+}
+
+#editor {
+  box-shadow: inset 1px 1px 0px 0px rgba(48, 48, 48, 1);
+  height: 100%;
+  position: absolute;
+  width: 100%;
+}
+
+.editor-header {
+  background-color: rgba(41, 41, 41, 1);
+  border-bottom: 1px solid black;
+  box-shadow: inset 1px 1px 0px 0px rgba(48, 48, 48, 1);
+  color: white;
+  padding-left: 5px;
+  height: 25px;
+}
+
+.dark-button {
+  color: rgba(200, 200, 200, 1);
+  border-radius: 0px;
+  padding-left: 10px;
+  padding-right: 10px;
+  height: 24px;
+  font-size: 12px;
+  padding-top: 4px;
+}
+
+.dark-button:hover {
+  color: white;
+  background-color: rgba(92, 92, 92, 1);
+}
+
+.locked-file-warning {
+  color: red;
+  float: left;
+  padding-left: 10px;
+  padding-top: 2px;
+  padding-right: 10px;
+}
+
+/* Blockly Overrides */
+.blocklyFlyoutBackground {
+  background-color: rgba(32, 32, 32, 1);
+}
+
+.blocklySvg {
+  background-color: transparent;
+}
+
+.control-header {
+  border-bottom: 1px solid darkgrey;
+  color: white;
+  padding-bottom: 10px;
+}
+
+.revert-button {
+  background: darkred;
+  padding-top: 5px;
+  width: 100%;
+}
+
+.revert-button-disabled {
+  background: darkgrey;
+  padding-top: 5px;
+  width: 100%;
+}
+
+.end-marker {
+  border-bottom: 1px solid rgba(15, 15, 15, 1);
+  color: darkgrey;
+  margin-bottom: 10px;
+  margin-top: 10px;
+  text-align: center;
+}
+
+.at-navbar-padding {
+}
+
+.at-teacher-navbar {
+  background: #690000;
+  border-bottom: 1px solid black;
+  border-right: 1px solid black;
+  padding-left: 4px;
+  padding-right: 4px;
+}
+.at-navbar-item {
+  height: 24px;
+  background-color: transparent;
+  border: none;
+  padding-left: 4px;
+  padding-right: 4px;
+}
+
+.at-navbar-item:hover {
+  padding-left: 3px;
+  padding-right: 3px;
+  border-left: 1px solid white;
+  border-right: 1px solid white;
+}
+
+.at-navbar-item:focus {
+  padding-left: 3px;
+  padding-right: 3px;
+  outline: 0;
+  color: white;
+  border-left: 1px solid white;
+  border-right: 1px solid white;
+}
+
+.dropdown-menu {
+  background-color: rgba(32, 32, 32, 1);
+  font-size: 12px;
+  border: 1px solid lightgrey;
+  margin-left: 1px;
+  margin-right: 1px;
+}
+
+.dropdown-menu>li>a {
+  color: rgba(200, 200, 200, 1);
+  padding: 0px 10px;
+}
+
+#controls td {
+    text-align: right;
+}
+
+#controls td + td {
+    text-align: left;
+}
+
+.alert-icon {
+  margin-top: 2px;
+  color: red;
+}
+
+.inactive-project {
+  padding-left: 10px;
+  padding-top: 4px;
+  padding-bottom: 4px;
+}
+
+.active-project-header {
+  padding-left: 10px;
+  padding-right: 10px;
+  font-size: 1.2em;
+  margin-bottom: 2px;
+}
+
+.active-project-header-title {
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+
+.files-plate {
+  padding-top: 10px;
+  padding-bottom: 10px;
+  padding-right: 1px;
+}
+
+.header-divider {
+  height: 1px;
+  margin-left: 10px;
+  margin-right: 10px;
+}
+
+.directory-plate {
+}
+
+.file-plate {
+}
+
+.file-plate-active {
+}
+
+.progress {
+  border-radius: 2px;
+  height: 12px;
+  margin-bottom: 4px;
+  height: 5px;
+  background: rgba(25, 25, 25, 1);
+  box-shadow: inset -1px -1px 0px 0px rgba(80, 80, 80, 1);
+}
+
+.progress-bar-custom {
+  background: rgba(0, 173, 43, 1);
+  box-shadow: inset 1px 0px 0px 1px rgba(0, 50, 0, 1);
+}
+
+.settings-icon {
+  font-size: 1.2em;
+  color: rgba(15, 15, 15, 0.8);
+  text-shadow: -1px -1px 1px rgba(48, 48, 48, 1), 0 0 0 lightgrey, -1px -1px 1px rgba(48, 48, 48, 1);
+  -webkit-transition: -webkit-all .8s ease-out;
+  transition: all .8s ease-out;
+}
+
+.settings-icon:hover {
+  -webkit-transform: rotate(360deg);
+  transform: rotate(360deg);
+  color: white;
+}
+
+.files-plate .dndDraggingSource {
+  display: none;
+}

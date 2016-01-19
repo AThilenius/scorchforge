@@ -1,0 +1,29 @@
+{
+  "name": "Workspace",
+  "base": "PersistedModel",
+  "idInjection": true,
+  "options": {},
+  "properties": {
+    "metadata": {
+      "type": "object",
+      "default": {
+        "projects": []
+      }
+    }
+  },
+  "validations": [],
+  "relations": {
+    "person": {
+      "type": "belongsTo",
+      "model": "Person",
+      "foreignKey": ""
+    },
+    "projects": {
+      "type": "hasMany",
+      "model": "Project",
+      "foreignKey": ""
+    }
+  },
+  "acls": [],
+  "methods": {}
+}

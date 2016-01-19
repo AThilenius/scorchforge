@@ -1,0 +1,21 @@
+{
+  "name": "Diff",
+  "plural": "Diffs",
+  "base": "Model",
+  "idInjection": true,
+  "options": {},
+  "properties": {
+    "type": {
+      "type": "number",
+      "required": true
+    },
+    "text": {
+      "type": "string",
+      "required": true
+    }
+  },
+  "validations": [],
+  "relations": {},
+  "acls": [],
+  "methods": {}
+}

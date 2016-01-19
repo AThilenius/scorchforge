@@ -1,0 +1,50 @@
+<div class="createUser-backdrop">
+  <div class="createUser-middle-align">
+    <div class="createUser-window">
+
+      <div ng-show="error" class="alert alert-danger" role="alert">
+        <span class="glyphicon glyphicon-exclamation-sign"
+          aria-hidden="true"></span>
+        <span class="sr-only">Error:</span>
+        {{error}}
+      </div>
+
+      <form name="loginForm" role="form-create">
+        <h2 class="text-center">Create ScorchForge Account</h2>
+        <br>
+        <div class="form-group">
+          <label for="firstname">First Name</label>
+          <input class="form-control" ng-model="createCredentials.firstName"
+          name="firstname" placeholder="First Name" required>
+        </div>
+        <div class="form-group">
+          <label for="lastname">Last Name</label>
+          <input class="form-control" ng-model="createCredentials.lastName"
+          name="lastname" placeholder="Last Name" required>
+        </div>
+        <div class="form-group">
+          <label for="email">Email Address</label>
+          <input class="form-control" ng-model="createCredentials.email"
+          type="email" name="email" placeholder="Email Address" required>
+        </div>
+        <div class="form-group">
+          <label for="password">Password</label>
+          <input class="form-control" ng-model="createCredentials.password"
+          type="password" name="password" placeholder="Password" required>
+        </div>
+        <div class="form-group">
+          <label for="password-conf">Confirm Password</label>
+          <input class="form-control" type="password" name="password-conf"
+          placeholder="Confirm Password"
+          ui-validate="'$value==password'"
+          ui-validate-watch="'password'" required>
+        </div>
+        <br>
+        <input ng-enabled="inputForm.$valid" type="submit"
+               ng-click="createAccount()"
+        class="btn btn-success login-button" value="Create">
+      </form>
+
+    </div>
+  </div>
+</div>

@@ -1,0 +1,15 @@
+{
+  "db": {
+    "host": "192.168.59.103",
+    "port": 27017,
+    "database": "scorch",
+    "password": "",
+    "name": "db",
+    "connector": "mongodb",
+    "user": ""
+  },
+  "transient": {
+    "name": "transient",
+    "connector": "transient"
+  }
+}

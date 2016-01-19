@@ -1,0 +1,39 @@
+{
+  "name": "Project",
+  "base": "PersistedModel",
+  "idInjection": true,
+  "options": {},
+  "mixins": {
+    "TimeStamp": true
+  },
+  "properties": {
+    "name": {
+      "type": "string",
+      "required": true
+    },
+    "metadata": {
+      "type": "object",
+      "default": {
+        "fileTree": []
+      }
+    },
+    "config": {
+      "type": "string"
+    }
+  },
+  "validations": [],
+  "relations": {
+    "sourceFiles": {
+      "type": "hasMany",
+      "model": "SourceFile",
+      "foreignKey": ""
+    },
+    "person": {
+      "type": "belongsTo",
+      "model": "Person",
+      "foreignKey": ""
+    }
+  },
+  "acls": [],
+  "methods": {}
+}

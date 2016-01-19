@@ -1,0 +1,27 @@
+<md-dialog aria-label="{{ properties.title }}" ng-cloak>
+  <form ng-submit="okay()">
+    <md-toolbar>
+      <div class="md-toolbar-tools">
+        <h3>{{ properties.title }}</h3>
+      </div>
+    </md-toolbar>
+
+    <md-dialog-content>
+      <div class="md-dialog-content">
+        <p>{{ properties.content }}</p>
+        <input style="width:100%;" ng-model="model"
+               md-autofocus></input>
+      </div>
+    </md-dialog-content>
+
+    <md-dialog-actions layout="row">
+      <span flex></span>
+      <md-button ng-click="cancel()">
+       {{ properties.cancel }}
+      </md-button>
+      <md-button type="submit" style="margin-right:20px;">
+        {{ properties.ok }}
+      </md-button>
+    </md-dialog-actions>
+  </form>
+</md-dialog>

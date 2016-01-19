@@ -1,0 +1,93 @@
+{
+  "_meta": {
+    "sources": [
+      "loopback/common/models",
+      "loopback/server/models",
+      "../common/models",
+      "./models"
+    ],
+    "mixins": [
+      "loopback/common/mixins",
+      "loopback/server/mixins",
+      "../node_modules/loopback-ds-timestamp-mixin",
+      "../common/mixins",
+      "./mixins"
+    ]
+  },
+  "User": {
+    "dataSource": "db",
+    "public": false
+  },
+  "AccessToken": {
+    "dataSource": "db",
+    "public": false
+  },
+  "ACL": {
+    "dataSource": "db",
+    "public": false
+  },
+  "RoleMapping": {
+    "dataSource": "db",
+    "public": false
+  },
+  "Role": {
+    "dataSource": "db",
+    "public": false
+  },
+  "Person": {
+    "dataSource": "db",
+    "public": true
+  },
+  "Project": {
+    "dataSource": "db",
+    "public": true
+  },
+  "SourceFile": {
+    "dataSource": "db",
+    "public": true
+  },
+  "Fiber": {
+    "dataSource": "db",
+    "public": true
+  },
+  "BilletHost": {
+    "dataSource": "db",
+    "public": true
+  },
+  "BilletRun": {
+    "dataSource": "db",
+    "public": true
+  },
+  "Diff": {
+    "dataSource": "transient",
+    "public": true
+  },
+  "Patch": {
+    "dataSource": "transient",
+    "public": true
+  },
+  "Commit": {
+    "dataSource": "transient",
+    "public": true
+  },
+  "Class": {
+    "dataSource": "db",
+    "public": true
+  },
+  "Enrolled": {
+    "dataSource": "db",
+    "public": true
+  },
+  "Assignment": {
+    "dataSource": "db",
+    "public": true
+  },
+  "AssignmentRun": {
+    "dataSource": "db",
+    "public": true
+  },
+  "Workspace": {
+    "dataSource": "db",
+    "public": true
+  }
+}

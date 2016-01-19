@@ -1,0 +1,23 @@
+{
+  "name": "Fiber",
+  "base": "PersistedModel",
+  "idInjection": true,
+  "options": {},
+  "mixins": {
+    "TimeStamp": true
+  },
+  "properties": {
+    "tokens": {
+      "type": "string",
+      "default": "[]"
+    },
+    "state": {
+      "type": "string",
+      "default": "active"
+    }
+  },
+  "validations": [],
+  "relations": {},
+  "acls": [],
+  "methods": {}
+}
