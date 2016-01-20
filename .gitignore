@@ -19,3 +19,5 @@ node_modules
 npm-debug.log
 vendor
 bower_components
+**/build
+test_output.js
