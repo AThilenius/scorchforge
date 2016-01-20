@@ -6,6 +6,7 @@ var app = angular.module('app', [
   'ngCookies',
   'ngMaterial',
   'dndLists',
+  'ui.ace',
   'ui.router',
   'ui.bootstrap.contextMenu',
   'ui.bootstrap',

@@ -31,6 +31,20 @@
     </div>
   </div>
   <div class="flex-body">
-    <div id="editor"></div>
+    <div id="editor" ui-ace="{
+      onLoad: aceLoaded,
+      require: ['ace/ext/language_tools'],
+      mode: 'c_cpp',
+      useSoftTabs: true,
+      showPrintMargin: true,
+      showIndentGuides: true,
+      theme:'twilight',
+      advanced: {
+          enableSnippets: true,
+          enableBasicAutocompletion: true,
+          enableLiveAutocompletion: true
+      },
+      callbacks: ['aceLoaded']
+    }"></div>
   </div>
 </div>

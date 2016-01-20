@@ -1,8 +1,8 @@
-client/app/components/forge/forge_controller.js:166: WARNING - Suspicious code. This code lacks side-effects. Is there a bug?
+client/app/components/forge/forge_controller.js:127: WARNING - Suspicious code. This code lacks side-effects. Is there a bug?
             if (item.type === 'file') {
             ^
 
-client/app/components/forge/forge_controller.js:168: WARNING - Suspicious code. This code lacks side-effects. Is there a bug?
+client/app/components/forge/forge_controller.js:129: WARNING - Suspicious code. This code lacks side-effects. Is there a bug?
             } else if (item.type === 'directory') {
                    ^
 

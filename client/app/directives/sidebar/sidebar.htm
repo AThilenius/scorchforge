@@ -67,9 +67,8 @@
 
   <!--Active Project-->
   <div ng-show="state.activeProject"
-       ng-repeat="projectMeta in [state.activeProject]"
+       ng-repeat="project in [state.activeProject]"
        class="tone-cplate-in noselect"
-       ng-init="project = projectMeta.getModel()"
        context-menu="activeProjectDropdown">
     <div class="active-project-header">
       <div class="active-project-header-title">
@@ -104,12 +103,11 @@
   </div>
 
   <!--Inavtive Projects-->
-  <div ng-repeat="projectMeta in projects">
+  <div ng-repeat="project in workspace.projects">
     <div class="inactive-project tone-cplate-out-hover tone-text-secondary
                 noselect"
-          ng-show="projectMeta != state.activeProject"
-          ng-click="state.activeProject = projectMeta"
-          ng-init="project = projectMeta.getModel()"
+          ng-show="project != state.activeProject"
+          ng-click="state.activeProject = project"
           context-menu="projectDropdown">
       <span ng-show="activeAssignment" class="glyphicon glyphicon-education
                      small-font"

@@ -28,9 +28,9 @@
       "model": "SourceFile",
       "foreignKey": ""
     },
-    "person": {
+    "workspace": {
       "type": "belongsTo",
-      "model": "Person",
+      "model": "Workspace",
       "foreignKey": ""
     }
   },

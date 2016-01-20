@@ -8,7 +8,19 @@ module.exports = function(grunt) {
       all: {
         dest: 'client/build/_bower.js',
         cssDest: 'client/build/_bower.css',
-        dependencies: {'underscore': 'jquery', 'angular': 'jquery'}
+        mainFiles: {
+          'ace-builds': [
+            'src-min-noconflict/ace.js',
+            'src-min-noconflict/ext-language_tools.js'
+          ],
+          'angular-ui-ace': 'ui-ace.min.js',
+          'bootstrap': ['dist/css/bootstrap.min.css', 'dist/js/bootstrap.js']
+        },
+        dependencies: {
+          'angular-ui-ace': ['angular', 'ace-builds'],
+          'underscore': 'jquery',
+          'angular': 'jquery'
+        }
       }
     },
 

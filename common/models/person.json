@@ -26,8 +26,8 @@
   },
   "validations": [],
   "relations": {
-    "workspace": {
-      "type": "hasOne",
+    "workspaces": {
+      "type": "hasMany",
       "model": "Workspace",
       "foreignKey": ""
     },

@@ -18,15 +18,11 @@ angular.module('thilenius.sidebar', [])
 
             $scope.sidebarState = {};
 
-            $scope.saveProject = function(project) {
-              project.$save();
-            };
-
             // Dropdown Handlers, Dropwdown Definitions
             var addProject = function($itemScope) { $scope.addProject(); };
 
             var removeProject = function($itemScope) {
-              $scope.removeProject($itemScope.projectMeta);
+              $scope.removeProject($itemScope.project);
             };
 
             var addFile = function($itemScope) {

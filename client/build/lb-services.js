@@ -216,28 +216,31 @@ module.factory(
           method: "PUT"
         },
 
-        // INTERNAL. Use Person.workspace() instead.
-        "prototype$__get__workspace": {
-          url: urlBase + "/People/:id/workspace",
+        // INTERNAL. Use Person.workspaces.findById() instead.
+        "prototype$__findById__workspaces": {
+          params: {
+          'fk': '@fk'
+          },
+          url: urlBase + "/People/:id/workspaces/:fk",
           method: "GET"
         },
 
-        // INTERNAL. Use Person.workspace.create() instead.
-        "prototype$__create__workspace": {
-          url: urlBase + "/People/:id/workspace",
-          method: "POST"
-        },
-
-        // INTERNAL. Use Person.workspace.update() instead.
-        "prototype$__update__workspace": {
-          url: urlBase + "/People/:id/workspace",
-          method: "PUT"
-        },
-
-        // INTERNAL. Use Person.workspace.destroy() instead.
-        "prototype$__destroy__workspace": {
-          url: urlBase + "/People/:id/workspace",
+        // INTERNAL. Use Person.workspaces.destroyById() instead.
+        "prototype$__destroyById__workspaces": {
+          params: {
+          'fk': '@fk'
+          },
+          url: urlBase + "/People/:id/workspaces/:fk",
           method: "DELETE"
+        },
+
+        // INTERNAL. Use Person.workspaces.updateById() instead.
+        "prototype$__updateById__workspaces": {
+          params: {
+          'fk': '@fk'
+          },
+          url: urlBase + "/People/:id/workspaces/:fk",
+          method: "PUT"
         },
 
         /**
@@ -424,6 +427,31 @@ module.factory(
         // INTERNAL. Use Person.assignmentRuns.count() instead.
         "prototype$__count__assignmentRuns": {
           url: urlBase + "/People/:id/assignmentRuns/count",
+          method: "GET"
+        },
+
+        // INTERNAL. Use Person.workspaces() instead.
+        "prototype$__get__workspaces": {
+          isArray: true,
+          url: urlBase + "/People/:id/workspaces",
+          method: "GET"
+        },
+
+        // INTERNAL. Use Person.workspaces.create() instead.
+        "prototype$__create__workspaces": {
+          url: urlBase + "/People/:id/workspaces",
+          method: "POST"
+        },
+
+        // INTERNAL. Use Person.workspaces.destroyAll() instead.
+        "prototype$__delete__workspaces": {
+          url: urlBase + "/People/:id/workspaces",
+          method: "DELETE"
+        },
+
+        // INTERNAL. Use Person.workspaces.count() instead.
+        "prototype$__count__workspaces": {
+          url: urlBase + "/People/:id/workspaces/count",
           method: "GET"
         },
 
@@ -1014,12 +1042,6 @@ module.factory(
         "resetPassword": {
           url: urlBase + "/People/reset",
           method: "POST"
-        },
-
-        // INTERNAL. Use Project.person() instead.
-        "::get::Project::person": {
-          url: urlBase + "/Projects/:id/person",
-          method: "GET"
         },
 
         // INTERNAL. Use Enrolled.person() instead.
@@ -1884,33 +1906,69 @@ module.factory(
         };
     /**
      * @ngdoc object
-     * @name lbServices.Person.workspace
-     * @header lbServices.Person.workspace
+     * @name lbServices.Person.workspaces
+     * @header lbServices.Person.workspaces
      * @object
      * @description
      *
-     * The object `Person.workspace` groups methods
+     * The object `Person.workspaces` groups methods
      * manipulating `Workspace` instances related to `Person`.
      *
-     * Call {@link lbServices.Person#workspace Person.workspace()}
+     * Call {@link lbServices.Person#workspaces Person.workspaces()}
      * to query all related instances.
      */
 
 
         /**
          * @ngdoc method
-         * @name lbServices.Person#workspace
+         * @name lbServices.Person#workspaces
          * @methodOf lbServices.Person
          *
          * @description
          *
-         * Fetches hasOne relation workspace.
+         * Queries workspaces of Person.
          *
          * @param {Object=} parameters Request parameters.
          *
          *  - `id` – `{*}` - User id
          *
-         *  - `refresh` – `{boolean=}` - 
+         *  - `filter` – `{object=}` - 
+         *
+         * @param {function(Array.<Object>,Object)=} successCb
+         *   Success callback with two arguments: `value`, `responseHeaders`.
+         *
+         * @param {function(Object)=} errorCb Error callback with one argument:
+         *   `httpResponse`.
+         *
+         * @returns {Array.<Object>} An empty reference that will be
+         *   populated with the actual data once the response is returned
+         *   from the server.
+         *
+         * <em>
+         * (The remote method definition does not provide any description.
+         * This usually means the response is a `Workspace` object.)
+         * </em>
+         */
+        R.workspaces = function() {
+          var TargetResource = $injector.get("Workspace");
+          var action = TargetResource["::get::Person::workspaces"];
+          return action.apply(R, arguments);
+        };
+
+        /**
+         * @ngdoc method
+         * @name lbServices.Person.workspaces#count
+         * @methodOf lbServices.Person.workspaces
+         *
+         * @description
+         *
+         * Counts workspaces of Person.
+         *
+         * @param {Object=} parameters Request parameters.
+         *
+         *  - `id` – `{*}` - User id
+         *
+         *  - `where` – `{object=}` - Criteria to match model instances
          *
          * @param {function(Object,Object)=} successCb
          *   Success callback with two arguments: `value`, `responseHeaders`.
@@ -1922,25 +1980,24 @@ module.factory(
          *   populated with the actual data once the response is returned
          *   from the server.
          *
-         * <em>
-         * (The remote method definition does not provide any description.
-         * This usually means the response is a `Workspace` object.)
-         * </em>
+         * Data properties:
+         *
+         *  - `count` – `{number=}` - 
          */
-        R.workspace = function() {
+        R.workspaces.count = function() {
           var TargetResource = $injector.get("Workspace");
-          var action = TargetResource["::get::Person::workspace"];
+          var action = TargetResource["::count::Person::workspaces"];
           return action.apply(R, arguments);
         };
 
         /**
          * @ngdoc method
-         * @name lbServices.Person.workspace#create
-         * @methodOf lbServices.Person.workspace
+         * @name lbServices.Person.workspaces#create
+         * @methodOf lbServices.Person.workspaces
          *
          * @description
          *
-         * Creates a new instance in workspace of this model.
+         * Creates a new instance in workspaces of this model.
          *
          * @param {Object=} parameters Request parameters.
          *
@@ -1965,20 +2022,20 @@ module.factory(
          * This usually means the response is a `Workspace` object.)
          * </em>
          */
-        R.workspace.create = function() {
+        R.workspaces.create = function() {
           var TargetResource = $injector.get("Workspace");
-          var action = TargetResource["::create::Person::workspace"];
+          var action = TargetResource["::create::Person::workspaces"];
           return action.apply(R, arguments);
         };
 
         /**
          * @ngdoc method
-         * @name lbServices.Person.workspace#createMany
-         * @methodOf lbServices.Person.workspace
+         * @name lbServices.Person.workspaces#createMany
+         * @methodOf lbServices.Person.workspaces
          *
          * @description
          *
-         * Creates a new instance in workspace of this model.
+         * Creates a new instance in workspaces of this model.
          *
          * @param {Object=} parameters Request parameters.
          *
@@ -2003,20 +2060,20 @@ module.factory(
          * This usually means the response is a `Workspace` object.)
          * </em>
          */
-        R.workspace.createMany = function() {
+        R.workspaces.createMany = function() {
           var TargetResource = $injector.get("Workspace");
-          var action = TargetResource["::createMany::Person::workspace"];
+          var action = TargetResource["::createMany::Person::workspaces"];
           return action.apply(R, arguments);
         };
 
         /**
          * @ngdoc method
-         * @name lbServices.Person.workspace#destroy
-         * @methodOf lbServices.Person.workspace
+         * @name lbServices.Person.workspaces#destroyAll
+         * @methodOf lbServices.Person.workspaces
          *
          * @description
          *
-         * Deletes workspace of this model.
+         * Deletes all workspaces of this model.
          *
          * @param {Object=} parameters Request parameters.
          *
@@ -2034,24 +2091,95 @@ module.factory(
          *
          * This method returns no data.
          */
-        R.workspace.destroy = function() {
+        R.workspaces.destroyAll = function() {
           var TargetResource = $injector.get("Workspace");
-          var action = TargetResource["::destroy::Person::workspace"];
+          var action = TargetResource["::delete::Person::workspaces"];
           return action.apply(R, arguments);
         };
 
         /**
          * @ngdoc method
-         * @name lbServices.Person.workspace#update
-         * @methodOf lbServices.Person.workspace
+         * @name lbServices.Person.workspaces#destroyById
+         * @methodOf lbServices.Person.workspaces
          *
          * @description
          *
-         * Update workspace of this model.
+         * Delete a related item by id for workspaces.
          *
          * @param {Object=} parameters Request parameters.
          *
          *  - `id` – `{*}` - User id
+         *
+         *  - `fk` – `{*}` - Foreign key for workspaces
+         *
+         * @param {function(Object,Object)=} successCb
+         *   Success callback with two arguments: `value`, `responseHeaders`.
+         *
+         * @param {function(Object)=} errorCb Error callback with one argument:
+         *   `httpResponse`.
+         *
+         * @returns {Object} An empty reference that will be
+         *   populated with the actual data once the response is returned
+         *   from the server.
+         *
+         * This method returns no data.
+         */
+        R.workspaces.destroyById = function() {
+          var TargetResource = $injector.get("Workspace");
+          var action = TargetResource["::destroyById::Person::workspaces"];
+          return action.apply(R, arguments);
+        };
+
+        /**
+         * @ngdoc method
+         * @name lbServices.Person.workspaces#findById
+         * @methodOf lbServices.Person.workspaces
+         *
+         * @description
+         *
+         * Find a related item by id for workspaces.
+         *
+         * @param {Object=} parameters Request parameters.
+         *
+         *  - `id` – `{*}` - User id
+         *
+         *  - `fk` – `{*}` - Foreign key for workspaces
+         *
+         * @param {function(Object,Object)=} successCb
+         *   Success callback with two arguments: `value`, `responseHeaders`.
+         *
+         * @param {function(Object)=} errorCb Error callback with one argument:
+         *   `httpResponse`.
+         *
+         * @returns {Object} An empty reference that will be
+         *   populated with the actual data once the response is returned
+         *   from the server.
+         *
+         * <em>
+         * (The remote method definition does not provide any description.
+         * This usually means the response is a `Workspace` object.)
+         * </em>
+         */
+        R.workspaces.findById = function() {
+          var TargetResource = $injector.get("Workspace");
+          var action = TargetResource["::findById::Person::workspaces"];
+          return action.apply(R, arguments);
+        };
+
+        /**
+         * @ngdoc method
+         * @name lbServices.Person.workspaces#updateById
+         * @methodOf lbServices.Person.workspaces
+         *
+         * @description
+         *
+         * Update a related item by id for workspaces.
+         *
+         * @param {Object=} parameters Request parameters.
+         *
+         *  - `id` – `{*}` - User id
+         *
+         *  - `fk` – `{*}` - Foreign key for workspaces
          *
          * @param {Object} postData Request data.
          *
@@ -2072,9 +2200,9 @@ module.factory(
          * This usually means the response is a `Workspace` object.)
          * </em>
          */
-        R.workspace.update = function() {
+        R.workspaces.updateById = function() {
           var TargetResource = $injector.get("Workspace");
-          var action = TargetResource["::update::Person::workspace"];
+          var action = TargetResource["::updateById::Person::workspaces"];
           return action.apply(R, arguments);
         };
 
@@ -2106,12 +2234,6 @@ module.factory(
       { 'id': '@id' },
       {
 
-        // INTERNAL. Use Project.person() instead.
-        "prototype$__get__person": {
-          url: urlBase + "/Projects/:id/person",
-          method: "GET"
-        },
-
         // INTERNAL. Use Project.sourceFiles.findById() instead.
         "prototype$__findById__sourceFiles": {
           params: {
@@ -2137,6 +2259,12 @@ module.factory(
           },
           url: urlBase + "/Projects/:id/sourceFiles/:fk",
           method: "PUT"
+        },
+
+        // INTERNAL. Use Project.workspace() instead.
+        "prototype$__get__workspace": {
+          url: urlBase + "/Projects/:id/workspace",
+          method: "GET"
         },
 
         // INTERNAL. Use Project.sourceFiles() instead.
@@ -2823,42 +2951,6 @@ module.factory(
     */
     R.modelName = "Project";
 
-
-        /**
-         * @ngdoc method
-         * @name lbServices.Project#person
-         * @methodOf lbServices.Project
-         *
-         * @description
-         *
-         * Fetches belongsTo relation person.
-         *
-         * @param {Object=} parameters Request parameters.
-         *
-         *  - `id` – `{*}` - PersistedModel id
-         *
-         *  - `refresh` – `{boolean=}` - 
-         *
-         * @param {function(Object,Object)=} successCb
-         *   Success callback with two arguments: `value`, `responseHeaders`.
-         *
-         * @param {function(Object)=} errorCb Error callback with one argument:
-         *   `httpResponse`.
-         *
-         * @returns {Object} An empty reference that will be
-         *   populated with the actual data once the response is returned
-         *   from the server.
-         *
-         * <em>
-         * (The remote method definition does not provide any description.
-         * This usually means the response is a `Person` object.)
-         * </em>
-         */
-        R.person = function() {
-          var TargetResource = $injector.get("Person");
-          var action = TargetResource["::get::Project::person"];
-          return action.apply(R, arguments);
-        };
     /**
      * @ngdoc object
      * @name lbServices.Project.sourceFiles
@@ -3158,6 +3250,42 @@ module.factory(
         R.sourceFiles.updateById = function() {
           var TargetResource = $injector.get("SourceFile");
           var action = TargetResource["::updateById::Project::sourceFiles"];
+          return action.apply(R, arguments);
+        };
+
+        /**
+         * @ngdoc method
+         * @name lbServices.Project#workspace
+         * @methodOf lbServices.Project
+         *
+         * @description
+         *
+         * Fetches belongsTo relation workspace.
+         *
+         * @param {Object=} parameters Request parameters.
+         *
+         *  - `id` – `{*}` - PersistedModel id
+         *
+         *  - `refresh` – `{boolean=}` - 
+         *
+         * @param {function(Object,Object)=} successCb
+         *   Success callback with two arguments: `value`, `responseHeaders`.
+         *
+         * @param {function(Object)=} errorCb Error callback with one argument:
+         *   `httpResponse`.
+         *
+         * @returns {Object} An empty reference that will be
+         *   populated with the actual data once the response is returned
+         *   from the server.
+         *
+         * <em>
+         * (The remote method definition does not provide any description.
+         * This usually means the response is a `Workspace` object.)
+         * </em>
+         */
+        R.workspace = function() {
+          var TargetResource = $injector.get("Workspace");
+          var action = TargetResource["::get::Project::workspace"];
           return action.apply(R, arguments);
         };
 
@@ -10930,35 +11058,69 @@ module.factory(
           method: "POST"
         },
 
-        // INTERNAL. Use Person.workspace() instead.
-        "::get::Person::workspace": {
-          url: urlBase + "/People/:id/workspace",
+        // INTERNAL. Use Person.workspaces.findById() instead.
+        "::findById::Person::workspaces": {
+          params: {
+          'fk': '@fk'
+          },
+          url: urlBase + "/People/:id/workspaces/:fk",
           method: "GET"
         },
 
-        // INTERNAL. Use Person.workspace.create() instead.
-        "::create::Person::workspace": {
-          url: urlBase + "/People/:id/workspace",
-          method: "POST"
+        // INTERNAL. Use Person.workspaces.destroyById() instead.
+        "::destroyById::Person::workspaces": {
+          params: {
+          'fk': '@fk'
+          },
+          url: urlBase + "/People/:id/workspaces/:fk",
+          method: "DELETE"
         },
 
-        // INTERNAL. Use Person.workspace.createMany() instead.
-        "::createMany::Person::workspace": {
-          isArray: true,
-          url: urlBase + "/People/:id/workspace",
-          method: "POST"
-        },
-
-        // INTERNAL. Use Person.workspace.update() instead.
-        "::update::Person::workspace": {
-          url: urlBase + "/People/:id/workspace",
+        // INTERNAL. Use Person.workspaces.updateById() instead.
+        "::updateById::Person::workspaces": {
+          params: {
+          'fk': '@fk'
+          },
+          url: urlBase + "/People/:id/workspaces/:fk",
           method: "PUT"
         },
 
-        // INTERNAL. Use Person.workspace.destroy() instead.
-        "::destroy::Person::workspace": {
-          url: urlBase + "/People/:id/workspace",
+        // INTERNAL. Use Person.workspaces() instead.
+        "::get::Person::workspaces": {
+          isArray: true,
+          url: urlBase + "/People/:id/workspaces",
+          method: "GET"
+        },
+
+        // INTERNAL. Use Person.workspaces.create() instead.
+        "::create::Person::workspaces": {
+          url: urlBase + "/People/:id/workspaces",
+          method: "POST"
+        },
+
+        // INTERNAL. Use Person.workspaces.createMany() instead.
+        "::createMany::Person::workspaces": {
+          isArray: true,
+          url: urlBase + "/People/:id/workspaces",
+          method: "POST"
+        },
+
+        // INTERNAL. Use Person.workspaces.destroyAll() instead.
+        "::delete::Person::workspaces": {
+          url: urlBase + "/People/:id/workspaces",
           method: "DELETE"
+        },
+
+        // INTERNAL. Use Person.workspaces.count() instead.
+        "::count::Person::workspaces": {
+          url: urlBase + "/People/:id/workspaces/count",
+          method: "GET"
+        },
+
+        // INTERNAL. Use Project.workspace() instead.
+        "::get::Project::workspace": {
+          url: urlBase + "/Projects/:id/workspace",
+          method: "GET"
         },
       }
     );

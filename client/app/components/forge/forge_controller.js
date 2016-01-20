@@ -8,13 +8,17 @@ forgeApp.controller('forgeController', [
   'atTextDialog',
   'Person',
   'Project',
+  'Workspace',
   'SourceFile',
   function($rootScope, $scope, $location, $mdDialog, atTextDialog, Person,
-           Project, SourceFile) {
+           Project, Workspace, SourceFile) {
     $scope.forgeVersion = window.FORGE_VERSION;
 
+    // These are just here to let me run shit in the Chrome dev console.
+    // TODO(athilenius): Remove this
     window.Person = Person;
     window.Project = Project;
+    window.Workspace = Workspace;
     window.SourceFile = SourceFile;
 
     // Global state object (not intended for serialization)
@@ -22,61 +26,22 @@ forgeApp.controller('forgeController', [
       viewingAsRole: 'student'
     };
 
-    /**
-     * @param {string} project
-     * @param {tjtowietj} metadata
-     * @return {number}
-     */
-    $scope.mergeFilesAndFileMeta = function(project, metadata) {
+    $scope.person = Person.getCurrent(function(person) {
+      $scope.state.viewingAsRole = person.role;
+    });
 
-    };
-
-    $scope.misuse = function() {
-      $scope.mergeFilesAndFileMeta($scope.mergeFilesAndFileMeta(42, 42), 42);
-    };
-
-    //$scope.person = Person.getCurrent(function(person) {
-      //$scope.state.viewingAsRole = person.role;
-      // Must wait till person is ready, need to create getModel() links
-      //Person.projects(
-          //{
-            //id: Person.getCurrentId(),
-            //filter: {include: {relation: 'sourceFiles'}}
-          //},
-          //function(projects) {
-            //var linkProjectMeta = function(projectMeta) {
-              //project = _(projects).findWhere({id: projectMeta.modelId});
-              //projectMeta.getModel = function() { return project; };
-              //// Link each file meta to it's model
-              //var linkFileMetaRecursive = function(items) {
-                //for (var i = 0; i < items.length; i++) {
-                  //var item = items[i];
-                  //if (item.children) {
-                    //// Directory Meta
-                    //linkFileMetaRecursive(item.children);
-                  //} else {
-                    //// File Meta
-                    //var file =
-                        //_(project.sourceFiles).findWhere({id: item.modelId});
-                    //item.getModel = function() { return file; };
-                  //}
-                //}
-              //};
-              //linkFileMetaRecursive(project.metadata.fileTree);
-            //};
-            //// Link metatdata in Person.metadata.project with Project models
-            //var project = null;
-            //for (var i = 0; i < person.metadata.projects.length; i++) {
-              //var projectMeta = person.metadata.projects[i];
-              //linkProjectMeta(projectMeta);
-            //}
-            //$scope.projects = person.metadata.projects;
-            //if (person.metadata.activeProject) {
-              //linkProjectMeta(person.metadata.activeProject);
-              //$scope.state.activeProject = person.metadata.activeProject;
-            //}
-          //});
-    //});
+    $scope.workspace = Person.workspaces({
+      id: Person.getCurrentId(),
+      filter: {
+        include: {
+          relation: 'projects',
+          scope: {include: {relation: 'sourceFiles'}}
+        }
+      }
+    })
+                           .$promise.then(function(workspaces) {
+                             $scope.workspace = workspaces[0];
+                           });
 
     // Used by children to control project
     $scope.addProject = function() {
@@ -84,19 +49,16 @@ forgeApp.controller('forgeController', [
         title: 'Project Name',
         content: 'New Project Name',
         done: function(val) {
-          Person.projects.create({id: Person.getCurrentId()},
-                                 {
-                                   name: val,
-                                   config: '',
-                                 },
-                                 function(project) {
-                                   $scope.projects.unshift({
-                                     modelId: project.id,
-                                     getModel: function() { return project; }
-                                   });
-                                   Person.prototype$updateAttributes(
-                                       {id: $scope.person.id}, $scope.person);
-                                 });
+          Workspace.projects.create(
+              {id: $scope.workspace.id},
+              {
+                name: val,
+                config: '',
+              },
+              function(project) {
+                // TODO(athilenius): Create MetaData here?
+                $scope.workspace.projects.unshift(project);
+              });
         }
       });
     };
@@ -110,10 +72,8 @@ forgeApp.controller('forgeController', [
                          .ok('Delete Permanently')
                          .cancel('Cancel'))
           .then(function() {
-            Project.deleteById({id: project.modelId});
+            Project.deleteById({id: project.id});
             $scope.projects = _($scope.projects).without(project);
-            Person.prototype$updateAttributes({id: $scope.person.id},
-                                              $scope.person);
           });
     };
 
@@ -127,10 +87,11 @@ forgeApp.controller('forgeController', [
             Project.sourceFiles.create({id: project.id}, {}, function(file) {
               itemMeta.modelId = file.id;
               itemMeta.getModel = function() { return file; };
-              toChildList.unshift(itemMeta);
-              project.$save();
             });
           }
+          toChildList.unshift(itemMeta);
+          Project.prototype$updateAttributes({id: project.id},
+                                             {metadata: project.metadata});
         }
       });
     };
@@ -142,9 +103,14 @@ forgeApp.controller('forgeController', [
         placeholder: itemMeta.name,
         done: function(val) {
           itemMeta.name = val;
-          project.$save();
+          Project.prototype$updateAttributes({id: project.id},
+                                             {metadata: project.metadata});
         }
       });
+    };
+
+    $scope.saveProject = function(project) {
+      Project.prototype$updateAttributes({id: project.id}, project);
     };
 
     $scope.removeItemFromProject = function(project, fromChildList, index) {
@@ -169,7 +135,8 @@ forgeApp.controller('forgeController', [
               // TODO(athilenius): Mark all child files deleted
             }
             fromChildList.splice(index, 1);
-            project.$save();
+            Project.prototype$updateAttributes({id: project.id},
+                                               {metadata: project.metadata});
           });
     };
 
