@@ -1,27 +1,27 @@
 .login-backdrop {
-  background-color: rgba(41, 41, 41, 1);
-  display: table;
-  height: 100%;
-  position: absolute;
-  width: 100%;
+    background-color: rgba(41, 41, 41, 1);
+    display: table;
+    height: 100%;
+    position: absolute;
+    width: 100%;
 }
 
 .login-middle-align {
-  display: table-cell;
-  vertical-align: middle;
+    display: table-cell;
+    vertical-align: middle;
 }
 
 .login-window {
-  color: white;
-  margin-left: auto;
-  margin-right: auto;
-  width: 400px;
+    color: white;
+    margin-left: auto;
+    margin-right: auto;
+    width: 400px;
 }
 
 .login-button {
-  width: 100px;
+    width: 100px;
 }
 
 .create-button {
-  margin-top: 8px;
+    margin-top: 8px;
 }

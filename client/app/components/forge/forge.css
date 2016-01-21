@@ -1,45 +1,45 @@
 .error-overlay {
-  clear: both;
-  float: left;
-  left: 50%;
-  margin: 10px 0;
-  position: relative;
-  text-align: left;
-  z-index: 5000;
+    clear: both;
+    float: left;
+    left: 50%;
+    margin: 10px 0;
+    position: relative;
+    text-align: left;
+    z-index: 5000;
 }
 
 .error-label {
-  border: 1px solid;
-  height: 30;
-  left: -50%;
-  margin-top: 26px;
-  padding-left: 10px;
-  padding-right: 10px;
-  position: relative;
-  text-align: left;
+    border: 1px solid;
+    height: 30;
+    left: -50%;
+    margin-top: 26px;
+    padding-left: 10px;
+    padding-right: 10px;
+    position: relative;
+    text-align: left;
 }
 
 .at-navbar {
-  height: 25px;
+    height: 25px;
 }
 
 .sidebar {
-  width: 250px;
+    width: 250px;
 }
 
 .greyscale {
-  -webkit-filter: grayscale(100%);
-  filter: grayscale(100%);
+    -webkit-filter: grayscale(100%);
+    filter: grayscale(100%);
 }
 
 .editor-footer {
-  background-color: rgba(32, 32, 32, 1);
-  border: 1px solid black;
-  box-shadow: inset 1px 1px 0px 0px rgba(48, 48, 48, 1);
-  color: grey;
-  font-size: 12px;
-  height: 24px;
-  padding-left: 5px;
-  padding-right: 5px;
-  padding-top: 4px;
+    background-color: rgba(32, 32, 32, 1);
+    border: 1px solid black;
+    box-shadow: inset 1px 1px 0px 0px rgba(48, 48, 48, 1);
+    color: grey;
+    font-size: 12px;
+    height: 24px;
+    padding-left: 5px;
+    padding-right: 5px;
+    padding-top: 4px;
 }

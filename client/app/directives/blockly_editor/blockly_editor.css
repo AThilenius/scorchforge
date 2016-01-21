@@ -1,22 +1,22 @@
 .blocklySvg {
-  background-color: #141414 !important;
+    background-color: #141414 !important;
 }
 
 .blocklyMainBackground {
-  stroke: transparent !important;
+    stroke: transparent !important;
 }
 
 .blocklyFlyoutBackground {
-  fill: #232323 !important;
-  fill-opacity: 1 !important;
+    fill: #232323 !important;
+    fill-opacity: 1 !important;
 }
 
 .blocklyToolboxDiv {
-  background-color: #202020 !important;
-  color: white !important;
-  border-right: 1px solid black;
+    background-color: #202020 !important;
+    color: white !important;
+    border-right: 1px solid black;
 }
 
 .blocklyTreeLabel {
-  font-size: 12px !important;
+    font-size: 12px !important;
 }

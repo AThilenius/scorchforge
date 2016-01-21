@@ -3,20 +3,20 @@
 
 angular.module('thilenius.navbar', [])
     .directive('atNavbar', [
-      '$rootScope',
-      '$location',
-      'Person',
-      function($rootScope, $location, Person) {
-        return {
-          templateUrl: 'app/directives/navbar/navbar.htm',
-          link: function($scope, iElement, iAttrs) {
+        '$rootScope',
+        '$location',
+        'Person',
+        function ($rootScope, $location, Person) {
+            return {
+                templateUrl: 'app/directives/navbar/navbar.htm',
+                link: function ($scope, iElement, iAttrs) {
 
-            $scope.logout = function() {
-              Person.logout();
-              $location.path('/login');
+                    $scope.logout = function () {
+                        Person.logout();
+                        $location.path('/login');
+                    };
+
+                }
             };
-
-          }
-        };
-      }
+        }
     ]);
