@@ -41,5 +41,15 @@
 </head>
 <body class="{{$root.bodyClass ? $root.bodyClass : 'default-body'}}">
 <div ui-view></div>
+
+<script type="text/ng-template" id="my-messages.html">
+    <formly-transclude></formly-transclude>
+    <div class="my-messages" ng-messages="fc.$error" ng-if="options.formControl.$touched">
+        <div class="some-message" ng-message="{{::name}}" ng-repeat="(name, message) in ::options.validation.messages">
+            {{message(fc.$viewValue, fc.$modelValue, this)}}
+        </div>
+    </div>
+</script>
+
 </body>
 </html>

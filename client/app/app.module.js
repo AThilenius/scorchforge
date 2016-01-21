@@ -5,6 +5,7 @@ var app = angular.module('app', [
     'ngAnimate',
     'ngCookies',
     'ngMaterial',
+    'ngMessages',
     'dndLists',
     'ui.ace',
     'ui.router',
@@ -13,7 +14,9 @@ var app = angular.module('app', [
     'xeditable',
     'thilenius.navbar',
     'thilenius.sidebar',
-    'thilenius.content_window'
+    'thilenius.content_window',
+    'formly',
+    'formlyBootstrap'
 ]);
 
 app.run([
@@ -48,3 +51,27 @@ app.config([
         ]);
     }
 ]);
+
+app.run(function (formlyConfig, formlyValidationMessages, formlyApiCheck) {
+    formlyConfig.setWrapper({
+        name: 'validation',
+        types: ['input', 'customInput'],
+        templateUrl: 'my-messages.html'
+    });
+
+    formlyValidationMessages.addStringMessage('required', 'This field is required');
+    formlyValidationMessages.addStringMessage('email', 'Email is invalid');
+    formlyValidationMessages.addStringMessage('minlength', 'Too short');
+
+    formlyConfig.setType({
+        name: 'customInput',
+        extends: 'input',
+        apiCheck: function (check) {
+            return {
+                templateOptions: {
+                    foo: check.string.optional
+                }
+            };
+        }
+    });
+});

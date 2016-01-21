@@ -25,11 +25,3 @@
 .create-button {
     margin-top: 8px;
 }
-
-.ng-dirty.ng-invalid {
-    border-top-color: red;
-}
-
-.ng-dirty.ng-valid {
-    border-top-color: green;
-}
