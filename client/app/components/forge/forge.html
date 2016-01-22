@@ -1,31 +1,31 @@
 <div ng-show="displayError" class="error-overlay">
-    <div class="error-label red-d1">{{ displayError }}</div>
+  <div class="error-label red-d1">{{ displayError  }}</div>
 </div>
 
 <div class="v-flex-wrapper">
 
-    <div class="at-navbar flex-header">
-        <div at-navbar></div>
-    </div>
+  <div class="at-navbar flex-header">
+    <div at-navbar></div>
+  </div>
 
-    <div class="flex-body">
-        <div class="h-flex-wrapper">
+  <div class="flex-body">
+    <div class="h-flex-wrapper">
 
-            <div class="sidebar flex-header tone-d4">
-                <div at-sidebar></div>
-            </div>
+      <div class="sidebar flex-header tone-d4">
+        <div at-sidebar></div>
+      </div>
 
-            <div class="flex-body">
-                <div ng-show="activeSidebarTab != 'anvil'"
-                     control="contentWindowControl" at-content-window></div>
-                <div ng-show="activeSidebarTab == 'anvil'">Stub</div>
-            </div>
-        </div>
+      <div class="flex-body">
+        <div ng-show="activeSidebarTab != 'anvil'"
+             control="contentWindowControl" at-content-window></div>
+        <div ng-show="activeSidebarTab == 'anvil'">Stub</div>
+      </div>
     </div>
-    <div class="flex-footer editor-footer">
-        <div style="float:left;">ScorchForge.com &copy; Alec Thilenius 2015 All rights reserved</div>
-        <div style="float:right;">
-            Build {{ forgeVersion }}
-        </div>
+  </div>
+  <div class="flex-footer editor-footer">
+    <div style="float:left;">ScorchForge.com &copy; Alec Thilenius 2015 All rights reserved</div>
+    <div style="float:right;">
+      Build {{ forgeVersion }}
     </div>
+  </div>
 </div>

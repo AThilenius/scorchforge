@@ -1,22 +1,22 @@
 <div class="createUser-backdrop">
-    <div class="createUser-middle-align">
-        <div class="createUser-window">
+  <div class="createUser-middle-align">
+    <div class="createUser-window">
 
-            <div ng-show="error" class="alert alert-danger" role="alert">
+      <div ng-show="error" class="alert alert-danger" role="alert">
         <span class="glyphicon glyphicon-exclamation-sign"
-              aria-hidden="true"></span>
-                <span class="sr-only">Error:</span>
-                {{error}}
-            </div>
+          aria-hidden="true"></span>
+        <span class="sr-only">Error:</span>
+        {{error}}
+      </div>
 
             <form novalidate ng-submit="onSubmit()">
                 <h2 class="text-center">Create ScorchForge Account</h2>
                 <formly-form model="credentials" fields="credentialsFields" form="credentialsForm">
                     <button type="submit" class="btn btn-primary" ng-disabled="credentialsForm.$invalid">Submit</button>
                 </formly-form>
-            </form>
+      </form>
 
             <pre>{{$scope.credentials | json}}</pre>
-        </div>
     </div>
+  </div>
 </div>

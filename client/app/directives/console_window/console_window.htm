@@ -1,29 +1,29 @@
 <div class="v-flex-wrapper">
-    <div class="flex-header console-header noselect">
-        <div ng-click="show=!show;"
-             style="border-bottom-left-radius: 0px;"
-             class="btn close-button">
+  <div class="flex-header console-header noselect">
+      <div ng-click="show=!show;"
+        style="border-bottom-left-radius: 0px;"
+        class="btn close-button">
         <span class="glyphicon" aria-hidden="true"
-              ng-class="'glyphicon-chevron-' + (!show ? 'up' : 'down')">
+          ng-class="'glyphicon-chevron-' + (!show ? 'up' : 'down')">
         </span>
-        </div>
-    </div>
-    <div class="console flex-body">
-        <div class="console fill-flex-box">
-            <div id="consoleScroller" class="scroll-vertical" ng-show="show">
-                <div ng-repeat="line in content track by $index">
-                    <div class="toggle-region-text noselect" ng-show="line.toggleRegion"
-                         ng-click="line.toggleRegion.show = !line.toggleRegion.show">
+      </div>
+  </div>
+  <div class="console flex-body">
+    <div class="console fill-flex-box">
+      <div id="consoleScroller" class="scroll-vertical" ng-show="show">
+        <div ng-repeat="line in content track by $index">
+          <div class="toggle-region-text noselect" ng-show="line.toggleRegion"
+               ng-click="line.toggleRegion.show = !line.toggleRegion.show">
             <span class="glyphicon" aria-hidden="true"
-                  ng-class="'glyphicon-collapse-' + (line.toggleRegion.show ? 'up' : 'down')">
+              ng-class="'glyphicon-collapse-' + (line.toggleRegion.show ? 'up' : 'down')">
             </span>
-                        Region: {{line.toggleRegion.name}} - {{line.toggleRegion.lines}} lines
-                    </div>
-                    <div class="console-line"
-                         ng-show="!line.toggleRegion && (!line.region || line.region.show)"
-                         ng-bind-html="line.html"></div>
-                </div>
-            </div>
+            Region: {{line.toggleRegion.name}} - {{line.toggleRegion.lines}} lines
+          </div>
+          <div class="console-line"
+               ng-show="!line.toggleRegion && (!line.region || line.region.show)"
+               ng-bind-html="line.html"></div>
         </div>
+      </div>
     </div>
+  </div>
 </div>

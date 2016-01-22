@@ -54,248 +54,224 @@ client/build/_bower.js:38873: WARNING - Suspicious code. Is there a missing '+' 
 "use strict";angular.module("ui.ace",[]).constant("uiAceConfig",{}).directive("uiAce",["uiAceConfig",function(a){if(angular.isUndefined(window.ace))throw new Error("ui-ace need ace to work... (o rly?)");var b=function(a,b,c){if(angular.isDefined(c.workerPath)){var d=window.ace.require("ace/config");d.set("workerPath",c.workerPath)}angular.isDefined(c.require)&&c.require.forEach(function(a){window.ace.require(a)}),angular.isDefined(c.showGutter)&&a.renderer.setShowGutter(c.showGutter),angular.isDefined(c.useWrapMode)&&b.setUseWrapMode(c.useWrapMode),angular.isDefined(c.showInvisibles)&&a.renderer.setShowInvisibles(c.showInvisibles),angular.isDefined(c.showIndentGuides)&&a.renderer.setDisplayIndentGuides(c.showIndentGuides),angular.isDefined(c.useSoftTabs)&&b.setUseSoftTabs(c.useSoftTabs),angular.isDefined(c.showPrintMargin)&&a.setShowPrintMargin(c.showPrintMargin),angular.isDefined(c.disableSearch)&&c.disableSearch&&a.commands.addCommands([{name:"unfind",bindKey:{win:"Ctrl-F",mac:"Command-F"},exec:function(){return!1},readOnly:!0}]),angular.isString(c.theme)&&a.setTheme("ace/theme/"+c.theme),angular.isString(c.mode)&&b.setMode("ace/mode/"+c.mode),angular.isDefined(c.firstLineNumber)&&(angular.isNumber(c.firstLineNumber)?b.setOption("firstLineNumber",c.firstLineNumber):angular.isFunction(c.firstLineNumber)&&b.setOption("firstLineNumber",c.firstLineNumber()));var e,f;if(angular.isDefined(c.advanced))for(e in c.advanced)f={name:e,value:c.advanced[e]},a.setOption(f.name,f.value);if(angular.isDefined(c.rendererOptions))for(e in c.rendererOptions)f={name:e,value:c.rendererOptions[e]},a.renderer.setOption(f.name,f.value);angular.forEach(c.callbacks,function(b){angular.isFunction(b)&&b(a)})};return{restrict:"EA",require:"?ngModel",link:function(c,d,e,f){var g,h,i=a.ace||{},j=angular.extend({},i,c.$eval(e.uiAce)),k=window.ace.edit(d[0]),l=k.getSession(),m=function(){var a=arguments[0],b=Array.prototype.slice.call(arguments,1);angular.isDefined(a)&&c.$evalAsync(function(){if(!angular.isFunction(a))throw new Error("ui-ace use a function as callback.");a(b)})},n={onChange:function(a){return function(b){var d=l.getValue();!f||d===f.$viewValue||c.$$phase||c.$root.$$phase||c.$evalAsync(function(){f.$setViewValue(d)}),m(a,b,k)}},onBlur:function(a){return function(){m(a,k)}}};e.$observe("readonly",function(a){k.setReadOnly(!!a||""===a)}),f&&(f.$formatters.push(function(a){if(angular.isUndefined(a)||null===a)return"";if(angular.isObject(a)||angular.isArray(a))throw new Error("ui-ace cannot use an object or an array as a model");return a}),f.$render=function(){l.setValue(f.$viewValue)});var o=function(a,d){a!==d&&(j=angular.extend({},i,c.$eval(e.uiAce)),j.callbacks=[j.onLoad],j.onLoad!==i.onLoad&&j.callbacks.unshift(i.onLoad),l.removeListener("change",g),g=n.onChange(j.onChange),l.on("change",g),k.removeListener("blur",h),h=n.onBlur(j.onBlur),k.on("blur",h),b(k,l,j))};c.$watch(e.uiAce,o,!0),o(i),d.on("$destroy",function(){k.session.$stopWorker(),k.destroy()}),c.$watch(function(){return[d[0].offsetWidth,d[0].offsetHeight]},function(){k.resize(),k.renderer.updateFull()},!0)}}}]);
 ^
 
-client/build/_bower.js:55189: WARNING - Suspicious code. This code lacks side-effects. Is there a bug?
-	var apiCheck = (0, _apiCheck2['default'])({
-	                ^
-
-client/build/_bower.js:57598: WARNING - Suspicious code. This code lacks side-effects. Is there a bug?
-	    return (0, _otherUtils.contains)(key, '.') || (0, _otherUtils.contains)(key, '[') && (0, _otherUtils.contains)(key, ']');
-	            ^
-
-client/build/_bower.js:57598: WARNING - Suspicious code. This code lacks side-effects. Is there a bug?
-	    return (0, _otherUtils.contains)(key, '.') || (0, _otherUtils.contains)(key, '[') && (0, _otherUtils.contains)(key, ']');
-	                                                   ^
-
-client/build/_bower.js:57598: WARNING - Suspicious code. This code lacks side-effects. Is there a bug?
-	    return (0, _otherUtils.contains)(key, '.') || (0, _otherUtils.contains)(key, '[') && (0, _otherUtils.contains)(key, ']');
-	                                                                                          ^
-
-client/build/_bower.js:57654: WARNING - Suspicious code. The result of the 'pos' operator is not being used.
-+function ($) {
-^
-
-client/build/_bower.js:57671: WARNING - Suspicious code. The result of the 'pos' operator is not being used.
-+function ($) {
-^
-
-client/build/_bower.js:57731: WARNING - Suspicious code. The result of the 'pos' operator is not being used.
-+function ($) {
-^
-
-client/build/_bower.js:57826: WARNING - Suspicious code. The result of the 'pos' operator is not being used.
-+function ($) {
-^
-
-client/build/_bower.js:57947: WARNING - Suspicious code. The result of the 'pos' operator is not being used.
-+function ($) {
-^
-
-client/build/_bower.js:58084: WARNING - Suspicious code. The result of the 'getprop' operator is not being used.
-      $next[0].offsetWidth // force reflow
-      ^
-
-client/build/_bower.js:58185: WARNING - Suspicious code. The result of the 'pos' operator is not being used.
-+function ($) {
-^
-
-client/build/_bower.js:58280: WARNING - Suspicious code. The result of the 'getprop' operator is not being used.
-    this.$element[dimension](this.$element[dimension]())[0].offsetHeight
-    ^
-
-client/build/_bower.js:58397: WARNING - Suspicious code. The result of the 'pos' operator is not being used.
-+function ($) {
-^
-
-client/build/_bower.js:58563: WARNING - Suspicious code. The result of the 'pos' operator is not being used.
-+function ($) {
-^
-
-client/build/_bower.js:58642: WARNING - Suspicious code. This code lacks side-effects. Is there a bug?
-      if (transition) {
-      ^
-
-client/build/_bower.js:58643: WARNING - Suspicious code. The result of the 'getprop' operator is not being used.
-        that.$element[0].offsetWidth // force reflow
-        ^
-
-client/build/_bower.js:58758: WARNING - Suspicious code. This code lacks side-effects. Is there a bug?
-      if (doAnimate) this.$backdrop[0].offsetWidth // force reflow
-      ^
-
-client/build/_bower.js:58758: WARNING - Suspicious code. The result of the 'getprop' operator is not being used.
-      if (doAnimate) this.$backdrop[0].offsetWidth // force reflow
-                     ^
-
-client/build/_bower.js:58902: WARNING - Suspicious code. The result of the 'pos' operator is not being used.
-+function ($) {
-^
-
-client/build/_bower.js:59416: WARNING - Suspicious code. The result of the 'pos' operator is not being used.
-+function ($) {
-^
-
-client/build/_bower.js:59525: WARNING - Suspicious code. The result of the 'pos' operator is not being used.
-+function ($) {
-^
-
-client/build/_bower.js:59698: WARNING - Suspicious code. The result of the 'pos' operator is not being used.
-+function ($) {
-^
-
-client/build/_bower.js:59775: WARNING - Suspicious code. The result of the 'getprop' operator is not being used.
-        element[0].offsetWidth // reflow for transition
-        ^
-
-client/build/_bower.js:59854: WARNING - Suspicious code. The result of the 'pos' operator is not being used.
-+function ($) {
-^
-
-client/build/_bower.js:60525: WARNING - Suspicious code. This code lacks side-effects. Is there a bug?
-	  (0, _addons2['default'])(ngModule);
-	   ^
-
-client/build/_bower.js:60526: WARNING - Suspicious code. This code lacks side-effects. Is there a bug?
-	  (0, _description2['default'])(ngModule);
-	   ^
-
-client/build/_bower.js:60936: WARNING - Misplaced function annotation. This JSDoc is not attached to a function node. Are you missing parentheses?
+client/build/_bower.js:53960: WARNING - Misplaced function annotation. This JSDoc is not attached to a function node. Are you missing parentheses?
    .directive('ngMessages', ['$animate', function($animate) {
               ^
 
-client/build/_bower.js:61130: WARNING - Misplaced function annotation. This JSDoc is not attached to a function node. Are you missing parentheses?
+client/build/_bower.js:54154: WARNING - Misplaced function annotation. This JSDoc is not attached to a function node. Are you missing parentheses?
    .directive('ngMessagesInclude',
               ^
 
-client/build/_bower.js:61186: WARNING - Misplaced function annotation. This JSDoc is not attached to a function node. Are you missing parentheses?
+client/build/_bower.js:54210: WARNING - Misplaced function annotation. This JSDoc is not attached to a function node. Are you missing parentheses?
   .directive('ngMessage', ngMessageDirectiveFactory('AE'))
              ^
 
-client/build/_bower.js:61218: WARNING - Misplaced function annotation. This JSDoc is not attached to a function node. Are you missing parentheses?
+client/build/_bower.js:54242: WARNING - Misplaced function annotation. This JSDoc is not attached to a function node. Are you missing parentheses?
   .directive('ngMessageExp', ngMessageDirectiveFactory('A'));
              ^
 
-client/build/_bower.js:64948: WARNING - Misplaced function annotation. This JSDoc is not attached to a function node. Are you missing parentheses?
+client/build/_bower.js:57972: WARNING - Misplaced function annotation. This JSDoc is not attached to a function node. Are you missing parentheses?
   angular.module('material.core')
   ^
 
-client/build/_bower.js:64998: WARNING - Misplaced function annotation. This JSDoc is not attached to a function node. Are you missing parentheses?
+client/build/_bower.js:58022: WARNING - Misplaced function annotation. This JSDoc is not attached to a function node. Are you missing parentheses?
   angular.module('material.core')
   ^
 
-client/build/_bower.js:65037: WARNING - Misplaced function annotation. This JSDoc is not attached to a function node. Are you missing parentheses?
+client/build/_bower.js:58061: WARNING - Misplaced function annotation. This JSDoc is not attached to a function node. Are you missing parentheses?
   angular.module('material.core')
   ^
 
-client/build/_bower.js:65548: WARNING - Misplaced function annotation. This JSDoc is not attached to a function node. Are you missing parentheses?
+client/build/_bower.js:58572: WARNING - Misplaced function annotation. This JSDoc is not attached to a function node. Are you missing parentheses?
   angular.module('material.core')
   ^
 
-client/build/_bower.js:80514: WARNING - Parse error. String continuations are not recommended. See https://google-styleguide.googlecode.com/svn/trunk/javascriptguide.xml#Multiline_string_literals
+client/build/_bower.js:73538: WARNING - Parse error. String continuations are not recommended. See https://google-styleguide.googlecode.com/svn/trunk/javascriptguide.xml#Multiline_string_literals
       return '\
              ^
 
-client/build/_bower.js:80519: WARNING - Parse error. String continuations are not recommended. See https://google-styleguide.googlecode.com/svn/trunk/javascriptguide.xml#Multiline_string_literals
+client/build/_bower.js:73543: WARNING - Parse error. String continuations are not recommended. See https://google-styleguide.googlecode.com/svn/trunk/javascriptguide.xml#Multiline_string_literals
           ' + getInputElement() + '\
                                   ^
 
-client/build/_bower.js:80521: WARNING - Parse error. String continuations are not recommended. See https://google-styleguide.googlecode.com/svn/trunk/javascriptguide.xml#Multiline_string_literals
+client/build/_bower.js:73545: WARNING - Parse error. String continuations are not recommended. See https://google-styleguide.googlecode.com/svn/trunk/javascriptguide.xml#Multiline_string_literals
               class="' + (attr.mdFloatingLabel ? 'md-inline' : '') + '"\
                                                                      ^
 
-client/build/_bower.js:80541: WARNING - Parse error. String continuations are not recommended. See https://google-styleguide.googlecode.com/svn/trunk/javascriptguide.xml#Multiline_string_literals
+client/build/_bower.js:73565: WARNING - Parse error. String continuations are not recommended. See https://google-styleguide.googlecode.com/svn/trunk/javascriptguide.xml#Multiline_string_literals
                   ' + itemTemplate + '\
                                      ^
 
-client/build/_bower.js:80542: WARNING - Parse error. String continuations are not recommended. See https://google-styleguide.googlecode.com/svn/trunk/javascriptguide.xml#Multiline_string_literals
+client/build/_bower.js:73566: WARNING - Parse error. String continuations are not recommended. See https://google-styleguide.googlecode.com/svn/trunk/javascriptguide.xml#Multiline_string_literals
                   </li>' + noItemsTemplate + '\
                                              ^
 
-client/build/_bower.js:80564: WARNING - Parse error. String continuations are not recommended. See https://google-styleguide.googlecode.com/svn/trunk/javascriptguide.xml#Multiline_string_literals
+client/build/_bower.js:73588: WARNING - Parse error. String continuations are not recommended. See https://google-styleguide.googlecode.com/svn/trunk/javascriptguide.xml#Multiline_string_literals
             ? '<li ng-if="$mdAutocompleteCtrl.notFoundVisible()"\
               ^
 
-client/build/_bower.js:80572: WARNING - Parse error. String continuations are not recommended. See https://google-styleguide.googlecode.com/svn/trunk/javascriptguide.xml#Multiline_string_literals
+client/build/_bower.js:73596: WARNING - Parse error. String continuations are not recommended. See https://google-styleguide.googlecode.com/svn/trunk/javascriptguide.xml#Multiline_string_literals
           return '\
                  ^
 
-client/build/_bower.js:80576: WARNING - Parse error. String continuations are not recommended. See https://google-styleguide.googlecode.com/svn/trunk/javascriptguide.xml#Multiline_string_literals
+client/build/_bower.js:73600: WARNING - Parse error. String continuations are not recommended. See https://google-styleguide.googlecode.com/svn/trunk/javascriptguide.xml#Multiline_string_literals
                   ' + (tabindex != null ? 'tabindex="' + tabindex + '"' : '') + '\
                                                                                 ^
 
-client/build/_bower.js:80594: WARNING - Parse error. String continuations are not recommended. See https://google-styleguide.googlecode.com/svn/trunk/javascriptguide.xml#Multiline_string_literals
+client/build/_bower.js:73618: WARNING - Parse error. String continuations are not recommended. See https://google-styleguide.googlecode.com/svn/trunk/javascriptguide.xml#Multiline_string_literals
               <div md-autocomplete-parent-scope md-autocomplete-replace>' + leftover + '</div>\
                                                                                        ^
 
-client/build/_bower.js:80597: WARNING - Parse error. String continuations are not recommended. See https://google-styleguide.googlecode.com/svn/trunk/javascriptguide.xml#Multiline_string_literals
+client/build/_bower.js:73621: WARNING - Parse error. String continuations are not recommended. See https://google-styleguide.googlecode.com/svn/trunk/javascriptguide.xml#Multiline_string_literals
           return '\
                  ^
 
-client/build/_bower.js:80599: WARNING - Parse error. String continuations are not recommended. See https://google-styleguide.googlecode.com/svn/trunk/javascriptguide.xml#Multiline_string_literals
+client/build/_bower.js:73623: WARNING - Parse error. String continuations are not recommended. See https://google-styleguide.googlecode.com/svn/trunk/javascriptguide.xml#Multiline_string_literals
                 ' + (tabindex != null ? 'tabindex="' + tabindex + '"' : '') + '\
                                                                               ^
 
-client/build/_bower.js:80839: WARNING - Parse error. String continuations are not recommended. See https://google-styleguide.googlecode.com/svn/trunk/javascriptguide.xml#Multiline_string_literals
+client/build/_bower.js:73863: WARNING - Parse error. String continuations are not recommended. See https://google-styleguide.googlecode.com/svn/trunk/javascriptguide.xml#Multiline_string_literals
 var DELETE_HINT_TEMPLATE = '\
                            ^
 
-client/build/_bower.js:81574: WARNING - Parse error. String continuations are not recommended. See https://google-styleguide.googlecode.com/svn/trunk/javascriptguide.xml#Multiline_string_literals
+client/build/_bower.js:74598: WARNING - Parse error. String continuations are not recommended. See https://google-styleguide.googlecode.com/svn/trunk/javascriptguide.xml#Multiline_string_literals
   var MD_CHIPS_TEMPLATE = '\
                           ^
 
-client/build/_bower.js:81598: WARNING - Parse error. String continuations are not recommended. See https://google-styleguide.googlecode.com/svn/trunk/javascriptguide.xml#Multiline_string_literals
+client/build/_bower.js:74622: WARNING - Parse error. String continuations are not recommended. See https://google-styleguide.googlecode.com/svn/trunk/javascriptguide.xml#Multiline_string_literals
   var CHIP_INPUT_TEMPLATE = '\
                             ^
 
-client/build/_bower.js:81609: WARNING - Parse error. String continuations are not recommended. See https://google-styleguide.googlecode.com/svn/trunk/javascriptguide.xml#Multiline_string_literals
+client/build/_bower.js:74633: WARNING - Parse error. String continuations are not recommended. See https://google-styleguide.googlecode.com/svn/trunk/javascriptguide.xml#Multiline_string_literals
   var CHIP_DEFAULT_TEMPLATE = '\
                               ^
 
-client/build/_bower.js:81612: WARNING - Parse error. String continuations are not recommended. See https://google-styleguide.googlecode.com/svn/trunk/javascriptguide.xml#Multiline_string_literals
+client/build/_bower.js:74636: WARNING - Parse error. String continuations are not recommended. See https://google-styleguide.googlecode.com/svn/trunk/javascriptguide.xml#Multiline_string_literals
   var CHIP_REMOVE_TEMPLATE = '\
                              ^
 
-client/build/_bower.js:81902: WARNING - Parse error. String continuations are not recommended. See https://google-styleguide.googlecode.com/svn/trunk/javascriptguide.xml#Multiline_string_literals
+client/build/_bower.js:74926: WARNING - Parse error. String continuations are not recommended. See https://google-styleguide.googlecode.com/svn/trunk/javascriptguide.xml#Multiline_string_literals
 var MD_CONTACT_CHIPS_TEMPLATE = '\
                                 ^
 
-client/build/_bower.js:83157: WARNING - Misplaced function annotation. This JSDoc is not attached to a function node. Are you missing parentheses?
+client/build/_bower.js:76181: WARNING - Misplaced function annotation. This JSDoc is not attached to a function node. Are you missing parentheses?
 angular
 ^
 
-client/build/_bower.js:83557: WARNING - unreachable code
+client/build/_bower.js:76581: WARNING - unreachable code
         opts.menuContentEl[0].addEventListener('click', captureClickListener, true);
         ^
 
-client/build/_bower.js:84392: WARNING - Misplaced function annotation. This JSDoc is not attached to a function node. Are you missing parentheses?
+client/build/_bower.js:77416: WARNING - Misplaced function annotation. This JSDoc is not attached to a function node. Are you missing parentheses?
 angular
 ^
 
-client/build/_bower.js:85379: WARNING - Misplaced function annotation. This JSDoc is not attached to a function node. Are you missing parentheses?
+client/build/_bower.js:78403: WARNING - Misplaced function annotation. This JSDoc is not attached to a function node. Are you missing parentheses?
 angular
 ^
 
-client/build/_bower.js:85901: WARNING - Misplaced function annotation. This JSDoc is not attached to a function node. Are you missing parentheses?
+client/build/_bower.js:78925: WARNING - Misplaced function annotation. This JSDoc is not attached to a function node. Are you missing parentheses?
 angular.module('ngResource', ['ng']).
 ^
 
-client/build/_bower.js:89461: WARNING - Misplaced function annotation. This JSDoc is not attached to a function node. Are you missing parentheses?
+client/build/_bower.js:82485: WARNING - Misplaced function annotation. This JSDoc is not attached to a function node. Are you missing parentheses?
         if ($rootScope.$broadcast('$stateChangeStart', to.self, toParams, from.self, fromParams).defaultPrevented) {
         ^
 
-client/build/_bower.js:89543: WARNING - Misplaced function annotation. This JSDoc is not attached to a function node. Are you missing parentheses?
+client/build/_bower.js:82567: WARNING - Misplaced function annotation. This JSDoc is not attached to a function node. Are you missing parentheses?
           $rootScope.$broadcast('$stateChangeSuccess', to.self, toParams, from.self, fromParams);
           ^
 
-client/build/_bower.js:89910: WARNING - Misplaced function annotation. This JSDoc is not attached to a function node. Are you missing parentheses?
+client/build/_bower.js:82934: WARNING - Misplaced function annotation. This JSDoc is not attached to a function node. Are you missing parentheses?
           $rootScope.$broadcast('$viewContentLoading', options);
           ^
 
-client/build/_bower.js:90216: WARNING - Misplaced function annotation. This JSDoc is not attached to a function node. Are you missing parentheses?
+client/build/_bower.js:83240: WARNING - Misplaced function annotation. This JSDoc is not attached to a function node. Are you missing parentheses?
           currentScope.$emit('$viewContentLoaded');
           ^
 
-client/build/_bower.js:95086: WARNING - Suspicious code. The result of the 'not' operator is not being used.
+client/build/_bower.js:85865: WARNING - Suspicious code. The result of the 'pos' operator is not being used.
++function ($) {
+^
+
+client/build/_bower.js:85882: WARNING - Suspicious code. The result of the 'pos' operator is not being used.
++function ($) {
+^
+
+client/build/_bower.js:85942: WARNING - Suspicious code. The result of the 'pos' operator is not being used.
++function ($) {
+^
+
+client/build/_bower.js:86037: WARNING - Suspicious code. The result of the 'pos' operator is not being used.
++function ($) {
+^
+
+client/build/_bower.js:86158: WARNING - Suspicious code. The result of the 'pos' operator is not being used.
++function ($) {
+^
+
+client/build/_bower.js:86295: WARNING - Suspicious code. The result of the 'getprop' operator is not being used.
+      $next[0].offsetWidth // force reflow
+      ^
+
+client/build/_bower.js:86396: WARNING - Suspicious code. The result of the 'pos' operator is not being used.
++function ($) {
+^
+
+client/build/_bower.js:86491: WARNING - Suspicious code. The result of the 'getprop' operator is not being used.
+    this.$element[dimension](this.$element[dimension]())[0].offsetHeight
+    ^
+
+client/build/_bower.js:86608: WARNING - Suspicious code. The result of the 'pos' operator is not being used.
++function ($) {
+^
+
+client/build/_bower.js:86774: WARNING - Suspicious code. The result of the 'pos' operator is not being used.
++function ($) {
+^
+
+client/build/_bower.js:86853: WARNING - Suspicious code. This code lacks side-effects. Is there a bug?
+      if (transition) {
+      ^
+
+client/build/_bower.js:86854: WARNING - Suspicious code. The result of the 'getprop' operator is not being used.
+        that.$element[0].offsetWidth // force reflow
+        ^
+
+client/build/_bower.js:86969: WARNING - Suspicious code. This code lacks side-effects. Is there a bug?
+      if (doAnimate) this.$backdrop[0].offsetWidth // force reflow
+      ^
+
+client/build/_bower.js:86969: WARNING - Suspicious code. The result of the 'getprop' operator is not being used.
+      if (doAnimate) this.$backdrop[0].offsetWidth // force reflow
+                     ^
+
+client/build/_bower.js:87113: WARNING - Suspicious code. The result of the 'pos' operator is not being used.
++function ($) {
+^
+
+client/build/_bower.js:87627: WARNING - Suspicious code. The result of the 'pos' operator is not being used.
++function ($) {
+^
+
+client/build/_bower.js:87736: WARNING - Suspicious code. The result of the 'pos' operator is not being used.
++function ($) {
+^
+
+client/build/_bower.js:87909: WARNING - Suspicious code. The result of the 'pos' operator is not being used.
++function ($) {
+^
+
+client/build/_bower.js:87986: WARNING - Suspicious code. The result of the 'getprop' operator is not being used.
+        element[0].offsetWidth // reflow for transition
+        ^
+
+client/build/_bower.js:88065: WARNING - Suspicious code. The result of the 'pos' operator is not being used.
++function ($) {
+^
+
+client/build/_bower.js:90474: WARNING - Suspicious code. The result of the 'not' operator is not being used.
 !function(e){if("object"==typeof exports&&"undefined"!=typeof module)module.exports=e();else if("function"==typeof define&&define.amd)define([],e);else{var f;"undefined"!=typeof window?f=window:"undefined"!=typeof global?f=global:"undefined"!=typeof self&&(f=self),f.JSZip=e()}}(function(){var define,module,exports;return (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);throw new Error("Cannot find module '"+o+"'")}var f=n[o]={exports:{}};t[o][0].call(f.exports,function(e){var n=t[o][1][e];return s(n?n:e)},f,f.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(_dereq_,module,exports){
 ^
 
-0 error(s), 75 warning(s)
+0 error(s), 69 warning(s)

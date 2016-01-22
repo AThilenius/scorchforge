@@ -21,9 +21,7 @@ var app = angular.module('app', [
 
 app.run([
   'editableOptions',
-  function(editableOptions) {
-    editableOptions.theme = 'bs3';
-  }
+  function(editableOptions) { editableOptions.theme = 'bs3'; }
 ]);
 
 app.config([
