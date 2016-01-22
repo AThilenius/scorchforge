@@ -21,3 +21,4 @@ vendor
 bower_components
 **/build
 test_output.js
+dump
