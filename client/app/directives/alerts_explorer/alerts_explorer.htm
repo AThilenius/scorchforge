@@ -1,11 +1,11 @@
 <div class="fill-flex-box scroll-vertical">
-    <div class="alert-backdrop" ng-show="alerts.length === 0">
-        No Alerts
-    </div>
-    <div ng-repeat="alert in alerts">
-        <div class="noselect alert-plate"
-             ng-click="jumpToAlert(alert)">
-            <div class="alert-header">
+  <div class="alert-backdrop" ng-show="alerts.length === 0">
+    No Alerts
+  </div>
+  <div ng-repeat="alert in alerts">
+    <div class="noselect alert-plate"
+      ng-click="jumpToAlert(alert)">
+      <div class="alert-header">
         <span class="glyphicon glyphicon-exclamation-sign"
               style="color: #CC0000;"
               ng-show="alert.type === 'error'"
@@ -18,11 +18,11 @@
               style="color: #0035FF;"
               ng-show="alert.type === 'info'"
               aria-hidden="true"></span>
-                {{alert.file}} - line {{alert.row}}
-            </div>
-            <div class="alert-body">
-                {{alert.text}}
-            </div>
-        </div>
+        {{alert.file}} - line {{alert.row}}
+      </div>
+      <div class="alert-body">
+        {{alert.text}}
+      </div>
     </div>
+  </div>
 </div>

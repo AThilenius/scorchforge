@@ -1,150 +1,150 @@
 <div>
 
-    <button ng-click="resetSettings()" class="btn btn-danger revert-button"
-            style="margin-bottom: 10px;">
-        Restore Defaults
-    </button>
+<button ng-click="resetSettings()" class="btn btn-danger revert-button"
+        style="margin-bottom: 10px;">
+  Restore Defaults
+</button>
 
-    <table style="font-size: 12px; margin-left: 10px; margin-right: 10px;"
-           class="controls">
+<table style="font-size: 12px; margin-left: 10px; margin-right: 10px;"
+       class="controls">
+  <tbody>
+  <tr>
+    <td><label for="theme">Theme</label></td>
+    <td>
+      <select id="theme" size="1" ng-model="settings.theme">
+        <optgroup label="Bright">
+          <option value="ace/theme/chrome">Chrome</option>
+          <option value="ace/theme/clouds">Clouds</option>
+          <option value="ace/theme/crimson_editor">Crimson Editor</option>
+          <option value="ace/theme/dawn">Dawn</option>
+          <option value="ace/theme/dreamweaver">Dreamweaver</option>
+          <option value="ace/theme/eclipse">Eclipse</option>
+          <option value="ace/theme/github">GitHub</option>
+          <option value="ace/theme/iplastic">IPlastic</option>
+          <option value="ace/theme/solarized_light">Solarized Light</option>
+          <option value="ace/theme/textmate">TextMate</option>
+          <option value="ace/theme/tomorrow">Tomorrow</option>
+          <option value="ace/theme/xcode">XCode</option>
+          <option value="ace/theme/kuroir">Kuroir</option>
+          <option value="ace/theme/katzenmilch">KatzenMilch</option>
+          <option value="ace/theme/sqlserver">SQL Server</option>
+        </optgroup>
+        <optgroup label="Dark">
+          <option value="ace/theme/ambiance">Ambiance</option>
+          <option value="ace/theme/chaos">Chaos</option>
+          <option value="ace/theme/clouds_midnight">Clouds Midnight</option>
+          <option value="ace/theme/cobalt">Cobalt</option>
+          <option value="ace/theme/idle_fingers">idle Fingers</option>
+          <option value="ace/theme/kr_theme">krTheme</option>
+          <option value="ace/theme/merbivore">Merbivore</option>
+          <option value="ace/theme/merbivore_soft">Merbivore Soft</option>
+          <option value="ace/theme/mono_industrial">Mono Industrial</option>
+          <option value="ace/theme/monokai">Monokai</option>
+          <option value="ace/theme/pastel_on_dark">Pastel on dark</option>
+          <option value="ace/theme/solarized_dark">Solarized Dark</option>
+          <option value="ace/theme/terminal">Terminal</option>
+          <option value="ace/theme/tomorrow_night">Tomorrow Night</option>
+          <option value="ace/theme/tomorrow_night_blue">Tomorrow Night Blue</option>
+          <option value="ace/theme/tomorrow_night_bright">Tomorrow Night Bright</option>
+          <option value="ace/theme/tomorrow_night_eighties">Tomorrow Night 80s</option>
+          <option value="ace/theme/twilight">Twilight</option>
+          <option value="ace/theme/vibrant_ink">Vibrant Ink</option>
+        </optgroup>
+      </select>
+    </td>
+  </tr>
+  <tr>
+    <td><label for="fontsize">Font Size</label></td>
+    <td>
+      <select id="fontsize" size="1" ng-model="settings.fontSize">
+        <option value="6px">6px</option>
+        <option value="7px">7px</option>
+        <option value="8px">8px</option>
+        <option value="9px">9px</option>
+        <option value="10px">10px</option>
+        <option value="11px">11px</option>
+        <option value="12px">12px</option>
+        <option value="13px">13px</option>
+        <option value="14px">14px</option>
+        <option value="16px">16px</option>
+        <option value="18px">18px</option>
+        <option value="20px">20px</option>
+        <option value="24px">24px</option>
+      </select>
+    </td>
+  </tr>
+
+  <tr>
+    <td><label for="keybinding">Binding</label></td>
+    <td>
+      <select id="keybinding" size="1" ng-model="settings.keyBinding">
+        <option value="ace">Default</option>
+        <option value="vim">Vim</option>
+        <option value="emacs">Emacs</option>
+      </select>
+    </td>
+  </tr>
+
+  <tr>
+    <td colspan="2">
+      <table id="more-controls">
         <tbody>
         <tr>
-            <td><label for="theme">Theme</label></td>
-            <td>
-                <select id="theme" size="1" ng-model="settings.theme">
-                    <optgroup label="Bright">
-                        <option value="ace/theme/chrome">Chrome</option>
-                        <option value="ace/theme/clouds">Clouds</option>
-                        <option value="ace/theme/crimson_editor">Crimson Editor</option>
-                        <option value="ace/theme/dawn">Dawn</option>
-                        <option value="ace/theme/dreamweaver">Dreamweaver</option>
-                        <option value="ace/theme/eclipse">Eclipse</option>
-                        <option value="ace/theme/github">GitHub</option>
-                        <option value="ace/theme/iplastic">IPlastic</option>
-                        <option value="ace/theme/solarized_light">Solarized Light</option>
-                        <option value="ace/theme/textmate">TextMate</option>
-                        <option value="ace/theme/tomorrow">Tomorrow</option>
-                        <option value="ace/theme/xcode">XCode</option>
-                        <option value="ace/theme/kuroir">Kuroir</option>
-                        <option value="ace/theme/katzenmilch">KatzenMilch</option>
-                        <option value="ace/theme/sqlserver">SQL Server</option>
-                    </optgroup>
-                    <optgroup label="Dark">
-                        <option value="ace/theme/ambiance">Ambiance</option>
-                        <option value="ace/theme/chaos">Chaos</option>
-                        <option value="ace/theme/clouds_midnight">Clouds Midnight</option>
-                        <option value="ace/theme/cobalt">Cobalt</option>
-                        <option value="ace/theme/idle_fingers">idle Fingers</option>
-                        <option value="ace/theme/kr_theme">krTheme</option>
-                        <option value="ace/theme/merbivore">Merbivore</option>
-                        <option value="ace/theme/merbivore_soft">Merbivore Soft</option>
-                        <option value="ace/theme/mono_industrial">Mono Industrial</option>
-                        <option value="ace/theme/monokai">Monokai</option>
-                        <option value="ace/theme/pastel_on_dark">Pastel on dark</option>
-                        <option value="ace/theme/solarized_dark">Solarized Dark</option>
-                        <option value="ace/theme/terminal">Terminal</option>
-                        <option value="ace/theme/tomorrow_night">Tomorrow Night</option>
-                        <option value="ace/theme/tomorrow_night_blue">Tomorrow Night Blue</option>
-                        <option value="ace/theme/tomorrow_night_bright">Tomorrow Night Bright</option>
-                        <option value="ace/theme/tomorrow_night_eighties">Tomorrow Night 80s</option>
-                        <option value="ace/theme/twilight">Twilight</option>
-                        <option value="ace/theme/vibrant_ink">Vibrant Ink</option>
-                    </optgroup>
-                </select>
-            </td>
+          <td><label for="select_style">Full Line Selection</label></td>
+          <td><input type="checkbox" name="select_style" id="select_style"
+                      ng-model="settings.fullLineSelection"></td>
         </tr>
         <tr>
-            <td><label for="fontsize">Font Size</label></td>
-            <td>
-                <select id="fontsize" size="1" ng-model="settings.fontSize">
-                    <option value="6px">6px</option>
-                    <option value="7px">7px</option>
-                    <option value="8px">8px</option>
-                    <option value="9px">9px</option>
-                    <option value="10px">10px</option>
-                    <option value="11px">11px</option>
-                    <option value="12px">12px</option>
-                    <option value="13px">13px</option>
-                    <option value="14px">14px</option>
-                    <option value="16px">16px</option>
-                    <option value="18px">18px</option>
-                    <option value="20px">20px</option>
-                    <option value="24px">24px</option>
-                </select>
-            </td>
+          <td><label for="highlight_active">Highlight Active Line</label></td>
+          <td><input type="checkbox" name="highlight_active"
+                     id="highlight_active"
+                     ng-model="settings.highlightActiveLine"></td>
         </tr>
-
         <tr>
-            <td><label for="keybinding">Binding</label></td>
-            <td>
-                <select id="keybinding" size="1" ng-model="settings.keyBinding">
-                    <option value="ace">Default</option>
-                    <option value="vim">Vim</option>
-                    <option value="emacs">Emacs</option>
-                </select>
-            </td>
+          <td><label for="show_hidden">Show Invisibles</label></td>
+          <td><input type="checkbox" name="show_hidden" id="show_hidden"
+                      ng-model="settings.showInvisibles"></td>
         </tr>
-
         <tr>
-            <td colspan="2">
-                <table id="more-controls">
-                    <tbody>
-                    <tr>
-                        <td><label for="select_style">Full Line Selection</label></td>
-                        <td><input type="checkbox" name="select_style" id="select_style"
-                                   ng-model="settings.fullLineSelection"></td>
-                    </tr>
-                    <tr>
-                        <td><label for="highlight_active">Highlight Active Line</label></td>
-                        <td><input type="checkbox" name="highlight_active"
-                                   id="highlight_active"
-                                   ng-model="settings.highlightActiveLine"></td>
-                    </tr>
-                    <tr>
-                        <td><label for="show_hidden">Show Invisibles</label></td>
-                        <td><input type="checkbox" name="show_hidden" id="show_hidden"
-                                   ng-model="settings.showInvisibles"></td>
-                    </tr>
-                    <tr>
-                        <td><label for="display_indent_guides">Show Indent Guides</label></td>
-                        <td>
-                            <input type="checkbox" name="display_indent_guides"
-                                   id="display_indent_guides"
-                                   ng-model="settings.displayIndentGuides">
-                        </td>
-                    </tr>
-                    <tr>
-                        <td><label for="show_gutter">Show Gutter</label></td>
-                        <td><input type="checkbox" id="show_gutter"
-                                   ng-model="settings.showGutter"></td>
-                    </tr>
-                    <tr>
-                        <td><label for="show_print_margin">Show Print Margin</label></td>
-                        <td><input type="checkbox" id="show_print_margin"
-                                   ng-model="settings.showPrintMargin"></td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <label for="highlight_selected_word">Highlight selected word</label>
-                        </td>
-                        <td><input type="checkbox" id="highlight_selected_word"
-                                   ng-model="settings.highlightSelectedWord"></td>
-                    </tr>
-                    <tr>
-                        <td><label for="fade_fold_widgets">Fade Fold Widgets</label></td>
-                        <td><input type="checkbox" id="fade_fold_widgets"
-                                   ng-model="settings.fadeFoldWidgets"></td>
-                    </tr>
-                    <tr>
-                        <td><label for="scrollPastEnd">Scroll Past End</label></td>
-                        <td><input type="checkbox" id="scrollPastEnd"
-                                   ng-model="settings.scrollPastEnd"></td>
-                    </tr>
-                    </tbody>
-                </table>
-            </td>
+          <td><label for="display_indent_guides">Show Indent Guides</label></td>
+          <td>
+            <input type="checkbox" name="display_indent_guides"
+                   id="display_indent_guides"
+                   ng-model="settings.displayIndentGuides">
+          </td>
+        </tr>
+        <tr>
+          <td><label for="show_gutter">Show Gutter</label></td>
+          <td><input type="checkbox" id="show_gutter"
+                     ng-model="settings.showGutter"></td>
+        </tr>
+        <tr>
+          <td><label for="show_print_margin">Show Print Margin</label></td>
+          <td><input type="checkbox" id="show_print_margin"
+                     ng-model="settings.showPrintMargin"></td>
+        </tr>
+        <tr>
+          <td>
+            <label for="highlight_selected_word">Highlight selected word</label>
+          </td>
+          <td><input type="checkbox" id="highlight_selected_word"
+                     ng-model="settings.highlightSelectedWord"></td>
+        </tr>
+        <tr>
+          <td><label for="fade_fold_widgets">Fade Fold Widgets</label></td>
+          <td><input type="checkbox" id="fade_fold_widgets"
+                     ng-model="settings.fadeFoldWidgets"></td>
+        </tr>
+        <tr>
+          <td><label for="scrollPastEnd">Scroll Past End</label></td>
+          <td><input type="checkbox" id="scrollPastEnd"
+                     ng-model="settings.scrollPastEnd"></td>
         </tr>
         </tbody>
-    </table>
+      </table>
+    </td>
+  </tr>
+  </tbody>
+</table>
 
 </div>

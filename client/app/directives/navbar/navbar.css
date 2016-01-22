@@ -2,46 +2,45 @@
 }
 
 .at-teacher-navbar {
-    background: #690000;
-    border-bottom: 1px solid black;
-    border-right: 1px solid black;
-    padding-left: 4px;
-    padding-right: 4px;
+  background: #690000;
+  border-bottom: 1px solid black;
+  border-right: 1px solid black;
+  padding-left: 4px;
+  padding-right: 4px;
 }
-
 .at-navbar-item {
-    height: 24px;
-    background-color: transparent;
-    border: none;
-    padding-left: 4px;
-    padding-right: 4px;
+  height: 24px;
+  background-color: transparent;
+  border: none;
+  padding-left: 4px;
+  padding-right: 4px;
 }
 
 .at-navbar-item:hover {
-    padding-left: 3px;
-    padding-right: 3px;
-    border-left: 1px solid white;
-    border-right: 1px solid white;
+  padding-left: 3px;
+  padding-right: 3px;
+  border-left: 1px solid white;
+  border-right: 1px solid white;
 }
 
 .at-navbar-item:focus {
-    padding-left: 3px;
-    padding-right: 3px;
-    outline: 0;
-    color: white;
-    border-left: 1px solid white;
-    border-right: 1px solid white;
+  padding-left: 3px;
+  padding-right: 3px;
+  outline: 0;
+  color: white;
+  border-left: 1px solid white;
+  border-right: 1px solid white;
 }
 
 .dropdown-menu {
-    background-color: rgba(32, 32, 32, 1);
-    font-size: 12px;
-    border: 1px solid lightgrey;
-    margin-left: 1px;
-    margin-right: 1px;
+  background-color: rgba(32, 32, 32, 1);
+  font-size: 12px;
+  border: 1px solid lightgrey;
+  margin-left: 1px;
+  margin-right: 1px;
 }
 
-.dropdown-menu > li > a {
-    color: rgba(200, 200, 200, 1);
-    padding: 0px 10px;
+.dropdown-menu>li>a {
+  color: rgba(200, 200, 200, 1);
+  padding: 0px 10px;
 }

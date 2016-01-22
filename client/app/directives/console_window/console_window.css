@@ -1,71 +1,71 @@
 .console-window {
-    border-top: 1px solid black;
-    box-shadow: inset 1px 1px 0px 0px rgba(48, 48, 48, 1);
+  border-top: 1px solid black;
+  box-shadow: inset 1px 1px 0px 0px rgba(48, 48, 48, 1);
 }
 
 .minimize-console {
-    height: 23px;
+  height: 23px;
 }
 
 .maximize-console {
-    height: 60%;
+  height: 60%;
 }
 
 .console-header {
-    background-color: rgba(41, 41, 41, 1);
-    border-bottom: 1px solid black;
-    box-shadow: inset 1px 1px 0px 0px rgba(48, 48, 48, 1);
-    color: white;
+  background-color: rgba(41, 41, 41, 1);
+  border-bottom: 1px solid black;
+  box-shadow: inset 1px 1px 0px 0px rgba(48, 48, 48, 1);
+  color: white;
 }
 
 .console {
-    background-color: rgba(25, 25, 25, 1);
+  background-color: rgba(25, 25, 25, 1);
 }
 
 .console-line {
-    line-height: 14px;
+  line-height: 14px;
 }
 
 .console-text {
-    color: white;
-    font-family: Monaco, Menlo, 'Ubuntu Mono', Consolas, source-code-pro, monospace;
-    font-size: 12px;
-    white-space: pre-wrap;
+  color: white;
+  font-family: Monaco, Menlo, 'Ubuntu Mono', Consolas, source-code-pro, monospace;
+  font-size: 12px;
+  white-space: pre-wrap;
 }
 
 .toggle-region-text {
-    background-color: rgba(15, 15, 15, 1);
-    color: darkgrey;
-    font-family: Monaco, Menlo, 'Ubuntu Mono', Consolas, source-code-pro, monospace;
-    font-size: 12px;
-    line-height: 20px;
+  background-color: rgba(15, 15, 15, 1);
+  color: darkgrey;
+  font-family: Monaco, Menlo, 'Ubuntu Mono', Consolas, source-code-pro, monospace;
+  font-size: 12px;
+  line-height: 20px;
 }
 
 .dark-tab {
-    color: rgba(200, 200, 200, 1);
-    width: 120px;
-    border-radius: 0px;
+  color: rgba(200, 200, 200, 1);
+  width: 120px;
+  border-radius: 0px;
 }
 
 .dark-tab:hover {
-    color: white;
+  color: white;
 }
 
 .dark-tab.active {
-    background-color: rgba(25, 25, 25, 1);
+  background-color: rgba(25, 25, 25, 1);
 }
 
 .close-button {
-    background-color: transparent;
-    color: rgba(200, 200, 200, 1);
-    border-radius: 0px;
-    padding-left: 10px;
-    padding-right: 10px;
-    height: 18px;
-    font-size: 12px;
-    padding-top: 2px;
+  background-color: transparent;
+  color: rgba(200, 200, 200, 1);
+  border-radius: 0px;
+  padding-left: 10px;
+  padding-right: 10px;
+  height: 18px;
+  font-size: 12px;
+  padding-top: 2px;
 }
 
 .close-button:hover {
-    color: white;
+  color: white;
 }
