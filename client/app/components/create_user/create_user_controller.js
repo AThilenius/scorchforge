@@ -7,6 +7,7 @@ angular.module('app').controller('createUserController', [
 
     $scope.credentials = {};
     $scope.confirmationModel = {};
+    $scope.error = {};
 
     $scope.credentialsFields = [
       {
@@ -77,9 +78,8 @@ angular.module('app').controller('createUserController', [
       Person.create($scope.credentials, function(result) {
         //$location.path('/club');
       }, function(error) {
-        $scope.error = 'Woops, something isn\'t right';
+        $scope.error = JSON.parse(error);
       });
-      alert(JSON.stringify($scope.credentials));
     };
   }
 ]);
