@@ -50,12 +50,7 @@ app.config([
   }
 ]);
 
-app.run(function(formlyConfig, formlyValidationMessages, formlyApiCheck) {
-  formlyConfig.setWrapper({
-    name: 'validation',
-    types: ['input', 'customInput'],
-    templateUrl: 'my-messages.html'
-  });
+app.run(function(formlyConfig, formlyValidationMessages) {
 
   formlyValidationMessages.addStringMessage('required', 'This field is required');
   formlyValidationMessages.addStringMessage('email', 'Email is invalid');
