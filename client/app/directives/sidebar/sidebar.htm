@@ -44,17 +44,17 @@
 </script>
 
 <script type="text/ng-template" id="fileTemplate">
-  <div class="file-plate{{ state.activeFileMeta == item ?
+  <div class="file-plate{{ state.activeFile == item ?
                            '-active bg-highlight-blue' : '' }}"
-        ng-dblclick="state.activeFileMeta = item"
-        style="{{ state.activeFileMeta == item ?
+        ng-dblclick="state.activeFile = item"
+        style="{{ state.activeFile == item ?
                   'margin-left: -' + ((depth * 18) + 10) + 'px;
                   padding-left: ' + ((depth * 18) + 10) + 'px;' : '' }}"
         context-menu="fileDropdown">
     <span class="glyphicon glyphicon-file" style="font-size: 0.8em;
       margin-right:2px;" aria-hidden="true">
     </span>
-    {{ item.name + ' - ' + item.getModel().id }}
+    {{ item.name }}
     <span class="glyphicon glyphicon-exclamation-sign pull-right alert-icon
                  small-font"
           ng-show="false" aria-hidden="true">
@@ -95,7 +95,7 @@
     </div>
     <div class="header-divider bg-25"></div>
     <div class="files-plate">
-      <div ng-repeat="list in [project.metadata.fileTree]"
+      <div ng-repeat="list in [project.metadata.SourceFile]"
            ng-include="'listTemplate'"
            ng-init="depth = 0">
       </div>

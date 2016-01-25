@@ -1,3 +1,6 @@
+// Copyright 2015 Alec Thilenius
+// All rights reserved.
+
 /*
  * Various helpers for Javascript strings
  */
@@ -18,4 +21,12 @@ String.prototype.toPascalCase = function() {
 
 String.prototype.capitalizeFirstLetter = function() {
   return this.charAt(0).toUpperCase() + this.slice(1);
+};
+
+var newGuid = newUuid = function() {
+  return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+    var r = Math.random() * 16 | 0;
+    var v = c == 'x' ? r : (r & 0x3 | 0x8);
+    return v.toString(16);
+  });
 };
