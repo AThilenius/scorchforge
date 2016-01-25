@@ -1,6 +1,8 @@
 // Copyright 2015 Alec Thilenius
 // All rights reserved.
 
+// NOTE!! If you change routes you also need to update /server/middleware,
+// line 25 and below
 angular.module('app').config([
   '$stateProvider',
   '$urlRouterProvider',

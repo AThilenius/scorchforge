@@ -23,9 +23,15 @@
     }
   },
   "files": {
-    "loopback#static": {
+    "loopback#static": [{
+      "name": "forge",
+      "paths": ["/forge", "/login", "/create_user"],
+      "params": "$!../client/index.html"
+    }, {
+      "name": "general",
+      "paths": ["/"],
       "params": "$!../client"
-    }
+    }]
   },
   "final": {
     "loopback#urlNotFound": {}
