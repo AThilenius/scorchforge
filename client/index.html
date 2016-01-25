@@ -4,8 +4,10 @@
 <head><title ng-bind="$root.title || 'Scorch'"></title>
     <link rel="shortcut icon" href="assets/flame-512.png"/>
     <link href="build/_bower.css" rel="stylesheet">
+
     <script src="build/compiled_libs.js"></script>
     <script>var FORGE_VERSION = "160120.18.5758";</script>
+
     <link rel="stylesheet" href="app/base/base.css"/>
     <link rel="stylesheet" href="app/base/colors.css"/>
     <link rel="stylesheet" href="app/base/fonts.css"/>
@@ -20,6 +22,7 @@
     <link rel="stylesheet" href="app/directives/history_explorer/history_explorer.css"/>
     <link rel="stylesheet" href="app/directives/navbar/navbar.css"/>
     <link rel="stylesheet" href="app/directives/settings_window/settings_window.css"/>
+
     <link rel="stylesheet" href="app/directives/sidebar/sidebar.css"/>
     <script src="app/app.module.js"></script>
     <script src="app/app.route.js"></script>
@@ -38,19 +41,10 @@
     <script src="app/directives/sidebar/sidebar.js"></script>
     <script src="app/factories/text_dialog/text_dialog.js"></script>
     <script src="app/services/meta_service.js"></script>
+
+    <base href="/">
 </head>
 <body class="{{$root.bodyClass ? $root.bodyClass : 'default-body'}}">
 <div ui-view></div>
-
-<script type="text/ng-template" id="my-messages.html">
-    <div class="col-xs-8">
-        <formly-transclude></formly-transclude>
-    </div>
-    <div class="my-messages col-xs-4" ng-messages="fc.$error" ng-if="options.formControl.$touched" ng-messages-multiple>
-        <div class="some-message" ng-message="{{::name}}" ng-repeat="(name, message) in ::options.validation.messages">
-            {{message(fc.$viewValue, fc.$modelValue, this)}}
-        </div>
-    </div>
-</script>
 </body>
 </html>
