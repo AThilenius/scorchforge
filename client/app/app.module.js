@@ -21,7 +21,9 @@ var app = angular.module('app', [
 
 app.run([
   'editableOptions',
-  function(editableOptions) { editableOptions.theme = 'bs3'; }
+  function(editableOptions) {
+    editableOptions.theme = 'bs3';
+  }
 ]);
 
 app.config([
@@ -51,7 +53,6 @@ app.config([
 ]);
 
 app.run(function(formlyConfig, formlyValidationMessages) {
-
   formlyValidationMessages.addStringMessage('required', 'This field is required');
   formlyValidationMessages.addStringMessage('email', 'Email is invalid');
   formlyValidationMessages.addStringMessage('minlength', 'Too short');
@@ -120,5 +121,10 @@ app.run(function(formlyConfig, formlyValidationMessages) {
         return foundItem;
       }
     }
+  });
+
+  formlyConfig.setWrapper({
+    name: 'customValidation',
+    templateUrl: 'my-messages.html'
   });
 });
