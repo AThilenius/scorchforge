@@ -2,12 +2,13 @@ angular.module('app').controller('createUserController', [
   '$location',
   '$rootScope',
   '$scope',
+  '$log',
   'Person',
-  function($location, $rootScope, $scope, Person) {
+  function($location, $rootScope, $scope, $log, Person) {
 
     $scope.credentials = {};
     $scope.confirmationModel = {};
-    $scope.error = {};
+    //$scope.error = {};
 
     $scope.credentialsFields = [
       {
@@ -50,6 +51,7 @@ angular.module('app').controller('createUserController', [
         templateOptions: {
           type: 'password',
           label: 'Password',
+          placeholder: 'Must be more than 5 characters',
           required: true,
           minlength: 5
         }
@@ -62,8 +64,7 @@ angular.module('app').controller('createUserController', [
         templateOptions: {
           type: 'password',
           label: 'Password Confirmation',
-          required: true,
-          minlength: 5
+          required: true
         },
         data: {
           fieldToMatch: 'password',
@@ -76,9 +77,15 @@ angular.module('app').controller('createUserController', [
       $scope.credentials.email =
           $scope.credentials.email.toLowerCase();
       Person.create($scope.credentials, function(result) {
-        //$location.path('/club');
+        $location.path('/login');
       }, function(error) {
-        $scope.error = JSON.parse(error);
+        var errorList = error.data.error.details.messages;
+        var errors = Object.keys(errorList);
+        $log.debug(errors);
+        $scope.error = '';
+        for (var key in errorList) {
+          $scope.error += errorList[key] + ';\n'; // TODO: Make the printing a little more clever
+        }
       });
     };
   }
