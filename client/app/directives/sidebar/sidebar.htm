@@ -46,7 +46,7 @@
 <script type="text/ng-template" id="fileTemplate">
   <div class="file-plate{{ state.activeFile == item ?
                            '-active bg-highlight-blue' : '' }}"
-        ng-dblclick="state.activeFile = item"
+        ng-dblclick="activateFile(item)"
         style="{{ state.activeFile == item ?
                   'margin-left: -' + ((depth * 18) + 10) + 'px;
                   padding-left: ' + ((depth * 18) + 10) + 'px;' : '' }}"
