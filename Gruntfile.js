@@ -80,18 +80,37 @@ module.exports = function(grunt) {
           summary_detail_level: 3
         }
       }
-    }
+    },
 
+    includeSource: {
+      options: {
+        basePath: 'client/',
+        baseUrl: '',
+        templates: {
+          html: {
+            js: '<script src="{filePath}"></script>',
+            css: '<link rel="stylesheet" type="text/css" href="{filePath}" />',
+          }
+        }
+      },
+      client: {
+        files: {
+          'client/index.html': 'client/index.html'
+        }
+      }
+    }
   });
 
   grunt.loadNpmTasks('grunt-bower-concat');
   grunt.loadNpmTasks('grunt-closure-compiler');
   grunt.loadNpmTasks('grunt-contrib-concat');
   grunt.loadNpmTasks('grunt-loopback-sdk-angular');
+  grunt.loadNpmTasks('grunt-include-source');
 
   grunt.registerTask('default', []);
 
   grunt.registerTask('build', [
+    'includeSource:client',
     'loopback_sdk_angular',
     'bower_concat',
     'closure-compiler:libs',
