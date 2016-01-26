@@ -58,18 +58,6 @@
     "dataSource": "db",
     "public": true
   },
-  "Diff": {
-    "dataSource": "transient",
-    "public": true
-  },
-  "Patch": {
-    "dataSource": "transient",
-    "public": true
-  },
-  "Commit": {
-    "dataSource": "transient",
-    "public": true
-  },
   "Class": {
     "dataSource": "db",
     "public": true

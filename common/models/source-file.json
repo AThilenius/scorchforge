@@ -10,20 +10,19 @@
     "state": {
       "type": "string",
       "default": "active"
+    },
+    "metadata": {
+      "type": "object"
+    },
+    "stagedCommit": {
+      "type": "object"
+    },
+    "commits": {
+      "type": "array"
     }
   },
   "validations": [],
   "relations": {
-    "commits": {
-      "type": "embedsMany",
-      "model": "Commit",
-      "property": "commits"
-    },
-    "stagedCommit": {
-      "type": "embedsOne",
-      "model": "Commit",
-      "property": "stagedCommit"
-    },
     "project": {
       "type": "belongsTo",
       "model": "Project",
