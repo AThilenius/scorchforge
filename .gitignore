@@ -22,4 +22,4 @@ bower_components
 build/
 test_output.js
 dump
-client/index.html
+#client/index.html
