@@ -18,6 +18,12 @@ angular.module('thilenius.sidebar', [])
           $scope.sidebarState = {};
           $scope.metastore = metastore;
 
+          $scope.activateFile = function(file) {
+            var ephemeral = metastore.ephemeral(file);
+            ephemeral.readOnly = false;
+            $scope.state.activeFile = file;
+          };
+
           // Dropdown Handlers, Dropwdown Definitions
           var addProject = function($itemScope) {
             $scope.addProject();

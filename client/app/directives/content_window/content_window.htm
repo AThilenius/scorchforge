@@ -1,19 +1,11 @@
 <div class="v-flex-wrapper">
   <div class="flex-body">
-    <div ng-show="!forgeState.selectedFile"
+    <div ng-show="!state.activeFile"
          class="editor-backdrop fill-flex-box">
     </div>
-    <div ng-show="forgeState.selectedFile" class="fill-flex-box">
-      <div ng-show="true" file="forgeState.selectedFile" at-ace-editor>
+    <div ng-show="state.activeFile" class="fill-flex-box">
+      <div at-ace-editor>
       </div>
-      <div ng-show="activeEditor === blocklyEditorControl"
-           control="blocklyEditorControl" at-blockly-editor>
-      </div>
-    </div>
-  </div>
-  <div class="flex-footer console-window"
-       ng-class="showConsole ? 'maximize-console' : 'minimize-console'">
-    <div contol="consoleWindowControl" show="showConsole" at-console-window>
     </div>
   </div>
 </div>
