@@ -1,11 +1,6 @@
-<div class="v-flex-wrapper">
-  <div class="flex-body">
-    <div ng-show="!state.activeFile"
-         class="editor-backdrop fill-flex-box">
-    </div>
-    <div ng-show="state.activeFile" class="fill-flex-box">
-      <div at-ace-editor>
-      </div>
-    </div>
-  </div>
+<div ng-show="!state.activeFile"
+     class="editor-backdrop fill">
+</div>
+<div ng-show="state.activeFile" class="fill">
+  <div at-ace-editor></div>
 </div>

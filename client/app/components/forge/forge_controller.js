@@ -3,6 +3,16 @@
 
 var forgeApp = angular.module('app');
 
+(function($) {
+  $.event.special.destroyed = {
+    remove: function(o) {
+      if (o.handler) {
+        o.handler();
+      }
+    }
+  };
+})(jQuery);
+
 /**
  * This is the high level controller for the Forge editor. It holds most of the
  * editors state and data, like workspace, projects, and so on.
@@ -12,15 +22,43 @@ forgeApp.controller('forgeController', [
   '$scope',
   '$location',
   '$mdDialog',
+  '$timeout',
+  '$compile',
   'atTextDialog',
   'metastore',
   'Person',
   'Project',
   'Workspace',
   'SourceFile',
-  function($rootScope, $scope, $location, $mdDialog, atTextDialog,
-    metastore, Person, Project, Workspace, SourceFile) {
+  'atRateLimiter',
+  function($rootScope, $scope, $location, $mdDialog, $timeout, $compile,
+    atTextDialog, metastore, Person, Project, Workspace, SourceFile,
+    atRateLimiter) {
     $scope.forgeVersion = window.FORGE_VERSION;
+
+    // TODO(athilenius): This is pretty fucking ugly and probably shouldn't be
+    // here.
+    var divDockManager = document.getElementById('my_dock_manager');
+    $scope.dockManager = new dockspawn.DockManager(divDockManager);
+    $scope.dockManager.initialize();
+    // Let the dock manager element fill in the entire screen
+    var onresized = function(e) {
+      $scope.dockManager.resize(window.innerWidth - (divDockManager.clientLeft +
+        divDockManager.offsetLeft), window.innerHeight - (
+        divDockManager.clientTop + divDockManager.offsetTop));
+    };
+    window.onresize = onresized;
+    onresized(null);
+    var project = new dockspawn.PanelContainer(document.getElementById(
+      'projectWindow'), $scope.dockManager);
+    var output = new dockspawn.PanelContainer(document.getElementById(
+      'outputWindow'), $scope.dockManager);
+    // Dock the panels on the dock manager
+    $scope.documentNode = $scope.dockManager.context.model.documentManagerNode;
+    $scope.projectNode = $scope.dockManager.dockLeft($scope.documentNode,
+      project, 0.3);
+    $scope.outputNode = $scope.dockManager.dockDown($scope.documentNode,
+      output, 0.3);
 
     // These are just here to let me run shit in the Chrome dev console.
     // TODO(athilenius): Remove this
@@ -28,6 +66,8 @@ forgeApp.controller('forgeController', [
     window.Project = Project;
     window.Workspace = Workspace;
     window.SourceFile = SourceFile;
+    window.rateLimiter = atRateLimiter;
+    window.docManager = $scope.dockManager;
 
     // Global state object (not intended for serialization)
     $scope.state = {
@@ -68,6 +108,38 @@ forgeApp.controller('forgeController', [
           });
       });
 
+    /**
+     * Opens a source file, creting a new DockSpawn DockNode for it and docking
+     * it directly to the parent container.
+     */
+    $scope.openFile = function(file) {
+      // If the file is already open, bring it to front
+      if (!file.links.ephemeral.dsData) {
+        var dsData = {};
+        dsData.domElement = angular.element(
+          '<div class="fill" at-ace-editor file="file.links.meta"></div>'
+        )[0];
+        angular.element(document.getElementsByTagName('body')).append(
+          dsData.domElement);
+        $compile(dsData.domElement)({
+          file: file.links.meta
+        });
+        dsData.panelContainer = new dockspawn.PanelContainer(dsData.domElement,
+          $scope.dockManager);
+        // Set panel attributes
+        dsData.panelContainer.setTitle(file.links.meta.name);
+        dsData.dockNode = $scope.dockManager.dockFill($scope.documentNode,
+          dsData.panelContainer);
+        file.links.ephemeral.dsData = dsData;
+        dsData.panelContainer.onClose = function(container) {
+          $timeout(function() {
+            console.log('closing');
+            file.links.ephemeral.dsData = undefined;
+          });
+        };
+      }
+    };
+
     // Used by children to control project
     $scope.addProject = function() {
       atTextDialog({
@@ -91,8 +163,8 @@ forgeApp.controller('forgeController', [
     $scope.removeProject = function(project) {
       $mdDialog.show($mdDialog.confirm()
           .title('Delete, are you sure?')
-          .textContent('Delete the project \"' + project.name +
-            '\"? This cannot be undone!')
+          .textContent('Delete the project \'' + project.name +
+            '\'? This cannot be undone!')
           .ariaLabel('Delete Conformation')
           .ok('Delete Permanently')
           .cancel('Cancel'))
@@ -115,16 +187,14 @@ forgeApp.controller('forgeController', [
             }, {}, function(file) {
               var itemMeta = metastore.linkMeta(project, file,
                 itemMetaSeed);
-              toChildList = toChildList || metastore.metaRoot(
-                itemMeta);
+              toChildList = toChildList || itemMeta.links.metaRoot;
               toChildList.unshift(itemMeta);
               metastore.saveMeta(itemMeta);
             });
           } else {
             var itemMeta = metastore.linkMeta(project, 'SourceFile',
               itemMetaSeed);
-            toChildList = toChildList || metastore.metaRoot(
-              itemMeta);
+            toChildList = toChildList || itemMeta.links.metaRoot;
             toChildList.unshift(itemMeta);
             metastore.saveMeta(itemMeta);
           }
@@ -133,13 +203,12 @@ forgeApp.controller('forgeController', [
     };
 
     $scope.renameItemInProject = function(project, obj) {
-      var itemMeta = metastore.meta(obj);
       atTextDialog({
         title: 'Rename',
-        content: 'Rename \"' + itemMeta.name + '\"...',
-        placeholder: itemMeta.name,
+        content: 'Rename \'' + obj.links.meta.name + '\'...',
+        placeholder: obj.links.meta.name,
         done: function(val) {
-          itemMeta.name = val;
+          obj.links.meta.name = val;
           metastore.saveMeta(obj);
         }
       });
@@ -153,8 +222,8 @@ forgeApp.controller('forgeController', [
 
     $scope.removeItemFromProject = function(project, fromChildList, index) {
       var item = fromChildList[index];
-      var content = 'Are you sute you want to delete \"' + item.name +
-        '\"?';
+      var content = 'Are you sute you want to delete \'' + item.name +
+        '\'?';
       var okay = 'Delete';
       if (item.type === 'directory' && item.children.length > 0) {
         content = 'Are you sute you want to delete ' + item.name +
