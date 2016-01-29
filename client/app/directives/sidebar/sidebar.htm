@@ -44,10 +44,10 @@
 </script>
 
 <script type="text/ng-template" id="fileTemplate">
-  <div class="file-plate{{ state.activeFile == item ?
+  <div class="file-plate{{ item.links.ephemeral.dsData ?
                            '-active bg-highlight-blue' : '' }}"
-        ng-dblclick="activateFile(item)"
-        style="{{ state.activeFile == item ?
+        ng-dblclick="openFile(item)"
+        style="{{ item.links.ephemeral.dsData ?
                   'margin-left: -' + ((depth * 18) + 10) + 'px;
                   padding-left: ' + ((depth * 18) + 10) + 'px;' : '' }}"
         context-menu="fileDropdown">
@@ -62,8 +62,8 @@
   </div>
 </script>
 
-<div class="sidebar fill-flex-box tone-cplate-out tone-text-primary"
-     context-menu="sidebarDropdown">
+<div class="fill tone-cplate-out tone-text-primary"
+  context-menu="sidebarDropdown">
 
   <!--Active Project-->
   <div ng-show="state.activeProject"

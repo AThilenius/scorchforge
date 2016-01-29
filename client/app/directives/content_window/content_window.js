@@ -16,7 +16,7 @@ angular.module('thilenius.content_window', [
       return {
         restrict: 'AE',
         templateUrl: 'app/directives/content_window/content_window.htm',
-        link: function($scope, iElement, iAttrs) {
+        link: function($scope, $element, $attr) {
           // Note that Ephemeral data can have: {
           //   textBuffer:string,
           //   readOnly:Boolean

@@ -8,21 +8,13 @@ angular.module('thilenius.sidebar', [])
     'Person',
     'Project',
     'SourceFile',
-    'metastore',
-    function($rootScope, $mdDialog, Person, Project, SourceFile, metastore) {
+    function($rootScope, $mdDialog, Person, Project, SourceFile) {
       return {
         restrict: 'AE',
         templateUrl: 'app/directives/sidebar/sidebar.htm',
         link: function($scope, iElement, iAttrs) {
 
           $scope.sidebarState = {};
-          $scope.metastore = metastore;
-
-          $scope.activateFile = function(file) {
-            var ephemeral = metastore.ephemeral(file);
-            ephemeral.readOnly = false;
-            $scope.state.activeFile = file;
-          };
 
           // Dropdown Handlers, Dropwdown Definitions
           var addProject = function($itemScope) {

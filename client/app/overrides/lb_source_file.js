@@ -12,8 +12,7 @@
 var app = angular.module('app');
 app.run([
   'SourceFile',
-  'metastore',
-  function(SourceFile, metastore) {
+  function(SourceFile) {
 
     /**
      * Creates an array of patches by diffing the from text to the to text
@@ -101,7 +100,7 @@ app.run([
      */
     SourceFile.prototype.checkout = function(timestamp) {
       // Always bring cache back to HEAD minus stage
-      var ephemeral = metastore.ephemeral(this);
+      var ephemeral = this.links.ephemeral;
       ephemeral.lcText = ephemeral.lcText || '';
       _.chain(this.commits).filter(function(commit) {
         return !ephemeral.lcTimestamp || new Date(commit.timestamp) >

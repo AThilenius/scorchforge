@@ -1,6 +1,8 @@
 // Copyright 2015 Alec Thilenius
 // All rights reserved.
 
+var app = angular.module('app');
+
 /**
  * At a high level, links metadata and ephemeral data with a hasMany model
  * relationship. Links are formed at load time using linkHasMany and lazily
@@ -10,11 +12,7 @@
  * Transitions can be made from one of [model/meta/ephemeral] to any of
  * [model/meta/ephemeral/metaRoot/parentModel] in O(1) time.
  */
-angular.module('app').service('metastore', function() {
-
-  // A multi-index dictionary for O(1) lookups of links from any indexed object
-  // objToLink:{obj:link, obj:link}
-  this.objToLink = {};
+app.service('metastore', function() {
 
   /**
    * Takes two forms, depending on the type of childModelOrChildModelName.
@@ -35,28 +33,26 @@ angular.module('app').service('metastore', function() {
     // Make sure metadata.<modelName> exists
     var metaRoot = parentModel.metadata[childModelName] = parentModel.metadata[
       childModelName] || [];
-    var uuid = meta.uuid || newUuid();
-    var uuidFn = function() {
-      return uuid;
-    };
-    // Generate the partial link
-    var link = {
-      uuid: uuid,
-      parentModel: parentModel,
-      metaRoot: metaRoot,
-      meta: meta,
-      ephemeral: {}
-    };
-    // Index by uuid
-    this.objToLink[link.uuid] = link;
-    // Set uuid in all indexed objects
-    link.meta.uuidFn = uuidFn;
-    link.ephemeral.uuidFn = uuidFn;
-    if (typeof(childModelOrChildModelName) !== 'string') {
+    var ephemeral = {};
+    if (typeof(childModelOrChildModelName) === 'string') {
+      // Generate the partial link
+      meta.links = ephemeral.links = {
+        parentModel: parentModel,
+        metaRoot: metaRoot,
+        meta: meta,
+        ephemeral: ephemeral
+      };
+    } else {
       // Link child model as well
       meta.modelId = childModelOrChildModelName.id;
-      link.model = childModelOrChildModelName;
-      childModelOrChildModelName.uuidFn = uuidFn;
+      // Generate a full link
+      meta.links = ephemeral.links = childModelOrChildModelName.links = {
+        model: childModelOrChildModelName,
+        parentModel: parentModel,
+        metaRoot: metaRoot,
+        meta: meta,
+        ephemeral: ephemeral
+      };
     }
     return meta;
   };
@@ -93,50 +89,10 @@ angular.module('app').service('metastore', function() {
   };
 
   /**
-   * Gets the metadata from one an indexed object.
-   */
-  this.meta = function(obj) {
-    var link = obj && obj.uuidFn ? this.objToLink[obj.uuidFn()] : null;
-    return link ? link.meta : null;
-  };
-
-  /**
-   * Gets the model from one an indexed object.
-   */
-  this.model = function(obj) {
-    var link = obj && obj.uuidFn ? this.objToLink[obj.uuidFn()] : null;
-    return link ? link.model : null;
-  };
-
-  /**
-   * Gets the ephemeral from one an indexed object.
-   */
-  this.ephemeral = function(obj) {
-    var link = obj && obj.uuidFn ? this.objToLink[obj.uuidFn()] : null;
-    return link ? link.ephemeral : null;
-  };
-
-  /**
-   * Gets the parent object (holding the metadata) from one an indexed object.
-   */
-  this.parent = function(obj) {
-    var link = obj && obj.uuidFn ? this.objToLink[obj.uuidFn()] : null;
-    return link ? link.parentModel : null;
-  };
-
-  /**
-   * Gets the root of the metadata object for this specific model
-   */
-  this.metaRoot = function(obj) {
-    var link = obj && obj.uuidFn ? this.objToLink[obj.uuidFn()] : null;
-    return link ? link.metaRoot : null;
-  };
-
-  /**
-   * Helper function for saving the parent model holding the metadata
+   * Helper function for saving the parent model holding the metadata.
    */
   this.saveMeta = function(obj) {
-    var parentModel = this.parent(obj);
+    var parentModel = obj.links.parentModel;
     if (parentModel) {
       parentModel.constructor.prototype$updateAttributes({
         id: parentModel.id
@@ -148,12 +104,16 @@ angular.module('app').service('metastore', function() {
 
   /**
    * Helper function for saving a child model of metadata. linkPlaceholder
-   * cannot be used with this as there is no backing child model.
+   * cannot be used with this as there is no backing child model. Strips links
+   * off first
    */
   this.saveModel = function(obj) {
-    var model = this.model(obj);
+    var model = obj.links.model;
     if (model) {
+      var links = model.links;
+      delete model.links;
       model.$save();
+      model.links = links;
     }
   };
 

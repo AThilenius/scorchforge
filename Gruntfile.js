@@ -14,7 +14,9 @@ module.exports = function(grunt) {
             'src-min-noconflict/ext-language_tools.js'
           ],
           'angular-ui-ace': 'ui-ace.min.js',
-          'bootstrap': ['dist/css/bootstrap.min.css', 'dist/js/bootstrap.js']
+          'bootstrap': ['dist/css/bootstrap.min.css',
+            'dist/js/bootstrap.js'
+          ]
         },
         dependencies: {
           'angular-ui-ace': ['angular', 'ace-builds'],
@@ -49,9 +51,9 @@ module.exports = function(grunt) {
         jsOutputFile: 'client/build/compiled_libs.js',
         maxBuffer: 5000,
         options: {
-          compilation_level: 'SIMPLE_OPTIMIZATIONS'
-          // debug: null,
-          // formatting: 'PRETTY_PRINT'
+          compilation_level: 'SIMPLE_OPTIMIZATIONS',
+          debug: null,
+          formatting: 'PRETTY_PRINT'
         }
       },
       app: {
@@ -60,8 +62,8 @@ module.exports = function(grunt) {
         maxBuffer: 5000,
         options: {
           compilation_level: 'SIMPLE_OPTIMIZATIONS'
-          // debug: null,
-          // formatting: 'PRETTY_PRINT'
+            // debug: null,
+            // formatting: 'PRETTY_PRINT'
         }
       },
       check: {
