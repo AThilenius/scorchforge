@@ -6,9 +6,12 @@
 }
 
 html body {
+  height: 100%
   font-family: Optima, Segoe, 'Segoe UI', Candara, Calibri, Arial, sans-serif;
-  overflow-x: hidden;
-  overflow-y: auto;
+}
+
+body {
+  overflow: hidden;
 }
 
 div {

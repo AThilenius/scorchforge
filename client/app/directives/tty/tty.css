@@ -1,0 +1,14 @@
+.terminal-background {
+  background: black;
+  overflow: hidden;
+}
+
+.terminal {
+  font-family: "DejaVu Sans Mono", "Liberation Mono", monospace;
+  font-size: 11px;
+  line-height: 1.2em;
+  color: rgb(240, 240, 240);
+  background: black !important;
+  padding: 3px;
+  border: none !important;
+}
