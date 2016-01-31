@@ -45,9 +45,10 @@ angular.module('thilenius.tty', [])
           };
 
           // TODO(athilenius): A service needs to manage this...
-          var socket = io.connect('http://192.168.59.103', {
-            path: '/sample/socket.io'
-          });
+          var socket = io.connect(location.protocol + '//' +
+            location.hostname, {
+              path: '/sample/socket.io'
+            });
 
           socket.on('connect', function() {
             var term = new Terminal({
