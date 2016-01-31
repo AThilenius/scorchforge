@@ -8,15 +8,15 @@ md-menu-bar md-menu > button:focus {
 }
 
 md-menu-bar button {
-  background-color: rgba(48, 48, 48, 1);
+  background: rgba(32, 32, 32, 1);
   height: 25px;
   color: rgb(240, 240, 240);
 }
 
 md-toolbar.md-default-theme.md-menu-toolbar,
 md-toolbar.md-menu-toolbar {
-  background-color: rgba(48, 48, 48, 1);
-  box-shadow: inset -1px -1px 0px 0px rgba(25, 25, 25, 1);
+  background: rgba(32, 32, 32, 1);
+  box-shadow: inset 1px 1px 0px 0px rgba(48, 48, 48, 1);
   color: rgba(255, 255, 255, 1.0);
 }
 
