@@ -1,15 +1,58 @@
-<div class="fill-flex-box tone-cplate-out tone-text-primary">
-    <button class="dropdown pull-right">
-    <a class="dropdown-toggle noselect" data-toggle="dropdown"
-      role="button" aria-haspopup="true" aria-expanded="false">
-      {{ activePerson.lastName.toPascalCase() }} <span class="caret"></span>
-    </a>
-    <ul class="dropdown-menu">
-      <li><a class="noselect">Placeholder</a></li>
-      <li><a class="noselect">Another Placeholder</a></li>
-      <li><a class="noselect">And Another</a></li>
-      <li role="separator" class="divider"></li>
-      <li><a class="noselect" ng-click="logout()">Logout</a></li>
-    </ul>
-    </button>
+<div ng-cloak="">
+  <md-toolbar class="md-menu-toolbar" style="min-height: 25px;">
+    <md-menu-bar>
+
+      <!--Forge-->
+      <md-menu>
+        <button ng-click="$mdOpenMenu()">
+          Forge
+        </button>
+        <md-menu-content>
+          <md-menu-divider></md-menu-divider>
+          <md-menu-item>
+            <md-button ng-click="logout()">
+              Logout
+            </md-button>
+          </md-menu-item>
+        </md-menu-content>
+      </md-menu>
+
+      <!--File-->
+      <md-menu>
+        <button ng-click="$mdOpenMenu()">
+          File
+        </button>
+        <md-menu-content>
+        </md-menu-content>
+      </md-menu>
+
+      <!--Edit-->
+      <md-menu>
+        <button ng-click="$mdOpenMenu()">
+          Edit
+        </button>
+        <md-menu-content>
+        </md-menu-content>
+      </md-menu>
+
+      <!--Project-->
+      <md-menu>
+        <button ng-click="$mdOpenMenu()">
+          Project
+        </button>
+        <md-menu-content>
+        </md-menu-content>
+      </md-menu>
+
+      <!--Window-->
+      <md-menu>
+        <button ng-click="$mdOpenMenu()">
+          Window
+        </button>
+        <md-menu-content>
+        </md-menu-content>
+      </md-menu>
+
+    </md-menu-bar>
+  </md-toolbar>
 </div>

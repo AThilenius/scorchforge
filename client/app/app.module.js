@@ -13,6 +13,7 @@ var app = angular.module('app', [
   'ui.bootstrap',
   'xeditable',
   'thilenius.navbar',
+  'thilenius.tty',
   'thilenius.sidebar',
   'thilenius.content_window',
   'formly',
@@ -53,7 +54,8 @@ app.config([
 ]);
 
 app.run(function(formlyConfig, formlyValidationMessages) {
-  formlyValidationMessages.addStringMessage('required', 'This field is required');
+  formlyValidationMessages.addStringMessage('required',
+    'This field is required');
   formlyValidationMessages.addStringMessage('email', 'Email is invalid');
   formlyValidationMessages.addStringMessage('minlength', 'Too short');
 
@@ -87,14 +89,18 @@ app.run(function(formlyConfig, formlyValidationMessages) {
           validateOnModelChange: true
         },
         expressionProperties: {
-          'templateOptions.disabled': function(viewValue, modelValue, scope) {
-            var matchField = find(scope.fields, 'key', options.data.fieldToMatch);
+          'templateOptions.disabled': function(viewValue, modelValue,
+            scope) {
+            var matchField = find(scope.fields, 'key', options.data
+              .fieldToMatch);
             if (!matchField) {
-              throw new Error('Could not find a field for the key ' + options.data.fieldToMatch);
+              throw new Error('Could not find a field for the key ' +
+                options.data.fieldToMatch);
             }
             var model = options.data.modelToMatch || scope.model;
             var originalValue = model[options.data.fieldToMatch];
-            var invalidOriginal = matchField.formControl && matchField.formControl.$invalid;
+            var invalidOriginal = matchField.formControl &&
+              matchField.formControl.$invalid;
             return !originalValue || invalidOriginal;
           }
         },
