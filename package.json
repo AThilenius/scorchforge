@@ -8,6 +8,7 @@
   "dependencies": {
     "compression": "^1.0.3",
     "cors": "^2.5.2",
+    "dockerode": "^2.2.9",
     "express": "^4.13.4",
     "http-proxy": "^1.13.0",
     "loopback": "^2.22.0",
@@ -17,9 +18,11 @@
     "loopback-datasource-juggler": "^2.39.0",
     "loopback-ds-timestamp-mixin": "~3.2.2",
     "pty.js": "^0.3.0",
+    "redis": "^2.4.2",
     "serve-favicon": "^2.0.1",
     "socket.io": "^1.4.5",
-    "term.js": "0.0.7"
+    "term.js": "0.0.7",
+    "underscore": "^1.8.3"
   },
   "devDependencies": {
     "grunt": "^0.4.5",
