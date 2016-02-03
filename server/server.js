@@ -1,11 +1,11 @@
+var _ = require('underscore');
+var billet = require('./billet.js');
 var boot = require('loopback-boot');
 var express = require('express');
 var http = require('http');
 var httpProxy = require('http-proxy');
 var io = require('socket.io');
 var loopback = require('loopback');
-var pty = require('pty.js');
-var terminal = require('term.js');
 var url = require('url');
 var util = require('util');
 
@@ -33,117 +33,60 @@ boot(app, __dirname, function(err) {
   }
   // start the server if `$ node server.js`
   if (require.main === module) {
-    app.start();
-  }
+    app.io = require('socket.io')(app.start());
 
-  //============================================================================
-  //==  Start of  sample Term.js stuff. It will be removed  ====================
-  //============================================================================
-  var socket;
-  var term;
-  var buff = [];
-  // create shell process
-  term = pty.fork(
-    process.env.SHELL || 'bash', [], {
-      name: require('fs').existsSync(
-          '/usr/share/terminfo/x/xterm-256color') ?
-        'xterm-256color' : 'xterm',
-      cols: 80,
-      rows: 24,
-      cwd: process.env.HOME
-    }
-  );
+    // Socket.IO for requesting a development environment
+    app.io.on('connection', function(socket) {
 
-  // store term's output into buffer or emit through socket
-  term.on('data', function(data) {
-    return !socket ? buff.push(data) : socket.emit('data', data);
-  });
+      // Authenticate new connections, and fire up a Billet session
+      socket.on('login', function(data, callback) {
+        var accessToken = data.accessToken;
+        if (!accessToken) {
+          return callback('Missing AccessToken');
+        }
+        // Check the token
+        app.models.AccessToken.findById(accessToken, function(err,
+          token) {
+          if (err || !token) {
+            return callback('Invalid AccessToken');
+          }
+          // Authorized, file up a Billet session
+          billet.createSession(accessToken, token.userId,
+            socket, 'athilenius/billet_session');
+        });
+      });
 
-  console.log(
-    'Created shell with pty master/slave pair (master: %d, pid: %d)',
-    term.fd,
-    term.pid);
-
-  var expressApp = express();
-  var server = http.createServer(expressApp);
-
-  // let term.js handle req/res
-  expressApp.use(terminal.middleware());
-
-  // let server listen on the port
-  server.listen(8080);
-
-  // let socket.io handle sockets
-  io = io.listen(server, {
-    log: false
-  });
-  //io.set('origins', '*');
-
-  io.sockets.on('connection', function(s) {
-    // when connect, store the socket
-    socket = s;
-
-    // handle incoming data (client -> server)
-    socket.on('data', function(data) {
-      term.write(data);
-    });
-
-    // handle connection lost
-    socket.on('disconnect', function() {
-      socket = null;
-    });
-
-    socket.on('resize', function(size) {
-      term.resize(size.cols + 1, size.rows + 1);
-      setTimeout(function() {
-        term.resize(size.cols, size.rows);
+      // console.log('User connected');
+      socket.on('disconnect', function() {
+        // console.log('user disconnected');
       });
     });
 
-    // send buffer data to client
-    while (buff.length) {
-      socket.emit('data', buff.shift());
-    };
-  });
-  //============================================================================
-  //==  End of  sample Term.js stuff. It will be removed  ======================
-  //============================================================================
-
-  // Put all of it behin a proxy on P80
-  var httpTarget = httpProxy.createProxy({
-    target: {
-      host: 'localhost',
-      port: 3000
-    }
-  });
-
-  var wsTarget = httpProxy.createProxy({
-    target: {
-      host: 'localhost',
-      port: 8080
-    },
-    ws: true
-  });
-
-  var proxyServer = http.createServer(function(req, res) {
-    if (req.url.indexOf('/sample') === 0) {
-      req.url = req.url.slice('/sample'.length);
-      wsTarget.web(req, res);
-    } else {
-      httpTarget.web(req, res);
-    }
-  });
-
-  // Listen to the `upgrade` event and proxy the WebSocket requests as well.
-  proxyServer.on('upgrade', function(req, socket, head) {
-    if (req.url.indexOf('/sample') === 0) {
-      req.url = req.url.slice('/sample'.length);
-      wsTarget.ws(req, socket, head);
-    } else {
-      httpTarget.ws(req, socket, head);
-    }
-  });
-
-  proxyServer.listen(80);
-
+  }
 });
+
+var loopbackTarget = httpProxy.createProxy({
+  target: {
+    host: 'localhost',
+    port: 3000
+  }
+});
+
+var proxyServer = http.createServer(function(req, res) {
+  if (!billet.proxyHttp(req, res)) {
+    loopbackTarget.web(req, res, function(err) {
+      console.log('Error while proxying to LoopBack: ', err);
+    });
+  }
+});
+
+// Listen to the `upgrade` event and proxy the WebSocket requests as well.
+proxyServer.on('upgrade', function(req, socket, head) {
+  if (!billet.proxyUpgrade(req, socket, head)) {
+    loopbackTarget.ws(req, socket, head, function(err) {
+      console.log('Error while proxying to LoopBack: ', err);
+    });
+  }
+});
+
+proxyServer.listen(80);

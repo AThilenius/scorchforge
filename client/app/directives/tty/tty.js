@@ -5,7 +5,8 @@ angular.module('thilenius.tty', [])
   .directive('atTty', [
     '$timeout',
     '$interval',
-    function($timeout, $interval) {
+    'billet',
+    function($timeout, $interval, billet) {
       return {
         restrict: 'AE',
         templateUrl: 'app/directives/tty/tty.htm',
@@ -18,6 +19,8 @@ angular.module('thilenius.tty', [])
             rows: 20
           };
           $scope.element = $element[0].children[0].children[0];
+          $scope.term = null;
+          $scope.termConnected = false;
 
           $scope.getNewRowColSize = function() {
             if (!$scope.canvas) {
@@ -44,48 +47,59 @@ angular.module('thilenius.tty', [])
             }
           };
 
-          // TODO(athilenius): A service needs to manage this...
-          var socket = io.connect(location.protocol + '//' +
-            location.hostname, {
-              path: '/sample/socket.io'
-            });
+          billet.onReady(function(socket) {
+            console.log('onReady called with socket: ', socket);
+            if (!$scope.term) {
+              $scope.termConnected = true;
+              var size = $scope.getNewRowColSize();
+              console.log('Creating Term');
+              $scope.term = new Terminal({
+                cols: size.cols,
+                rows: size.rows,
+                useStyle: true,
+                screenKeys: true
+              });
 
-          socket.on('connect', function() {
-            var term = new Terminal({
-              cols: 120,
-              rows: 20,
-              useStyle: true,
-              screenKeys: true
-            });
+              $scope.term.on('data', function(data) {
+                socket.emit('data', data);
+              });
 
-            term.on('data', function(data) {
-              socket.emit('data', data);
-            });
+              socket.on('data', function(data) {
+                $scope.term.write(data);
+              });
 
-            socket.on('data', function(data) {
-              term.write(data);
-            });
+              $scope.term.open($scope.element);
 
-            term.open($scope.element);
+              socket.on('disconnect', function() {
+                $scope.term.write(
+                  '\r\nLost connection to Billet, trying to reconnect...\r\n'
+                );
+                $scope.termConnected = false;
+              });
 
-            socket.on('disconnect', function() {
-              term.destroy();
-            });
+              // For displaying the first command line
+              socket.emit('data', '\n');
 
-            // For displaying the first command line
-            socket.emit('data', '\n');
-
-            // Resize handler
-            // TODO(athilenius): This is JANKY as FUCKKKKK. Ugly, ugly hack
-            $interval(function() {
-              var newSize = $scope.getNewRowColSize();
-              if (newSize) {
-                console.log('Resizing to ', newSize);
-                term.resize(newSize.cols, newSize.rows);
-                socket.emit('resize', newSize);
+              // Resize handler
+              // TODO(athilenius): This is JANKY as FUCKKKKK. Ugly, ugly hack
+              $interval(function() {
+                var newSize = $scope.getNewRowColSize();
+                if (newSize) {
+                  console.log('Resizing to ', newSize);
+                  $scope.term.resize(newSize.cols, newSize.rows);
+                  socket.emit('resize', newSize);
+                }
+              }, 500);
+            } else {
+              if (!$scope.termConnected) {
+                $scope.term.write('\r\nReconnected!\r\n');
+                $scope.termConnected = true;
+                socket.on('data', function(data) {
+                  $scope.term.write(data);
+                });
+                socket.emit('data', '\n');
               }
-            }, 500);
-
+            }
           });
 
         }
