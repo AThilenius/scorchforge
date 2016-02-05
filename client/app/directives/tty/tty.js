@@ -84,7 +84,6 @@ angular.module('thilenius.tty', [])
               $interval(function() {
                 var newSize = $scope.getNewRowColSize();
                 if (newSize) {
-                  console.log('Resizing to ', newSize);
                   $scope.term.resize(newSize.cols, newSize.rows);
                   socket.emit('resize', newSize);
                 }
