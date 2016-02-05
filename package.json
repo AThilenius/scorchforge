@@ -7,6 +7,7 @@
   },
   "dependencies": {
     "compression": "^1.0.3",
+    "core-js": "^2.0.3",
     "cors": "^2.5.2",
     "dockerode": "^2.2.9",
     "express": "^4.13.4",

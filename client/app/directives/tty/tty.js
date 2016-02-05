@@ -48,7 +48,6 @@ angular.module('thilenius.tty', [])
           };
 
           billet.onReady(function(socket) {
-            console.log('onReady called with socket: ', socket);
             if (!$scope.term) {
               $scope.termConnected = true;
               var size = $scope.getNewRowColSize();

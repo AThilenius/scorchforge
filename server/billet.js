@@ -220,6 +220,7 @@ exports.createSession = function(accessToken, userId, socket, dockerImage) {
   // Create Container
   emitStatusUpdate(0);
   docker.createContainer({
+    Cmd: ['/etc/billet/session_host/run.sh'],
     Image: dockerImage,
     name: 'billet-' + userId,
     ExposedPorts: {
@@ -275,15 +276,22 @@ var getUserIdFromUrl_ = function(url) {
   return null;
 };
 
-var proxy = function(req, proxyFn) {
+var proxy = function(req, proxyFn, res) {
   var userIdAndUrl = getUserIdFromUrl_(req.url);
   if (userIdAndUrl) {
     var session = userIdToSession_[userIdAndUrl.userId];
     if (session && !session.locked && session.proxyTarget) {
       req.url = userIdAndUrl.newUrl;
       proxyFn(session);
-      return true;
+    } else if (res) {
+      // Return 410 - Gone back to user
+      res.writeHead(410, {
+        'Content-Type': 'text/plain'
+      });
+      res.end('Given Billet Session does not exist or was closed.\n');
     }
+    // Never return /billet/* routes back to LoopBack even if they don't exist
+    return true;
   }
   return false;
 };
