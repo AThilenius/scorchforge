@@ -44,8 +44,8 @@
 </script>
 
 <script type="text/ng-template" id="fileTemplate">
-  <div class="file-plate{{ item.links.ephemeral.dsData ?
-                           '-active bg-highlight-blue' : '' }}"
+  <div class="file-plate{{ item.links.ephemeral.focused ?
+                           '-active bg-highlight-darkblue-grad' : '' }}"
         ng-dblclick="openFile(item)"
         style="{{ item.links.ephemeral.dsData ?
                   'margin-left: -' + ((depth * 18) + 10) + 'px;

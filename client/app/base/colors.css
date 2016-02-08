@@ -1,9 +1,16 @@
 .bg-25 {
-  background: rgba(25, 25, 25, 1);
+  background: rgb(25, 25, 25);
 }
 
 .bg-highlight-blue {
-  background-color: rgba(17, 108, 214, 1);
+  background-color: rgb(17, 108, 214);
+}
+
+.bg-highlight-darkblue-grad {
+  background: #01629e;
+  background: -moz-linear-gradient(top,  #01629e 0%, #014a75 100%);
+  background: -webkit-linear-gradient(top,  #01629e 0%,#014a75 100%);
+  background: linear-gradient(to bottom,  #01629e 0%,#014a75 100%);
 }
 
 .tone-cplate-out {

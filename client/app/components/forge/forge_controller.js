@@ -47,7 +47,7 @@ forgeApp.controller('forgeController', [
       $scope.dockManager.resize(
         window.innerWidth,
         // The offsetHeight is from the topbar, the 4 is from the nav-h-bar
-        window.innerHeight - (Math.max(divTopBar.offsetHeight, 28) + 4));
+        window.innerHeight - (Math.max(divTopBar.offsetHeight, 28)));
     };
     window.onresize = onresized;
     onresized(null);

@@ -1,13 +1,21 @@
+var Duplex = require('stream').Duplex;
+var WebSocketServer = require('ws').Server;
 var _ = require('underscore');
 var billet = require('./billet.js');
 var boot = require('loopback-boot');
-var express = require('express');
 var http = require('http');
 var httpProxy = require('http-proxy');
 var io = require('socket.io');
 var loopback = require('loopback');
-var url = require('url');
-var util = require('util');
+var sharejs = require('share');
+var livedb = require('livedb');
+var liveDbMongo = require('livedb-mongo');
+
+var db = liveDbMongo(
+  'mongodb://192.168.99.100:27017/scorch?auto_reconnect', {
+    safe: true
+  });
+var backend = livedb.client(db);
 
 // Setup LoopBack
 var app = module.exports = loopback();
@@ -33,9 +41,51 @@ boot(app, __dirname, function(err) {
   }
   // start the server if `$ node server.js`
   if (require.main === module) {
-    app.io = require('socket.io')(app.start());
+    var server = app.start();
 
-    // Socket.IO for requesting a development environment
+    //===  ShareJS  ============================================================
+
+    share = sharejs.server.createClient({
+      backend
+    });
+
+    wss = new WebSocketServer({
+      server
+    });
+
+    wss.on('connection', function(client) {
+      var stream = new Duplex({
+        objectMode: true
+      });
+      stream._write = function(chunk, encoding, callback) {
+        client.send(JSON.stringify(chunk));
+        return callback();
+      };
+      stream._read = function() {};
+      stream.headers = client.upgradeReq.headers;
+      stream.remoteAddress = client.upgradeReq.connection.remoteAddress;
+      client.on('message', function(data) {
+        return stream.push(JSON.parse(data));
+      });
+      stream.on('error', function(msg) {
+        return client.close(msg);
+      });
+      client.on('close', function(reason) {
+        stream.push(null);
+        stream.emit('close');
+        return client.close(reason);
+      });
+      stream.on('end', function() {
+        return client.close();
+      });
+      return share.listen(stream);
+    });
+
+    //===  ShareJS  ============================================================
+
+    app.io = require('socket.io')(server);
+
+    // For requesting a development environment
     app.io.on('connection', function(socket) {
 
       // Authenticate new connections, and fire up a Billet session
@@ -56,7 +106,6 @@ boot(app, __dirname, function(err) {
         });
       });
 
-      // console.log('User connected');
       socket.on('disconnect', function() {
         // console.log('user disconnected');
       });
