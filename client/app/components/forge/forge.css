@@ -27,14 +27,7 @@
 
 .at-navbar {
   display: inline-block;
-  width: 80%;
-}
-
-.at-iconbar {
-  display: inline-block;
-  float: right;
-  vertical-align: top;
-  margin-right: 20px;
+  width: 100%;
 }
 
 .greyscale {
@@ -57,4 +50,8 @@
 .nav-h-bar {
   height: 4px;
   width: 100%;
+}
+
+.panel-titlebar-text {
+  font-weight: normal !important;
 }

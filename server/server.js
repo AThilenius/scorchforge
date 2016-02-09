@@ -124,7 +124,6 @@ var loopbackTarget = httpProxy.createProxy({
 var proxyServer = http.createServer(function(req, res) {
   if (!billet.proxyHttp(req, res)) {
     loopbackTarget.web(req, res, function(err) {
-      console.log('Error while proxying to LoopBack: ', err);
     });
   }
 });
@@ -133,7 +132,6 @@ var proxyServer = http.createServer(function(req, res) {
 proxyServer.on('upgrade', function(req, socket, head) {
   if (!billet.proxyUpgrade(req, socket, head)) {
     loopbackTarget.ws(req, socket, head, function(err) {
-      console.log('Error while proxying to LoopBack: ', err);
     });
   }
 });

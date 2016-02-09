@@ -1,17 +1,13 @@
-<div ng-show="displayError" class="error-overlay">
-  <div class="error-label red-d1">{{ displayError  }}</div>
-</div>
-
 <div id="topbar" class="topbar">
   <div class="at-navbar" at-navbar></div>
-  <div class="at-iconbar" at-icon-bar></div>
 </div>
 
 <div id="my_dock_manager" class="my-dock-manager"></div>
 
-<div id="projectWindow" caption="Projects" icon="icon-circle-arrow-right"
+<div id="projectWindow" caption="Project" icon="icon-folder-open"
   class="project-window" at-sidebar>
 </div>
-<div id="outputWindow" caption="Terminal" class="output-window editor-host">
+<div id="outputWindow" caption="Terminal" icon="icon-terminal"
+     class="output-window editor-host">
   <div class="fill" at-tty></div>
 </div>

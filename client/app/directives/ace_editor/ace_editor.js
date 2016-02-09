@@ -31,19 +31,6 @@ angular.module('thilenius.ace_editor', [])
           };
 
           editor.setReadOnly(true);
-          var ws = new WebSocket('ws://' + window.location.host);
-          var sjs = new window.sharejs.Connection(ws);
-          var doc = sjs.get('users', 'wjgOIEjgoWIGJ');
-          doc.subscribe();
-          doc.whenReady(function() {
-            if (!doc.type) {
-              doc.create('text');
-            }
-            if (doc.type && doc.type.name === 'text') {
-              window.attachAce(doc, editor);
-              editor.setReadOnly($scope.file.links.ephemeral.readOnly);
-            }
-          });
 
           // Focus it right now as well
           focus(true);

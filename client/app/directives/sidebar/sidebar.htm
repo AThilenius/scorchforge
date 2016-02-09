@@ -62,13 +62,13 @@
   </div>
 </script>
 
-<div class="fill tone-cplate-out tone-text-primary sidebar-wrapper"
+<div class="fill tone-cplate-in tone-text-primary sidebar-wrapper"
   context-menu="sidebarDropdown">
 
   <!--Active Project-->
-  <div ng-show="state.activeProject"
-       ng-repeat="project in [state.activeProject]"
-       class="tone-cplate-in noselect"
+  <div ng-show="projects.active"
+       ng-repeat="project in [projects.active]"
+       class="noselect"
        context-menu="activeProjectDropdown">
     <div class="active-project-header">
       <div class="active-project-header-title">
@@ -102,23 +102,12 @@
     </div>
   </div>
 
-  <!--Inavtive Projects-->
-  <div ng-repeat="project in workspace.projects">
-    <div class="inactive-project tone-cplate-out-hover tone-text-secondary
-                noselect"
-          ng-show="project != state.activeProject"
-          ng-click="state.activeProject = project"
-          context-menu="projectDropdown">
-      <span ng-show="activeAssignment" class="glyphicon glyphicon-education
-                     small-font"
-            style="margin-right:2px; color: red;" aria-hidden="true">
-      </span>
-      {{ project.name }}
-      <span ng-show="false" class="tone-text-secondary pull-right small-font"
-            style="padding-top: 2px; padding-right: 10px;">
-        Due in
-        <span style="color: orange;">2 weeks</span>
-      </span>
+  <!--No Active Project-->
+  <div ng-show="!projects.active" class="fill noselect"
+       style="display: table; text-align: center;">
+    <div class="tone-text-secondary"
+         style="display:table-cell; vertical-align:middle;">
+      No Project Selected
     </div>
   </div>
 

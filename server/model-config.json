@@ -38,26 +38,6 @@
     "dataSource": "db",
     "public": true
   },
-  "Project": {
-    "dataSource": "db",
-    "public": true
-  },
-  "SourceFile": {
-    "dataSource": "db",
-    "public": true
-  },
-  "Fiber": {
-    "dataSource": "db",
-    "public": true
-  },
-  "BilletHost": {
-    "dataSource": "db",
-    "public": true
-  },
-  "BilletRun": {
-    "dataSource": "db",
-    "public": true
-  },
   "Class": {
     "dataSource": "db",
     "public": true
@@ -67,10 +47,6 @@
     "public": true
   },
   "Assignment": {
-    "dataSource": "db",
-    "public": true
-  },
-  "AssignmentRun": {
     "dataSource": "db",
     "public": true
   },

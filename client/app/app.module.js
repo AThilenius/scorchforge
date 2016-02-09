@@ -13,7 +13,6 @@ var app = angular.module('app', [
   'ui.bootstrap',
   'xeditable',
   'thilenius.navbar',
-  'thilenius.icon_bar',
   'thilenius.tty',
   'thilenius.sidebar',
   'thilenius.content_window',

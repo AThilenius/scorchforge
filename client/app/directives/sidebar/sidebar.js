@@ -4,22 +4,18 @@
 angular.module('thilenius.sidebar', [])
   .directive('atSidebar', [
     '$rootScope',
-    '$mdDialog',
     'Person',
-    'Project',
-    'SourceFile',
-    function($rootScope, $mdDialog, Person, Project, SourceFile) {
+    'workspaces',
+    'projects',
+    function($rootScope, Person, workspaces, projects) {
       return {
         restrict: 'AE',
         templateUrl: 'app/directives/sidebar/sidebar.htm',
         link: function($scope, iElement, iAttrs) {
 
           $scope.sidebarState = {};
-
-          // Dropdown Handlers, Dropwdown Definitions
-          var addProject = function($itemScope) {
-            $scope.addProject();
-          };
+          $scope.workspaces = workspaces;
+          $scope.projects = projects;
 
           var removeProject = function($itemScope) {
             $scope.removeProject($itemScope.project);
@@ -53,7 +49,7 @@ angular.module('thilenius.sidebar', [])
           };
 
           $scope.sidebarDropdown = [
-            ['New Project', addProject]
+            ['New Project', $scope.addProjectFromModal]
           ];
 
           $scope.projectDropdown = [
