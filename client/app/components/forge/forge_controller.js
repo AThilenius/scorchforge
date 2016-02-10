@@ -39,13 +39,15 @@ forgeApp.controller('forgeController', [
     // TODO(athilenius): This is pretty fucking ugly and probably shouldn't be
     // here.
     var divDockManager = document.getElementById('my_dock_manager');
+    var divTopBar = document.getElementById('topbar');
     $scope.dockManager = new dockspawn.DockManager(divDockManager);
     $scope.dockManager.initialize();
     // Let the dock manager element fill in the entire screen
     var onresized = function(e) {
-      $scope.dockManager.resize(window.innerWidth - (divDockManager.clientLeft +
-        divDockManager.offsetLeft), window.innerHeight - (
-        divDockManager.clientTop + divDockManager.offsetTop));
+      $scope.dockManager.resize(
+        window.innerWidth,
+        // The offsetHeight is from the topbar, the 4 is from the nav-h-bar
+        window.innerHeight - (Math.max(divTopBar.offsetHeight, 28) + 4));
     };
     window.onresize = onresized;
     onresized(null);
@@ -93,7 +95,8 @@ forgeApp.controller('forgeController', [
           .$promise.then(function(projects) {
             $scope.workspace.projects = $scope.projects = projects;
             // Initialize workspace metadata
-            metastore.linkHasMany($scope.workspace, projects, 'Project');
+            metastore.linkHasMany($scope.workspace, projects,
+              'Project');
             // Load source files for each project
             _(projects).each(function(project) {
               Project.sourceFiles({
@@ -175,24 +178,28 @@ forgeApp.controller('forgeController', [
         });
     };
 
-    $scope.addItemToProject = function(project, toChildList, itemMetaSeed) {
+    $scope.addItemToProject = function(project, toChildList,
+      itemMetaSeed) {
       atTextDialog({
         title: 'Name',
-        content: 'New ' + itemMetaSeed.type.toUpperCase() + ' Name',
+        content: 'New ' + itemMetaSeed.type.toUpperCase() +
+          ' Name',
         done: function(val) {
           itemMetaSeed.name = val;
           if (itemMetaSeed.type === 'file') {
             Project.sourceFiles.create({
               id: project.id
             }, {}, function(file) {
-              var itemMeta = metastore.linkMeta(project, file,
+              var itemMeta = metastore.linkMeta(project,
+                file,
                 itemMetaSeed);
               toChildList = toChildList || itemMeta.links.metaRoot;
               toChildList.unshift(itemMeta);
               metastore.saveMeta(itemMeta);
             });
           } else {
-            var itemMeta = metastore.linkMeta(project, 'SourceFile',
+            var itemMeta = metastore.linkMeta(project,
+              'SourceFile',
               itemMetaSeed);
             toChildList = toChildList || itemMeta.links.metaRoot;
             toChildList.unshift(itemMeta);
@@ -220,7 +227,8 @@ forgeApp.controller('forgeController', [
       }, project);
     };
 
-    $scope.removeItemFromProject = function(project, fromChildList, index) {
+    $scope.removeItemFromProject = function(project, fromChildList,
+      index) {
       var item = fromChildList[index];
       var content = 'Are you sute you want to delete \'' + item.name +
         '\'?';
