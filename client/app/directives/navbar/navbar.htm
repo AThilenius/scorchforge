@@ -25,7 +25,7 @@
       </md-menu>
 
       <!--Workspace-->
-      <md-menu>
+      <md-menu style="margin-left: 14px;">
         <button ng-click="$mdOpenMenu()">
           Workspace -
           <b>{{ workspaces.active.name }}</b>
@@ -54,6 +54,10 @@
 
         </md-menu-content>
       </md-menu>
+
+      <span class="glyphicon glyphicon-menu-right" area-hidden="true"
+            style="position: relative; top: 4px; font-size: 0.8em;
+                   margin-left: 3px; margin-right: 3px;"></span>
 
       <!--Project-->
       <md-menu>

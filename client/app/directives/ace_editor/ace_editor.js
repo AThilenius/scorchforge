@@ -21,19 +21,17 @@ angular.module('thilenius.ace_editor', [])
 
           var focus = function(focusEditor) {
             if ($rootScope.focusedFile) {
-              $rootScope.focusedFile.links.ephemeral.focused = false;
+              $rootScope.focusedFile.focused = false;
             }
-            ephemeral.focused = true;
-            $rootScope.focusedFile = $scope.file;
+            $scope.ephemeral.focused = true;
+            $rootScope.focusedFile = $scope.ephemeral;
             if (focusEditor) {
               editor.focus();
             }
           };
 
-          editor.setReadOnly(true);
+          window.attachAce($scope.ephemeral.otDoc, editor);
 
-          // Focus it right now as well
-          focus(true);
           editor.on('focus', focus);
         }
       };

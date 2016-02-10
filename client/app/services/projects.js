@@ -22,7 +22,6 @@ app.service('projects', [
       return this.active;
     }, (newVal, oldVal) => {
       if (oldVal) {
-        // TODO(athilenius): Close open editor windows
         this.activeEphemeral.otDoc.promise.then((otDoc) => {
           otDoc.unsubscribe();
         });
@@ -35,7 +34,9 @@ app.service('projects', [
         otDoc.subscribe();
         otDoc.whenReady(() => {
           if (!otDoc.type) {
-            otDoc.create('json0');
+            otDoc.create('json0', {
+              fileTree: []
+            });
           }
           if (otDoc.type && otDoc.type.name === 'json0') {
             this.activeEphemeral.otDoc.$$resolve(otDoc);
@@ -81,6 +82,61 @@ app.service('projects', [
             .theme('success')
           );
         }
+      });
+    };
+
+    this.addItemToProject_ = function(list, item) {
+      if (!this.activeEphemeral) {
+        return;
+      }
+      var that = this;
+      atTextDialog({
+        title: item.type === 'file' ? 'File Name' : 'Directory Name',
+        content: item.type === 'file' ? 'New File Name' : 'New Directory Name',
+        done: (val) => {
+          item.name = val;
+          // Make sure we have an active Project OT Doc
+          this.activeEphemeral.otDoc.promise.then((otDoc) => {
+            // Add new item to the file tree, then dump the OT Doc
+            var tree = otDoc.getSnapshot().fileTree;
+            list = list || tree;
+            var oldTree = JSON.parse(angular.toJson(tree));
+            list.push(item);
+            otDoc.submitOp({
+              p: ['fileTree'],
+              od: oldTree,
+              oi: JSON.parse(angular.toJson(tree))
+            });
+            $mdToast.show($mdToast.simple()
+              .textContent(
+                `${item.type.capitalizeFirstLetter()} ${val} created!`
+              )
+              .position('top right')
+              .hideDelay(3000)
+              .theme('success')
+            );
+          });
+        }
+      });
+    };
+
+    /**
+     * Add file from Modal
+     */
+    this.addFileFromModal = function(list) {
+      this.addItemToProject_(list, {
+        type: 'file',
+        otDocId: newShortUuid()
+      });
+    };
+
+    /**
+     * Add a directory from Modal
+     */
+    this.addDirectoryFromModal = function(list) {
+      this.addItemToProject_(list, {
+        type: 'directory',
+        children: []
       });
     };
 

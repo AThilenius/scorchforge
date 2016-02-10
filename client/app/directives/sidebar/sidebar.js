@@ -13,6 +13,36 @@ angular.module('thilenius.sidebar', [])
         templateUrl: 'app/directives/sidebar/sidebar.htm',
         link: function($scope, iElement, iAttrs) {
 
+          // TODO(athilenius): File tree manipulation is NOT safe! Shit could
+          // get fucked up if two people change things at the same time.
+
+          // Watch active project and pull the file tree out of the OT Doc
+          $scope.$watch('projects.active', () => {
+            if (projects.active && projects.activeEphemeral) {
+              projects.activeEphemeral.otDoc.promise.then((otDoc) => {
+                $scope.fileTree = otDoc.getSnapshot().fileTree;
+                // Also watch the doc for changes
+                otDoc.on('op', () => {
+                  $scope.fileTree = otDoc.getSnapshot().fileTree;
+                });
+              });
+            }
+          });
+
+          $scope.remove = function(list, index) {
+            // Copy it and remove Angular crap from the object (Yea it's gross)
+            var oldTree = JSON.parse(angular.toJson($scope.fileTree));
+            // Remove the item from local data now, then dump the OT Doc
+            list.splice(index, 1);
+            projects.activeEphemeral.otDoc.promise.then((otDoc) => {
+              otDoc.submitOp({
+                p: ['fileTree'],
+                od: oldTree,
+                oi: JSON.parse(angular.toJson($scope.fileTree))
+              });
+            });
+          };
+
           $scope.sidebarState = {};
           $scope.workspaces = workspaces;
           $scope.projects = projects;
@@ -22,39 +52,25 @@ angular.module('thilenius.sidebar', [])
           };
 
           var addFile = function($itemScope) {
-            $scope.addItemToProject(
-              $itemScope.project,
-              $itemScope.item ? $itemScope.item.children : null, {
-                type: 'file'
-              });
+            projects.addFileFromModal($itemScope.item ?
+              $itemScope.item.children : null);
           };
 
           var addDirectory = function($itemScope) {
-            $scope.addItemToProject(
-              $itemScope.project,
-              $itemScope.item ? $itemScope.item.children : null, {
-                type: 'directory',
-                isExpanded: true,
-                children: []
-              });
+            projects.addDirectoryFromModal(
+              $itemScope.item ? $itemScope.item.children : null);
           };
 
           var renameItem = function($itemScope) {
-            $scope.renameItemInProject($itemScope.project, $itemScope.item);
+            $scope.renameItemInProject($itemScope.project, $itemScope
+              .item);
           };
 
           var removeItem = function($itemScope) {
-            $scope.removeItemFromProject($itemScope.project, $itemScope.list,
+            $scope.removeItemFromProject($itemScope.project,
+              $itemScope.list,
               $itemScope.$index);
           };
-
-          $scope.sidebarDropdown = [
-            ['New Project', $scope.addProjectFromModal]
-          ];
-
-          $scope.projectDropdown = [
-            ['Delete', removeProject]
-          ];
 
           $scope.activeProjectDropdown = [
             ['New Directory', addDirectory],
