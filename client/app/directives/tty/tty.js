@@ -77,7 +77,7 @@ angular.module('thilenius.tty', [])
               });
 
               // For displaying the first command line
-              socket.emit('data', '\n');
+              socket.emit('data', 'clear\n');
 
               // Resize handler
               // TODO(athilenius): This is JANKY as FUCKKKKK. Ugly, ugly hack

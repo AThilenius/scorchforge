@@ -4,11 +4,12 @@
   "idInjection": true,
   "options": {},
   "properties": {
-    "metadata": {
-      "type": "object",
-      "default": {
-        "projects": []
-      }
+    "name": {
+      "type": "string",
+      "required": true
+    },
+    "projects": {
+      "type": "array"
     }
   },
   "validations": [],
@@ -16,11 +17,6 @@
     "person": {
       "type": "belongsTo",
       "model": "Person",
-      "foreignKey": ""
-    },
-    "projects": {
-      "type": "hasMany",
-      "model": "Project",
       "foreignKey": ""
     }
   },

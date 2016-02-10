@@ -33,10 +33,15 @@ angular.module('thilenius.navbar', [])
     '$rootScope',
     '$location',
     'Person',
-    function($rootScope, $location, Person) {
+    'workspaces',
+    'projects',
+    function($rootScope, $location, Person, workspaces, projects) {
       return {
         templateUrl: 'app/directives/navbar/navbar.htm',
         link: function($scope, iElement, iAttrs) {
+
+          $scope.workspaces = workspaces;
+          $scope.projects = projects;
 
           $scope.logout = function() {
             Person.logout();

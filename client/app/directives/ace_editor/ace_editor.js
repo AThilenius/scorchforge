@@ -7,35 +7,32 @@ ace.config.set('basePath', '/assets/ace');
 angular.module('thilenius.ace_editor', [])
   .directive('atAceEditor', [
     '$timeout',
-    function($timeout) {
+    '$rootScope',
+    function($timeout, $rootScope) {
       return {
         restrict: 'AE',
         templateUrl: 'app/directives/ace_editor/ace_editor.htm',
         link: function($scope, $element, $attr) {
           var editor = ace.edit($element[0]);
+          window.editor = editor;
           editor.$blockScrolling = Infinity;
-          editor.on(
-            'change',
-            function(e) {
-              $scope.changeHandler(e);
-            });
-          $scope.changeHandler = function() {};
+          editor.setTheme('ace/theme/twilight');
+          editor.getSession().setMode('ace/mode/c_cpp');
 
-          var ephemeral = $scope.file.links.ephemeral;
-          ephemeral.sesion = ephemeral.session || ace.createEditSession(
-            $scope.file.links.model.checkout(), 'ace/mode/c_cpp');
-          editor.setSession(ephemeral.sesion);
-          editor.setReadOnly(ephemeral.readOnly);
-          $scope.changeHandler = function(e) {
-            $timeout.cancel($scope.timeout);
-            $scope.timeout = $timeout(function() {
-              $scope.file.links.model.stage(editor.getValue());
-            }, 500);
+          var focus = function(focusEditor) {
+            if ($rootScope.focusedFile) {
+              $rootScope.focusedFile.focused = false;
+            }
+            $scope.ephemeral.focused = true;
+            $rootScope.focusedFile = $scope.ephemeral;
+            if (focusEditor) {
+              editor.focus();
+            }
           };
 
-          // I'll need these later
-          //scope.editor.scrollToLine(row, true, true, function() {});
-          //scope.editor.gotoLine(row, column - 1, true);
+          window.attachAce($scope.ephemeral.otDoc, editor);
+
+          editor.on('focus', focus);
         }
       };
     }

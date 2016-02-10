@@ -22,18 +22,12 @@
 .topbar {
   width: 100%;
   background-color: rgba(32, 32, 32, 1);
+  border-bottom: 1px solid rgb(15, 15, 15);
 }
 
 .at-navbar {
   display: inline-block;
-  width: 80%;
-}
-
-.at-iconbar {
-  display: inline-block;
-  float: right;
-  vertical-align: top;
-  margin-right: 20px;
+  width: 100%;
 }
 
 .greyscale {
@@ -56,4 +50,8 @@
 .nav-h-bar {
   height: 4px;
   width: 100%;
+}
+
+.panel-titlebar-text {
+  font-weight: normal !important;
 }
