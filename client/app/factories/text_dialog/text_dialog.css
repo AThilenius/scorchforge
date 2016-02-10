@@ -1,0 +1,26 @@
+md-toolbar.md-default-theme:not(.md-menu-toolbar),
+md-toolbar:not(.md-menu-toolbar) {
+  background-color: rgb(17, 108, 214);
+  color: white;
+}
+
+md-dialog md-dialog-content {
+  color: white;
+  background-color: rgb(31, 31, 31);
+}
+
+md-dialog .md-actions,
+md-dialog md-dialog-actions {
+  color: white;
+  background-color: rgb(48, 48, 48);
+}
+
+md-dialog .md-actions .md-button,
+md-dialog md-dialog-actions .md-button {
+  background-color: rgb(32, 32, 32);
+}
+
+md-dialog input {
+  background-color: transparent;
+  border: 1px solid rgb(17, 108, 214);
+}
