@@ -17,7 +17,8 @@ RUN apt-get install -y clang-format-3.6
 RUN ln /usr/bin/clang-format-3.6 /usr/bin/clang-format
 
 #===  NODEJS / NPM  ============================================================
-RUN curl -sL https://deb.nodesource.com/setup | sudo bash -
+RUN apt-get install -y curl
+RUN curl -sL https://deb.nodesource.com/setup_5.x | sudo -E bash -
 RUN apt-get install -y nodejs
 
 #===  GIT  =====================================================================
