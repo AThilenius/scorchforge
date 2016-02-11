@@ -33,6 +33,7 @@ angular.module('thilenius.ace_editor', [])
           window.attachAce($scope.ephemeral.otDoc, editor);
 
           editor.on('focus', focus);
+          focus(true);
         }
       };
     }

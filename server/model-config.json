@@ -49,9 +49,5 @@
   "Assignment": {
     "dataSource": "db",
     "public": true
-  },
-  "Workspace": {
-    "dataSource": "db",
-    "public": true
   }
 }

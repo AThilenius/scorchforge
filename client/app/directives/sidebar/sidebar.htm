@@ -4,10 +4,10 @@
     <div ng-repeat="item in list"
          dnd-draggable="item"
          dnd-effect-allowed="move"
-         dnd-moved="remove(list, $index)"
+         dnd-moved="list.splice($index, 1)"
          dnd-selected="sidebarState.selected = item"
          ng-init="depth = depth + 1"
-         style="margin-left: 18px;"
+         style="padding-left: 18px;"
          ng-include="item.type + 'Template'">
     </div>
     <div class="dndPlaceholder"
@@ -45,12 +45,12 @@
 </script>
 
 <script type="text/ng-template" id="fileTemplate">
-  <div class="file-plate{{ item.links.ephemeral.focused ?
+  <div class="file-plate{{ ephemeral(item).focused ?
                            '-active bg-highlight-darkblue-grad' : '' }}"
         ng-dblclick="openFile(item.name, item.otDocId)"
-        style="{{ item.links.ephemeral.dsData ?
+        style="{{ ephemeral(item).focused ?
                   'margin-left: -' + ((depth * 18) + 10) + 'px;
-                  margin-left: ' + ((depth * 18) + 10) + 'px;' : '' }}"
+                  padding-left: ' + ((depth * 18) + 10) + 'px;' : '' }}"
         context-menu="fileDropdown">
     <span class="glyphicon glyphicon-file" style="font-size: 0.8em;
       margin-right:2px;" aria-hidden="true">
@@ -68,14 +68,13 @@
 
   <!--Active Project-->
   <div ng-show="projects.active"
-       ng-repeat="project in [projects.active]"
        class="noselect">
     <div class="active-project-header">
       <div class="active-project-header-title">
         <span ng-show="activeAssignment" class="glyphicon glyphicon-education"
               style="margin-right:2px; color: green;" aria-hidden="true">
         </span>
-        {{ project.name }}
+        {{ projects.active.name }}
         <div class="glyphicon glyphicon-cog pull-right settings-icon"
              aria-hidden="true">
         </div>
@@ -96,11 +95,11 @@
     <div class="header-divider bg-25"></div>
     <div class="files-plate">
       <!--Remember that the listTemplate takes in a list-->
-      <div ng-repeat="list in [fileTree]"
+      <div ng-repeat="list in [sourceFiles.fileTree]"
            ng-include="'listTemplate'"
            ng-init="depth = 0">
       </div>
-      <div ng-show="!fileTree.length" class="fill noselect"
+      <div ng-show="!sourceFiles.fileTree.length" class="fill noselect"
            style="display: table; text-align: center;">
         <div class="tone-text-secondary"
              style="display:table-cell; vertical-align:middle;">
