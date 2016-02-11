@@ -23,3 +23,4 @@ build/
 test_output.js
 dump
 #client/index.html
+server/datasources.json
