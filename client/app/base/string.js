@@ -32,7 +32,7 @@ var newGuid = newUuid = function() {
 };
 
 var ALPHABET = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
-var ID_LENGTH = 8;
+var ID_LENGTH = 16;
 
 var newShortGuid = newShortUuid = function() {
   var rtn = '';

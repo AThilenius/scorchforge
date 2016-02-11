@@ -8,24 +8,103 @@ var app = angular.module('app');
  */
 app.service('sourceFiles', [
   '$rootScope', '$q', '$document', '$mdToast', '$compile', 'atTextDialog',
-  'projects', 'otShare', 'atDockspawn',
+  'persons', 'projects', 'otShare', 'atDockspawn',
   function($rootScope, $q, $document, $mdToast, $compile, atTextDialog,
-    projects, otShare, atDockspawn) {
+    persons, projects, otShare, atDockspawn) {
 
     this.activeEphemeral = [];
+    this.fileTree = null;
+
+    this.root_ = null;
+    this.context_ = null;
+    this.supressSave_ = false;
 
     // Watch for project change events. Need to unload any open source docs
     $rootScope.$watch(() => {
       return projects.active;
     }, (newVal, oldVal) => {
+      console.log('SourceFiles sees Projects change');
       this.activeEphemeral.forEach((ephemeral) => {
         // Unload the doc
-        ephemeral.otDoc.promise.then((otDoc) => {
-          otDoc.unsubscribe();
-        });
+        ephemeral.otDoc.unsubscribe();
+        ephemeral.dsData.panelContainer.onCloseButtonClicked();
       });
-      // TODO(athilenius): Need to close windows here
+      if (this.context_) {
+        this.context_.destroy();
+        this.context_ = null;
+      }
+      if (newVal) {
+        this.context_ = projects.context_.createContextAt(['items',
+          projects.activeIndex, 'fileTree'
+        ]);
+        this.context_.on('child op', () => {
+          this.root_ = this.context_.get();
+          this.supressSave_ = true;
+          this.fileTree = JSON.parse(angular.toJson(this.root_.children));
+        });
+        // Supress error in ShareDB
+        this.context_.on('op', () => {});
+        this.root_ = this.context_.get();
+        this.supressSave_ = true;
+        this.fileTree = JSON.parse(angular.toJson(this.root_.children));
+      }
     });
+
+    // Watch for changes to the file tree, save them when needed
+    $rootScope.$watch(() => {
+      return this.fileTree;
+    }, (newVal, oldVal) => {
+      if (this.supressSave_) {
+        this.supressSave_ = false;
+        return;
+      }
+      if (newVal) {
+        this.context_.set(['children'], JSON.parse(angular.toJson(newVal)));
+        console.log('Saving FileTree');
+      }
+    }, true);
+
+    this.addItemToProject_ = function(list, item) {
+      var that = this;
+      atTextDialog({
+        title: item.type === 'file' ? 'File Name' : 'Directory Name',
+        content: item.type === 'file' ? 'New File Name' : 'New Directory Name',
+        done: (val) => {
+          item.name = val;
+          // Add new item to the file tree, it will auto update
+          list = list || that.fileTree;
+          list.push(item);
+          $mdToast.show($mdToast.simple()
+            .textContent(
+              `${item.type.capitalizeFirstLetter()} ${val} created!`
+            )
+            .position('top right')
+            .hideDelay(3000)
+            .theme('success')
+          );
+        }
+      });
+    };
+
+    /**
+     * Add file from Modal
+     */
+    this.addFileFromModal = function(list) {
+      this.addItemToProject_(list, {
+        type: 'file',
+        otDocId: newShortUuid()
+      });
+    };
+
+    /**
+     * Add a directory from Modal
+     */
+    this.addDirectoryFromModal = function(list) {
+      this.addItemToProject_(list, {
+        type: 'directory',
+        children: []
+      });
+    };
 
     /**
      * Opens a editor tab with the otDocId OT Doc loaded into it.
