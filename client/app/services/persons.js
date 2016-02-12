@@ -21,7 +21,7 @@ app.service('persons', ['$rootScope', '$q', '$mdToast', 'Person',
     /**
      * Active root OT Context
      */
-    this.context_ = null;
+    this.context = null;
 
     /**
      * The OT Document with all person metadata in it
@@ -42,7 +42,7 @@ app.service('persons', ['$rootScope', '$q', '$mdToast', 'Person',
           });
         }
         if (otDoc.type && otDoc.type.name === 'json0') {
-          this.context_ = otDoc.createContext();
+          this.context = otDoc.createContext();
           this.otDoc_ = otDoc;
         } else {
           otDoc.unsubscribe();
