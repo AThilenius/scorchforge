@@ -14,28 +14,27 @@ app.service('workspaces', ['$rootScope', '$mdToast', 'atTextDialog', 'persons',
     this.all = [];
 
     this.root_ = null;
-    this.context_ = null;
+    this.context = null;
 
     /**
      * Watch for persons switches, persons.active so we can reload context
      */
     $rootScope.$watch(() => {
-      return persons.context_;
+      return persons.context;
     }, (newVal, oldVal) => {
-      console.log('Workspaces sees Person change');
       this.active = this.activeIndex = this.root_ = null;
       this.all = [];
-      if (this.context_) {
-        this.context_.destroy();
-        this.context_ = null;
+      if (this.context) {
+        this.context.destroy();
+        this.context = null;
       }
       if (newVal) {
-        if (this.context_) {
-          this.context_.destroy();
-          this.context_ = null;
+        if (this.context) {
+          this.context.destroy();
+          this.context = null;
         }
-        this.context_ = persons.context_.createContextAt(['workspaces']);
-        this.root_ = this.context_.get();
+        this.context = persons.context.createContextAt(['workspaces']);
+        this.root_ = this.context.get();
         this.all = this.root_.items;
         if (this.root_.index >= 0) {
           this.active = this.root_.items[this.root_.index];
@@ -50,12 +49,10 @@ app.service('workspaces', ['$rootScope', '$mdToast', 'atTextDialog', 'persons',
     $rootScope.$watch(() => {
       return this.active;
     }, (newVal, oldVal) => {
-      console.log('Workspace sees Active change');
-      if (newVal && this.context_) {
+      if (newVal && this.context) {
         var index = _(this.all).indexOf(newVal);
-        console.log('Workspace sees Active change with index: ', index);
         if (index >= 0) {
-          this.context_.set(['index'], index, () => {});
+          this.context.set(['index'], index, () => {});
           this.activeIndex = index;
         }
       }
@@ -77,7 +74,7 @@ app.service('workspaces', ['$rootScope', '$mdToast', 'atTextDialog', 'persons',
               items: []
             }
           };
-          that.context_.push(['items'], workspace, () => {
+          that.context.push(['items'], workspace, () => {
             that.active = this.all[this.all.length - 1];
             $mdToast.show($mdToast.simple()
               .textContent(`Workspace ${val} created!`)

@@ -16,37 +16,35 @@ app.service('sourceFiles', [
     this.fileTree = null;
 
     this.root_ = null;
-    this.context_ = null;
+    this.rootContext_ = null;
     this.supressSave_ = false;
 
     // Watch for project change events. Need to unload any open source docs
     $rootScope.$watch(() => {
       return projects.active;
     }, (newVal, oldVal) => {
-      console.log('SourceFiles sees Projects change');
       this.activeEphemeral.forEach((ephemeral) => {
         // Unload the doc
         ephemeral.otDoc.unsubscribe();
         ephemeral.dsData.panelContainer.onCloseButtonClicked();
       });
-      if (this.context_) {
-        this.context_.destroy();
-        this.context_ = null;
-      }
+      this.root_ = this.rootContext_ = null;
+      this.activeEphemeral = [];
       if (newVal) {
-        this.context_ = projects.context_.createContextAt(['items',
-          projects.activeIndex, 'fileTree'
-        ]);
-        this.context_.on('child op', () => {
-          this.root_ = this.context_.get();
+        // Wait for context to be available to get file tree
+        projects.activeOtDocFuture.promise.then((otDoc) => {
+          // I might be leaking contexts here...
+          this.rootContext_ = otDoc.createContext().createContextAt([]);
+          this.rootContext_.on('child op', () => {
+            this.root_ = this.rootContext_.get();
+            this.supressSave_ = true;
+            this.fileTree = JSON.parse(angular.toJson(this.root_
+              .fileTree));
+          });
+          this.root_ = this.rootContext_.get();
           this.supressSave_ = true;
-          this.fileTree = JSON.parse(angular.toJson(this.root_.children));
+          this.fileTree = JSON.parse(angular.toJson(this.root_.fileTree));
         });
-        // Supress error in ShareDB
-        this.context_.on('op', () => {});
-        this.root_ = this.context_.get();
-        this.supressSave_ = true;
-        this.fileTree = JSON.parse(angular.toJson(this.root_.children));
       }
     });
 
@@ -59,8 +57,7 @@ app.service('sourceFiles', [
         return;
       }
       if (newVal) {
-        this.context_.set(['children'], JSON.parse(angular.toJson(newVal)));
-        console.log('Saving FileTree');
+        this.rootContext_.set(['fileTree'], JSON.parse(angular.toJson(newVal)));
       }
     }, true);
 
