@@ -37,6 +37,7 @@ RUN apt-get install -y unzip
 #===  MISX TOOLS  ==============================================================
 RUN apt-get install -qy vim
 RUN apt-get install -y tmux
+RUN apt-get install -y libfuse-dev
 
 #===  BILLET SESSION HOST  =====================================================
 ADD session_host /etc/billet/session_host

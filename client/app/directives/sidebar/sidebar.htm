@@ -1,18 +1,9 @@
 <script type="text/ng-template" id="listTemplate">
-  <div dnd-list="list"
-       style="min-height: 20px;">
+  <div style="min-height: 20px;">
     <div ng-repeat="item in list"
-         dnd-draggable="item"
-         dnd-effect-allowed="move"
-         dnd-moved="list.splice($index, 1)"
-         dnd-selected="sidebarState.selected = item"
          ng-init="depth = depth + 1"
          style="padding-left: 18px;"
          ng-include="item.type + 'Template'">
-    </div>
-    <div class="dndPlaceholder"
-          style="margin-left: 18px; height: 2px; margin-top: -2px;
-          background-color: #01629e;">
     </div>
   </div>
 </script>

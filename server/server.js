@@ -1,18 +1,24 @@
+// Copyright 2015 Alec Thilenius
+// All rights reserved.
+
 var Duplex = require('stream').Duplex;
 var WebSocketServer = require('ws').Server;
 var _ = require('underscore');
 var billet = require('./billet.js');
 var boot = require('loopback-boot');
+var childProcess = require('child_process');
 var http = require('http');
 var httpProxy = require('http-proxy');
 var io = require('socket.io');
+var liveDbMongo = require('livedb-mongo');
+var livedb = require('livedb');
 var loopback = require('loopback');
 var sharejs = require('share');
-var livedb = require('livedb');
-var liveDbMongo = require('livedb-mongo');
 
+var dockerHostIp = childProcess.execSync(
+  '/sbin/ip route|awk \'/default/ { print $3  }\'').toString().trim('\n');
 var db = liveDbMongo(
-  'mongodb://192.168.99.100:27017/scorch?auto_reconnect', {
+  'mongodb://' + dockerHostIp + ':27017/scorch?auto_reconnect', {
     safe: true
   });
 var backend = livedb.client(db);
@@ -58,7 +64,11 @@ boot(app, __dirname, function(err) {
         objectMode: true
       });
       stream._write = function(chunk, encoding, callback) {
-        client.send(JSON.stringify(chunk));
+        client.send(JSON.stringify(chunk), function(error) {
+          if (error) {
+            console.log('Socket error: ', error);
+          }
+        });
         return callback();
       };
       stream._read = function() {};
@@ -123,16 +133,14 @@ var loopbackTarget = httpProxy.createProxy({
 
 var proxyServer = http.createServer(function(req, res) {
   if (!billet.proxyHttp(req, res)) {
-    loopbackTarget.web(req, res, function(err) {
-    });
+    loopbackTarget.web(req, res, function(err) {});
   }
 });
 
 // Listen to the `upgrade` event and proxy the WebSocket requests as well.
 proxyServer.on('upgrade', function(req, socket, head) {
   if (!billet.proxyUpgrade(req, socket, head)) {
-    loopbackTarget.ws(req, socket, head, function(err) {
-    });
+    loopbackTarget.ws(req, socket, head, function(err) {});
   }
 });
 

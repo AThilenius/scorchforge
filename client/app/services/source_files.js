@@ -71,6 +71,11 @@ app.service('sourceFiles', [
           // Add new item to the file tree, it will auto update
           list = list || that.fileTree;
           list.push(item);
+          if (item.otDocId) {
+            // Also open it. Note this is done to get the OT Doc to create so
+            // that Billet sees it
+            this.openSourceFile(val, item.otDocId);
+          }
           $mdToast.show($mdToast.simple()
             .textContent(
               `${item.type.capitalizeFirstLetter()} ${val} created!`

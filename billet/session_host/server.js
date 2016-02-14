@@ -6,7 +6,9 @@ var http = require('http');
 var io = require('socket.io');
 var pty = require('pty.js');
 var terminal = require('term.js');
+var wsm = require('./workspace_mount.js');
 
+var wsmMounts = {};
 var socket;
 var buff = [];
 
@@ -81,6 +83,17 @@ io.sockets.on('connection', (s) => {
       stream = null;
     });
     callback(null, id);
+  });
+
+  /**
+   * Mounts a Person's Workspace to the given path. If it's already mounted then
+   * does nothing.
+   */
+  socket.on('mount', (data, callback) => {
+    if (!wsmMounts[data.otDocId]) {
+      wsmMounts[data.otDocId] = new wsm.WorkspaceMount(data.otDocId,
+        data.mountPoint);
+    }
   });
 
   // ==== Normal Term.js Stuff  ================================================

@@ -52,21 +52,42 @@ angular.module('thilenius.sidebar', [])
           $scope.activeProjectDropdown = [
             ['New Directory', addDirectory],
             ['New File', addFile],
-            ['Recover Deleted File', function($itemScope) {}],
-            null, ['Delete', removeProject]
+            ['Recover Deleted File', () => {}, () => {
+              // Disable
+              return false;
+            }],
+            null, ['Delete', () => {}, () => {
+              // Disable
+              return false;
+            }]
           ];
 
           $scope.directoryDropdown = [
             ['New Directory', addDirectory],
             ['New File', addFile],
-            null, ['Rename', renameItem],
-            ['Delete', removeItem]
+            null, ['Rename', () => {}, () => {
+              // Disable
+              return false;
+            }],
+            ['Delete', () => {}, () => {
+              // Disable
+              return false;
+            }]
           ];
 
           $scope.fileDropdown = [
-            ['View History', function($itemScope) {}],
-            null, ['Rename', renameItem],
-            ['Delete', removeItem]
+            ['View History', () => {}, () => {
+              // Disable
+              return false;
+            }],
+            null, ['Rename', () => {}, () => {
+              // Disable
+              return false;
+            }],
+            ['Delete', () => {}, () => {
+              // Disable
+              return false;
+            }]
           ];
 
         }

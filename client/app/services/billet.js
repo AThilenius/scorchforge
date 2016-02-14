@@ -60,7 +60,6 @@ app.service('billet', [
       var lbSocket = io.connect();
       lbSocket.on('connect', () => {
         console.log('lb connect');
-
         lbSocket.on('statusUpdate', (data) => {
           lastSeenStatus = data;
           if (lastSeenStatus.stage === 3) {
@@ -74,6 +73,10 @@ app.service('billet', [
             // On Billet-Direct connection
             this.billetSocket.on('connect', () => {
               console.log('billet connect');
+              this.billetSocket.emit('mount', {
+                otDocId: Person.getCurrentId(),
+                mountPoint: '/root/forge'
+              });
               _(this.readyCallbacks).each((callback) => {
                 callback(this.billetSocket);
               });

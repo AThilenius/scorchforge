@@ -8,4 +8,4 @@ popd
 
 echo 'Building Docker Image'
 docker build -t athilenius/billet_session .
-#docker push athilenius/billet_session
+# docker push athilenius/billet_session

@@ -219,6 +219,7 @@ exports.createSession = function(accessToken, userId, socket, dockerImage) {
 
   // Create Container
   emitStatusUpdate(0);
+  var mb = 1000000;
   docker.createContainer({
     Cmd: ['/etc/billet/session_host/run.sh'],
     Image: dockerImage,
@@ -235,8 +236,20 @@ exports.createSession = function(accessToken, userId, socket, dockerImage) {
         '7390/tcp': [{
           'HostPort': session.port.toString()
         }]
-      }
-    }
+      },
+      CapAdd: ['SYS_ADMIN'],
+      Devices: [{
+        'PathOnHost': '/dev/fuse',
+        'PathInContainer': '/dev/fuse',
+        'CgroupPermissions': 'mrw'
+      }]
+    },
+    Memory: 512 * mb,
+    MemorySwap: 2048 * mb,
+    // Relative 0 - inf, default 'docker run' is 1024 shares
+    CpuShares: 128,
+    // Realtive 1 - 1000
+    BlkioWeight: 100
   }, function(err, container) {
     // Start Container
     if (err || !container) {
