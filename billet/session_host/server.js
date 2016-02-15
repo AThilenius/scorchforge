@@ -71,16 +71,17 @@ io.sockets.on('connection', (s) => {
     });
     // On Socket.IO STDIN
     socket.on(id + 'stdin', (data, callback) => {
-      if (!stream) {
-        callback('Shell closed');
-      } else {
-        stream.stdin.write(data);
-      }
+      stream.stdin.write(data);
     });
     // On Socket.IO asking to close shell
     socket.on(id + 'close', () => {
       stream.kill();
-      stream = null;
+    });
+    // On process die (maybe 'exit\n' was called)
+    stream.on('exit', (code) => {
+      socket.emit(id + 'closed', code);
+      socket.removeAllListeners(id + 'stdin');
+      socket.removeAllListeners(id + 'close');
     });
     callback(null, id);
   });

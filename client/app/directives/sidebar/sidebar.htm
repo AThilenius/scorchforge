@@ -47,9 +47,9 @@
       margin-right:2px;" aria-hidden="true">
     </span>
     {{ item.name }}
-    <span class="glyphicon glyphicon-exclamation-sign pull-right alert-icon
-                 small-font"
-          ng-show="false" aria-hidden="true">
+    <span class="badge pull-right alert-icon"
+          ng-show="errorCount(item.otDocId)">
+      {{ errorCount(item.otDocId) }}
     </span>
   </div>
 </script>

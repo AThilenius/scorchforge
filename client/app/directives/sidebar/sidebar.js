@@ -7,7 +7,8 @@ angular.module('thilenius.sidebar', [])
     'Person',
     'projects',
     'sourceFiles',
-    function($rootScope, Person, projects, sourceFiles) {
+    'compiler',
+    function($rootScope, Person, projects, sourceFiles, compiler) {
       return {
         restrict: 'AE',
         templateUrl: 'app/directives/sidebar/sidebar.htm',
@@ -16,13 +17,25 @@ angular.module('thilenius.sidebar', [])
           // TODO(athilenius): File tree manipulation is NOT safe! Shit could
           // get fucked up if two people change things at the same time.
           $scope.sourceFiles = sourceFiles;
+          $scope.compiler = compiler;
 
           $scope.ephemeral = function(item) {
-            //return sourceFiles.getEphemeral(item);
+            if (item.otDocId) {
+              return sourceFiles.getEphemeral(item.otDocId);
+            }
           };
 
           $scope.sidebarState = {};
           $scope.projects = projects;
+
+          /**
+           * Returns the error count (errors only) for a file given by otDocId
+           */
+          $scope.errorCount = function(otDocId) {
+            return _(compiler.annotations[otDocId]).filter((a) => {
+              return a.type === 'error';
+            }).length;
+          };
 
           var removeProject = function($itemScope) {
             $scope.removeProject($itemScope.project);

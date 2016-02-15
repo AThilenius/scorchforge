@@ -39,6 +39,9 @@ RUN apt-get install -qy vim
 RUN apt-get install -y tmux
 RUN apt-get install -y libfuse-dev
 
+#===  CONFIGS  =================================================================
+ADD .pylintrc /root/.pylintrc
+
 #===  BILLET SESSION HOST  =====================================================
 ADD session_host /etc/billet/session_host
 

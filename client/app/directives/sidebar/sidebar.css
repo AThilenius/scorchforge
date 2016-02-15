@@ -3,8 +3,11 @@
 }
 
 .alert-icon {
-  margin-top: 2px;
-  color: red;
+  background-color: rgb(75, 0, 0);
+  color: white;
+  position: relative;
+  right: 8px;
+  top: 1px;
 }
 
 .inactive-project {
@@ -35,15 +38,6 @@
   height: 1px;
   margin-left: 10px;
   margin-right: 10px;
-}
-
-.directory-plate {
-}
-
-.file-plate {
-}
-
-.file-plate-active {
 }
 
 .progress {

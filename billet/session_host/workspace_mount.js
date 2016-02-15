@@ -18,13 +18,11 @@ function WorkspaceMount(otDocId, mountPoint) {
 
     readdir: function(path, cb) {
       var items = workspaceSync.getDirectory(path);
-      console.log('readdir(%s)', path, items);
       return cb(0, items);
       cb(0);
     },
 
     getattr: function(path, cb) {
-      console.log('getattr(%s)', path);
       var item = workspaceSync.getItem(path);
       if (item && item.type === 'file') {
         cb(0, {
@@ -53,7 +51,6 @@ function WorkspaceMount(otDocId, mountPoint) {
     },
 
     open: function(path, flags, cb) {
-      console.log('open(%s, %d)', path, flags);
       var item = workspaceSync.getItem(path);
       if (item && item.type === 'file') {
         cb(0, nextFd++);
@@ -63,7 +60,6 @@ function WorkspaceMount(otDocId, mountPoint) {
     },
 
     read: function(path, fd, buf, len, pos, cb) {
-      console.log('read(%s, %d, %d, %d)', path, fd, len, pos);
       var item = workspaceSync.getItem(path);
       if (!item || !item.content) {
         return cb(0);

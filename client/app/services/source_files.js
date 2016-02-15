@@ -8,9 +8,9 @@ var app = angular.module('app');
  */
 app.service('sourceFiles', [
   '$rootScope', '$q', '$document', '$mdToast', '$compile', 'atTextDialog',
-  'persons', 'projects', 'otShare', 'atDockspawn',
+  'persons', 'workspaces', 'projects', 'otShare', 'atDockspawn',
   function($rootScope, $q, $document, $mdToast, $compile, atTextDialog,
-    persons, projects, otShare, atDockspawn) {
+    persons, workspaces, projects, otShare, atDockspawn) {
 
     this.activeEphemeral = [];
     this.fileTree = null;
@@ -18,6 +18,7 @@ app.service('sourceFiles', [
     this.root_ = null;
     this.rootContext_ = null;
     this.supressSave_ = false;
+    this.ephemeralCache_ = {};
 
     // Watch for project change events. Need to unload any open source docs
     $rootScope.$watch(() => {
@@ -27,6 +28,8 @@ app.service('sourceFiles', [
         // Unload the doc
         ephemeral.otDoc.unsubscribe();
         ephemeral.dsData.panelContainer.onCloseButtonClicked();
+        delete ephemeral.dsData;
+        delete ephemeral.otDoc;
       });
       this.root_ = this.rootContext_ = null;
       this.activeEphemeral = [];
@@ -34,7 +37,8 @@ app.service('sourceFiles', [
         // Wait for context to be available to get file tree
         projects.activeOtDocFuture.promise.then((otDoc) => {
           // I might be leaking contexts here...
-          this.rootContext_ = otDoc.createContext().createContextAt([]);
+          this.rootContext_ = otDoc.createContext().createContextAt(
+            []);
           this.rootContext_.on('child op', () => {
             this.root_ = this.rootContext_.get();
             this.supressSave_ = true;
@@ -57,7 +61,8 @@ app.service('sourceFiles', [
         return;
       }
       if (newVal) {
-        this.rootContext_.set(['fileTree'], JSON.parse(angular.toJson(newVal)));
+        this.rootContext_.set(['fileTree'], JSON.parse(angular.toJson(
+          newVal)));
       }
     }, true);
 
@@ -109,6 +114,40 @@ app.service('sourceFiles', [
     };
 
     /**
+     * Returns a file's ephemeral object from it's otDocId
+     */
+    this.getEphemeral = function(otDocId) {
+      return this.ephemeralCache_[otDocId] ||
+        (this.ephemeralCache_[otDocId] = {
+          otDocId
+        });
+    };
+
+    /**
+     * Tries to find a file's ephemral object from a absolute path starting with
+     * /root/forge
+     */
+    this.getEphemeralFromPath = function(path) {
+      var parts = path.split('/').filter((part) => {
+        return Boolean(part);
+      });
+      if (parts[0] === 'root' && parts[1] === 'forge' && parts[2] ===
+        workspaces.active.name && parts[3] === projects.active.name) {
+        // From part 4 onward, search the file tree
+        var cursor = {
+          children: this.fileTree
+        };
+        for (var i = 4; i < parts.length && cursor; i++) {
+          cursor = _(cursor.children).find((child) => {
+            return child.name === parts[i];
+          });
+        }
+        return this.getEphemeral(cursor.otDocId);
+      }
+      return null;
+    };
+
+    /**
      * Opens a editor tab with the otDocId OT Doc loaded into it.
      */
     this.openSourceFile = function(name, otDocId) {
@@ -129,12 +168,10 @@ app.service('sourceFiles', [
         if (otDoc.type && otDoc.type.name === 'text') {
           // Then create the DockSpawn window with ACE in it
           var dsData = {};
-          var ephemeral = {
-            dsData,
-            name,
-            otDocId,
-            otDoc
-          };
+          var ephemeral = this.getEphemeral(otDocId);
+          ephemeral.otDocId = otDocId;
+          ephemeral.dsData = dsData;
+          ephemeral.otDoc = otDoc;
           dsData.domElement = angular.element(
             '<div class="fill" at-ace-editor ephemeral="ephemeral"></div>'
           )[0];
@@ -152,6 +189,9 @@ app.service('sourceFiles', [
             atDockspawn.documentNode, dsData.panelContainer);
           this.activeEphemeral.push(ephemeral);
           dsData.panelContainer.onClose = (container) => {
+            ephemeral.otDoc.unsubscribe();
+            delete ephemeral.dsData;
+            delete ephemeral.otDoc;
             this.activeEphemeral = _(this.activeEphemeral).without(
               ephemeral);
           };

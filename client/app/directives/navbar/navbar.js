@@ -32,10 +32,11 @@ angular.module('thilenius.navbar', [])
   .directive('atNavbar', [
     '$rootScope',
     '$location',
+    '$mdToast',
     'Person',
     'workspaces',
     'projects',
-    function($rootScope, $location, Person, workspaces, projects) {
+    function($rootScope, $location, $mdToast, Person, workspaces, projects) {
       return {
         templateUrl: 'app/directives/navbar/navbar.htm',
         link: function($scope, iElement, iAttrs) {
@@ -46,6 +47,15 @@ angular.module('thilenius.navbar', [])
           $scope.logout = function() {
             Person.logout();
             $location.path('/login');
+          };
+
+          $scope.run = function() {
+            $mdToast.show($mdToast.simple()
+              .textContent('Please use shell to run, for now')
+              .position('top right')
+              .hideDelay(6000)
+              .theme('error')
+            );
           };
 
         }

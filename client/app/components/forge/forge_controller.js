@@ -34,9 +34,10 @@ forgeApp.controller('forgeController', [
   'atRateLimiter',
   'otShare',
   'atDockspawn',
+  'compiler',
   function($rootScope, $scope, $location, $mdDialog, $mdToast, $timeout,
     $compile, atTextDialog, metastore, Person, workspaces, projects,
-    sourceFiles, atRateLimiter, otShare, atDockspawn) {
+    sourceFiles, atRateLimiter, otShare, atDockspawn, compiler) {
     $scope.forgeVersion = window.FORGE_VERSION;
 
     // Global state object (not intended for serialization)

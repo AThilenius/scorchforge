@@ -7,15 +7,17 @@
 var Shell = function(socket, id) {
   this.socket = socket;
   this.id = id;
-  this.isOpen = true;
+  this.exitCode = null;
+
+  this.socket.on(id + 'closed', (exitCode) => {
+    this.exitCode = exitCode || -1;
+  });
 
   this.write = function(data) {
-    if (this.isOpen) {
-      socket.emit(id + 'stdin', data, (err) => {
-        this.isOpen = false;
-      });
+    if (!this.exitCode) {
+      socket.emit(id + 'stdin', data, () => {});
     }
-    return this.isOpen;
+    return !this.exitCode;
   };
 
   this.onStderr = function(cb) {
@@ -26,9 +28,32 @@ var Shell = function(socket, id) {
     socket.on(id + 'stdout', cb);
   };
 
+  this.onClose = function(cb) {
+    socket.on(id + 'closed', cb);
+  };
+
   this.close = function() {
-    this.isOpen = false;
     socket.emit(id + 'close');
+  };
+
+  /**
+   * Runs a shell command, gets the output (sent to
+   * cb(stdout, stderr, editCode){ }) and closes the shell. The CB will not be
+   * called until the shell has been closed, meaning all output has been read.
+   */
+  this.execAndClose = function(command, cb) {
+    var stdOut = '';
+    var stdErr = '';
+    this.onStdout((out) => {
+      stdOut += out;
+    });
+    this.onStderr((err) => {
+      stdErr += err;
+    });
+    this.onClose((exitCode) => {
+      cb(stdOut, stdErr, exitCode);
+    });
+    this.write(command + '\nexit\n');
   };
 
 };
@@ -81,7 +106,10 @@ app.service('billet', [
                 callback(this.billetSocket);
               });
               // Also handle defered spawns
-              this.defferedSpawns.forEach(this.spawnNow_);
+              this.defferedSpawns.forEach((defered) => {
+                this.spawnNow_(defered);
+              });
+              this.defferedSpawns = [];
             });
           }
         });
