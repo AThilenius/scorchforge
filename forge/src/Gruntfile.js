@@ -60,6 +60,7 @@ module.exports = function(grunt) {
 
     // Compile libraries and source
     'closure-compiler': {
+      'closurePath': 'closure',
       'libs': {
         'js': ['client/build/_bower.js', 'client/build/lb-services.js'],
         'jsOutputFile': 'client/build/compiled_lib.js',

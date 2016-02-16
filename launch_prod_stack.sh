@@ -52,4 +52,3 @@ docker run                                           \
            -v $(which docker):/bin/docker            \
            -v /var/run/docker.sock:/run/docker.sock  \
            athilenius/forge:beta
-
