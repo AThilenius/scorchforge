@@ -43,6 +43,7 @@ RUN apt-get install -y libfuse-dev
 ADD .pylintrc /root/.pylintrc
 
 #===  BILLET SESSION HOST  =====================================================
-ADD session_host /etc/billet/session_host
+ADD src/ /etc/billet/
+ADD docker_command /etc/billet/
 
-CMD /etc/billet/session_host/run.sh
+CMD /bin/bash /etc/billet/docker_command.sh

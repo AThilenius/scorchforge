@@ -1,0 +1,51 @@
+# Copyright Alec Thilenius 2015
+
+# SSL Files
+ssl_certificate         /etc/ssl/www_scorchforge_com.crt;
+ssl_certificate_key     /etc/ssl/www_scorchforge_com.key;
+
+# Redirect all HTTP to HTTPS with a 301 PERMANENT REDIRECT
+server {
+  # Listen on ipv4 and ipv6 for requests
+  listen 80;
+  listen [::]:80;
+  # Listen for requests on all subdomains and the naked domain
+  server_name scorchforge.com *.scorchforge.com;
+  # Check if this is a subdomain request rather the naked domain
+  if ($http_host ~ (.*)\.scorchforge\.com) {
+      # Yank the subdomain from the regex match above
+      set $subdomain $1;
+      # Handle the subdomain redirect to HTTPS
+      rewrite ^ https://$subdomain.scorchforge.com$request_uri permanent;
+      break;
+  }
+  # Handle the naked domain redirect
+  rewrite ^ https://scorchforge.com$request_uri permanent;
+}
+
+# Shipyard
+server {
+  listen 443 ssl;
+  server_name docker.*;
+  location / {
+    proxy_pass http://172.31.30.146:8080/;
+  }
+}
+
+# Beta build
+server {
+  listen 443 ssl;
+  server_name beta.*;
+  location / {
+    proxy_pass http://localhost:5001/;
+  }
+}
+
+# Production
+server {
+  listen 443 ssl;
+  server_name scorchforge.com www.scorchforge.com;
+  location / {
+    proxy_pass http://localhost:5000/;
+  }
+}
