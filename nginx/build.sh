@@ -1,8 +1,8 @@
 #!/bin/bash
 set -e
-RED=`tput setaf 1`
-GREEN=`tput setaf 2`
-NC=`tput sgr0`
+RED=`tput setaf 1 || echo ''`
+GREEN=`tput setaf 2 || echo ''`
+NC=`tput sgr0 || echo ''`
 
 #===  NGINX  ===================================================================
 #
