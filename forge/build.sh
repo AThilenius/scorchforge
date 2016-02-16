@@ -8,7 +8,8 @@ NC=`tput sgr0 || echo ''`
 #
 # Usage: build.sh <channel>
 #
-# Packages Forge to a docker container. Production builds are always used.
+# Packages Forge to a docker container. Both production and dev assets are
+# bundled into the final build and switched by NODE_ENV
 #
 # Builds to:
 # athilenius/forge:<chennel>
@@ -28,13 +29,16 @@ echo "${GREEN}-> Running 'npm install' for prod client assets${NC}"
 npm install
 echo "${GREEN}-> Running 'bower install' for prod client assets${NC}"
 bower install
+echo "${GREEN}-> Running 'grunt build' for dev client assets${NC}"
+PORT=9000 grunt build
 echo "${GREEN}-> Running 'grunt build:prod' for prod client assets${NC}"
-grunt build:prod
+PORT=9000 grunt build:prod
 popd
 
 # Copy list for needed prod resources
 echo "${GREEN}-> Copying srouce to Bin${NC}"
-cp -r src/client_prod   \
+cp -r src/client        \
+      src/client_prod   \
       src/common        \
       src/package.json  \
       src/server        \

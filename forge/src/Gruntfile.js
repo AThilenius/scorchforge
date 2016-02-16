@@ -60,10 +60,9 @@ module.exports = function(grunt) {
 
     // Compile libraries and source
     'closure-compiler': {
-      'closurePath': 'closure',
       'libs': {
         'js': ['client/build/_bower.js', 'client/build/lb-services.js'],
-        'jsOutputFile': 'client/build/compiled_lib.js',
+        'jsOutputFile': 'client/build/compiled_libs.js',
         'maxBuffer': 5000,
         'options': {
           'compilation_level': 'SIMPLE_OPTIMIZATIONS',
@@ -109,7 +108,7 @@ module.exports = function(grunt) {
           }
         }
       },
-      'client': {
+      'dev': {
         'files': {
           'client/index.html': 'client/index.html'
         }
@@ -164,11 +163,10 @@ module.exports = function(grunt) {
   grunt.registerTask('default', []);
 
   grunt.registerTask('build', [
-    'includeSource:client',
+    'includeSource:dev',
     'loopback_sdk_angular',
     'bower_concat',
     'closure-compiler:libs',
-    'closure-compiler:app',
     'concat:app_css'
   ]);
 

@@ -13,5 +13,6 @@ RUN apt-get install -y nginx
 ADD default /etc/nginx/sites-available/default
 ADD ssl_certs/ /etc/ssl/
 ADD docker_command.sh /etc/nginx/docker_command.sh
+ADD .htpasswd /etc/nginx/.htpasswd
 
 CMD bash /etc/nginx/docker_command.sh

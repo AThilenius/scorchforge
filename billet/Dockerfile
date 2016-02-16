@@ -44,6 +44,6 @@ ADD .pylintrc /root/.pylintrc
 
 #===  BILLET SESSION HOST  =====================================================
 ADD src/ /etc/billet/
-ADD docker_command /etc/billet/
+ADD docker_command.sh /etc/billet/
 
 CMD /bin/bash /etc/billet/docker_command.sh
