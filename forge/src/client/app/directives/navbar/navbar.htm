@@ -1,0 +1,108 @@
+<div ng-cloak="">
+  <md-toolbar class="md-menu-toolbar" style="min-height: 25px;">
+    <md-menu-bar>
+
+      <img src="assets/flame-512-inverse.png" height="24" width="24">
+
+      <!--Forge-->
+      <md-menu>
+        <button ng-click="$mdOpenMenu()">
+          <b>Forge</b>
+        </button>
+        <md-menu-content>
+          <md-menu-item>
+            <md-button ng-click="addProjectFromModal()">
+              New Project
+            </md-button>
+          </md-menu-item>
+          <md-menu-divider></md-menu-divider>
+          <md-menu-item>
+            <md-button ng-click="logout()">
+              Logout
+            </md-button>
+          </md-menu-item>
+        </md-menu-content>
+      </md-menu>
+
+      <!--Workspace-->
+      <md-menu style="margin-left: 14px;">
+        <button ng-click="$mdOpenMenu()">
+          Workspace -
+          <b>{{ workspaces.active.name }}</b>
+          <span class="glyphicon glyphicon-triangle-bottom"
+            style="position:relative; top: -1px; left: 6px; font-size: 0.7em;"
+            aria-hidden="true"></span>
+        </button>
+        <md-menu-content>
+
+          <md-menu-item ng-repeat="workspace in workspaces.all"
+          class="{{ workspace === workspaces.active ?
+                    'bg-highlight-darkblue-grad' : '' }}">
+            <md-button ng-click="workspaces.active = workspace"
+                       ng-disabled="workspaces.active === workspace">
+              {{ workspace.name }}
+            </md-button>
+          </md-menu-item>
+
+          <md-menu-divider></md-menu-divider>
+
+          <md-menu-item>
+            <md-button ng-click="addWorkspaceFromModal()">
+              Create New Workspace
+            </md-button>
+          </md-menu-item>
+
+        </md-menu-content>
+      </md-menu>
+
+      <span class="glyphicon glyphicon-menu-right" area-hidden="true"
+            style="position: relative; top: 4px; font-size: 0.8em;
+                   margin-left: 3px; margin-right: 3px;"></span>
+
+      <!--Project-->
+      <md-menu>
+        <button ng-click="$mdOpenMenu()"
+          class="{{ !projects.active ? 'bg-highlight-darkblue-grad' : '' }}">
+          Project -
+          <b>
+            {{ projects.active ? '' + projects.active.name : 'None Selected'}}
+          </b>
+          <span class="glyphicon glyphicon-triangle-bottom"
+            style="position:relative; top: -1px; left: 6px; font-size: 0.7em;"
+            aria-hidden="true"></span>
+        </button>
+        <md-menu-content>
+
+          <md-menu-item ng-repeat="project in projects.all"
+          class="{{ project === projects.active ?
+                    'bg-highlight-darkblue-grad' : '' }}">
+            <md-button ng-click="projects.active = project"
+                       ng-disabled="projects.active === project">
+              {{ project.name }}
+            </md-button>
+          </md-menu-item>
+
+          <md-menu-divider></md-menu-divider>
+
+          <md-menu-item>
+            <md-button ng-click="addProjectFromModal()">
+              Create New Project
+            </md-button>
+          </md-menu-item>
+
+        </md-menu-content>
+      </md-menu>
+
+      <!--Run Controls-->
+      <md-menu class="pull-right">
+        <button ng-click="run()">
+          <span class="icon-play"
+                style="font-size: 1.6em; position:relative; top: 2px">
+          </span>
+        </button>
+        <md-menu-content></md-menu-content>
+      </md-menu>
+
+    </md-menu-bar>
+  </md-toolbar>
+</div>

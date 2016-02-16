@@ -1,0 +1,112 @@
+<script type="text/ng-template" id="listTemplate">
+  <div style="min-height: 20px;">
+    <div ng-repeat="item in list"
+         ng-init="depth = depth + 1"
+         style="padding-left: 18px;"
+         ng-include="item.type + 'Template'">
+    </div>
+  </div>
+</script>
+
+<script type="text/ng-template" id="directoryTemplate">
+  <div>
+    <div class="directory-plate"
+         mg-nofocus
+         ng-dblclick="item.isExpanded = !item.isExpanded"
+         context-menu="directoryDropdown">
+      <span class="tone-text-primary-hover glyphicon
+               glyphicon-triangle-{{ item.isExpanded ? 'bottom' : 'right' }}"
+            style="font-size: 0.8em; margin-right:2px;"
+            aria-hidden="true"
+            ng-click="item.isExpanded = !item.isExpanded">
+      </span>
+      <span class="glyphicon
+                   glyphicon-folder-{{ item.isExpanded ? 'open' : 'close' }}"
+            style="font-size: 0.8em; margin-right:1px;"
+            aria-hidden="true">
+      </span>
+      {{ item.name }}
+    </div>
+    <span ng-if="item.isExpanded && item.children"
+      <div ng-repeat="list in [item.children]"
+           ng-include="'listTemplate'">
+      </div>
+    </span>
+  </div>
+</script>
+
+<script type="text/ng-template" id="fileTemplate">
+  <div class="file-plate{{ ephemeral(item).focused ?
+                           '-active bg-highlight-darkblue-grad' : '' }}"
+        ng-dblclick="openFile(item.name, item.otDocId)"
+        style="{{ ephemeral(item).focused ?
+                  'margin-left: -' + ((depth * 18) + 10) + 'px;
+                  padding-left: ' + ((depth * 18) + 10) + 'px;' : '' }}"
+        context-menu="fileDropdown">
+    <span class="glyphicon glyphicon-file" style="font-size: 0.8em;
+      margin-right:2px;" aria-hidden="true">
+    </span>
+    {{ item.name }}
+    <span class="badge pull-right annotation-badge"
+          ng-show="errorCount(item.otDocId)">
+      {{ errorCount(item.otDocId) }}
+    </span>
+  </div>
+</script>
+
+<div class="fill tone-cplate-in tone-text-primary sidebar-wrapper"
+  context-menu="activeProjectDropdown">
+
+  <!--Active Project-->
+  <div ng-show="projects.active"
+       class="noselect">
+    <div class="active-project-header">
+      <div class="active-project-header-title">
+        <span ng-show="activeAssignment" class="glyphicon glyphicon-education"
+              style="margin-right:2px; color: green;" aria-hidden="true">
+        </span>
+        {{ projects.active.name }}
+        <div class="glyphicon glyphicon-cog pull-right settings-icon"
+             aria-hidden="true">
+        </div>
+      </div>
+      <div ng-show="activeAssignment">
+        <div class="progress">
+          <div class="progress-bar progress-bar-custom" role="progressbar"
+               aria-valuenow="40" aria-valuemin="0" aria-valuemax="100"
+               style="width: 90%">
+          </div>
+        </div>
+        <div class="small-font">
+          Due in
+          <span style="color: red;">4 hours</span>
+        </div>
+      </div>
+    </div>
+    <div class="header-divider bg-25"></div>
+    <div class="files-plate">
+      <!--Remember that the listTemplate takes in a list-->
+      <div ng-repeat="list in [sourceFiles.fileTree]"
+           ng-include="'listTemplate'"
+           ng-init="depth = 0">
+      </div>
+      <div ng-show="!sourceFiles.fileTree.length" class="fill noselect"
+           style="display: table; text-align: center;">
+        <div class="tone-text-secondary"
+             style="display:table-cell; vertical-align:middle;">
+          No Files
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!--No Active Project-->
+  <div ng-show="!projects.active" class="fill noselect"
+       style="display: table; text-align: center;">
+    <div class="tone-text-secondary"
+         style="display:table-cell; vertical-align:middle;">
+      No Project Selected
+    </div>
+  </div>
+
+</div>

@@ -1,0 +1,45 @@
+md-menu-bar.md-default-theme md-menu.md-open > button,
+md-menu-bar md-menu.md-open > button,
+md-menu-bar.md-default-theme md-menu > button:focus,
+md-menu-bar md-menu > button:focus {
+  outline: none !important;
+  background: rgb(238, 238, 238) !important;
+  color: black !important;
+}
+
+md-menu-bar button {
+  background: rgba(32, 32, 32, 1) !important;
+  height: 25px !important;
+  color: rgb(240, 240, 240) !important;
+}
+
+md-toolbar.md-default-theme.md-menu-toolbar,
+md-toolbar.md-menu-toolbar {
+  background: rgba(32, 32, 32, 1) !important;
+  box-shadow: inset 1px 1px 0px 0px rgba(48, 48, 48, 1) !important;
+  color: rgba(255, 255, 255, 1.0) !important;
+}
+
+md-menu-content.md-default-theme,
+md-menu-content {
+  background-color: rgba(32, 32, 32, 1) !important;
+}
+
+md-menu-content.md-menu-bar-menu.md-dense .md-button span {
+  -webkit-flex-grow: 1 !important;
+  -ms-flex-positive: 1 !important;
+  flex-grow: 1 !important;
+  color: rgb(240, 240, 240) !important;
+}
+
+md-menu-content.md-dense md-menu-item {
+  height: 25px !important;
+}
+
+md-menu-content.md-menu-bar-menu.md-dense .md-button {
+  height: 25px !important;
+}
+
+.md-button {
+  line-height: 25px !important;
+}

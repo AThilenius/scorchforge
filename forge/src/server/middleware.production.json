@@ -1,0 +1,20 @@
+{
+  "final:after": {
+    "loopback#errorHandler": {
+      "params": {
+        "includeStack": false
+      }
+    }
+  },
+  "files": {
+    "loopback#static": [{
+      "name": "forge",
+      "paths": ["/forge", "/login", "/create_user"],
+      "params": "$!../client_prod/index.html"
+    }, {
+      "name": "general",
+      "paths": ["/"],
+      "params": "$!../client_prod"
+    }]
+  }
+}

@@ -37,8 +37,13 @@ RUN apt-get install -y unzip
 #===  MISX TOOLS  ==============================================================
 RUN apt-get install -qy vim
 RUN apt-get install -y tmux
+RUN apt-get install -y libfuse-dev
+
+#===  CONFIGS  =================================================================
+ADD .pylintrc /root/.pylintrc
 
 #===  BILLET SESSION HOST  =====================================================
-ADD session_host /etc/billet/session_host
+ADD src/ /etc/billet/
+ADD docker_command /etc/billet/
 
-CMD /etc/billet/session_host/run.sh
+CMD /bin/bash /etc/billet/docker_command.sh
