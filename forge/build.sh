@@ -24,6 +24,8 @@ rm -rf bin
 mkdir bin
 
 pushd src
+echo "${GREEN}-> Running 'npm install' for prod client assets${NC}"
+npm install
 echo "${GREEN}-> Running 'bower instal' for prod client assets${NC}"
 bower install
 echo "${GREEN}-> Running 'grunt build:prod' for prod client assets${NC}"
