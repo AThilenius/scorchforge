@@ -24,6 +24,8 @@ rm -rf bin
 mkdir bin
 
 pushd src
+echo "${GREEN}-> Running 'bower instal' for prod client assets${NC}"
+bower install
 echo "${GREEN}-> Running 'grunt build:prod' for prod client assets${NC}"
 grunt build:prod
 popd
