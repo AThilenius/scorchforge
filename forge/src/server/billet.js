@@ -221,7 +221,6 @@ exports.createSession = function(accessToken, userId, socket, dockerImage) {
   emitStatusUpdate(0);
   var mb = 1000000;
   docker.createContainer({
-    Cmd: ['/etc/billet/session_host/run.sh'],
     Image: dockerImage,
     name: 'billet-' + userId,
     ExposedPorts: {
@@ -253,12 +252,14 @@ exports.createSession = function(accessToken, userId, socket, dockerImage) {
   }, function(err, container) {
     // Start Container
     if (err || !container) {
+      console.log('Billet container create error: ', err);
       return emitError(0, err);
     }
     emitStatusUpdate(2);
     session.container = container;
     container.start(function(err, data) {
       if (err) {
+        console.log('Billet container start error: ', err);
         return emitError(2, err);
       }
       // TODO(athilenius): With DockSwarm, I need to pull the IP address out
