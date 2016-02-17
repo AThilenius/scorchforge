@@ -131,7 +131,7 @@ WorkspaceSync.prototype.subscribeFileTree = function(workspaceName, projectName,
             if (fileOtDoc.type && fileOtDoc.type.name === 'text') {
               parentObj[item.name] = {
                 type: 'file',
-                content: fileOtDoc.getSnapshot()
+                content: fileOtDoc.getSnapshot() + '\n'
               };
             }
           };

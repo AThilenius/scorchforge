@@ -12,18 +12,7 @@ NC=`tput sgr0 || echo ''`
 # Builds Billet for production and packages it into
 # athilenius/billet:beta
 #
-# If all build well, then:
-# docker rm -f forge_beta
-# docker run                                           \
-#            --detach                                  \
-#            --env BILLET_IMAGE=billet:beta    \
-#            --name forge_beta                         \
-#            --privileged                              \
-#            --publish 5001:80                         \
-#            --restart=always                          \
-#            -v $(which docker):/bin/docker            \
-#            -v /var/run/docker.sock:/run/docker.sock  \
-#            athilenius/forge:beta
+# If all builds well, then the canery builds will be launched.
 #
 #===============================================================================
 

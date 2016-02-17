@@ -7,6 +7,8 @@ angular.module('thilenius.navbar', [])
       $mdIconProvider
         .defaultIconSet('img/icons/sets/core-icons.svg', 24);
       $mdThemingProvider.theme('default').dark();
+      $mdThemingProvider.theme('success');
+      $mdThemingProvider.theme('error');
     }
   ])
   .filter('keyboardShortcut', ['$window', function($window) {
@@ -38,7 +40,8 @@ angular.module('thilenius.navbar', [])
     'Person',
     'workspaces',
     'projects',
-    function($rootScope, $location, $mdToast, Person, workspaces, projects) {
+    function($rootScope, $location, $mdToast, Person, workspaces,
+      projects) {
       return {
         templateUrl: 'app/directives/navbar/navbar.htm',
         link: function($scope, iElement, iAttrs) {
@@ -48,7 +51,11 @@ angular.module('thilenius.navbar', [])
 
           $scope.logout = function() {
             Person.logout();
+            // Force a browser refresh so that all workspace / project.. caches
+            // are cleared out.
+            // TODO(athilenius): This is  hack, fix it
             $location.path('/login');
+            location.reload();
           };
 
           $scope.run = function() {
