@@ -64,5 +64,10 @@ forgeApp.controller('forgeController', [
       sourceFiles.openSourceFile(name, otDocId);
     };
 
+    // Allow DockSpawn to setup now
+    $timeout(() => {
+      atDockspawn.setup();
+    });
+
   }
 ]);

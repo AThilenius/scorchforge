@@ -38,13 +38,15 @@ bash build.sh beta
 popd
 
 echo "${GREEN}-> Building went well. Will launch Canarie beta build.${NC}"
-echo "${GREEN}-> Removing old Canarie${NC}"
-docker rm -f forge_beta
 
+echo "${GREEN}-> Removing old Canarie${NC}"
+docker rm -f forge_beta || echo 'Continueing'
 echo "${GREEN}-> Launching Beta build (Canarie)${NC}"
 docker run                                           \
            --detach                                  \
-           --env BILLET_IMAGE=billet_session:beta    \
+           --env BILLET_IMAGE='billet:beta'          \
+           --env MONGO_TARGET='172.17.0.1:27018'     \
+           --env NODE_ENV='production'               \
            --name forge_beta                         \
            --privileged                              \
            --publish 5001:80                         \
@@ -53,3 +55,17 @@ docker run                                           \
            -v /var/run/docker.sock:/run/docker.sock  \
            athilenius/forge:beta
 
+echo "${GREEN}-> Removing old Dev${NC}"
+docker rm -f forge_dev || echo 'Continueing'
+echo "${GREEN}-> Launching Dev build (Secured, non-minified)${NC}"
+docker run                                           \
+           --detach                                  \
+           --env BILLET_IMAGE='billet:beta'          \
+           --env MONGO_TARGET='172.17.0.1:27019'     \
+           --name forge_dev                          \
+           --privileged                              \
+           --publish 5002:80                         \
+           --restart=always                          \
+           -v $(which docker):/bin/docker            \
+           -v /var/run/docker.sock:/run/docker.sock  \
+           athilenius/forge:beta

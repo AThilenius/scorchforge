@@ -147,11 +147,12 @@ proxyServer.on('upgrade', function(req, socket, head) {
   }
 });
 
-proxyServer.listen(80);
+var port = process.env.PORT || 80;
+proxyServer.listen(port);
 
 console.log('        Start Time:', new Date());
 console.log('      Billet Image:', billetImage);
 console.log('     LoopBack Port: 3000');
 console.log('    MongoDB Target:', mongoTarget);
 console.log('  Node Environment:', process.env.NODE_ENV);
-console.log('Reverse Proxy Port: 80');
+console.log('Reverse Proxy Port:', port);
