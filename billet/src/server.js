@@ -24,8 +24,7 @@ var newShortUuid = function() {
 };
 
 // create shell process
-var term = pty.fork(
-  process.env.SHELL || 'bash', [], {
+var term = pty.fork('bash', [], {
     name: require('fs').existsSync(
         '/usr/share/terminfo/x/xterm-256color') ?
       'xterm-256color' : 'xterm',

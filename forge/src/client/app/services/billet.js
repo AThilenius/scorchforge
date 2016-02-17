@@ -83,9 +83,6 @@ app.service('billet', [
     // Connect to the LoopBack hosted Socket.IO and request a login
     this.connect_ = function() {
       var lbSocket = io.connect();
-      lbSocket.on('connect_error', (err) => {
-        console.log('Socket.IO Connection error: ', err);
-      });
       lbSocket.on('connect', () => {
         console.log('lb connect');
         lbSocket.on('statusUpdate', (data) => {

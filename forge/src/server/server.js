@@ -115,7 +115,7 @@ boot(app, __dirname, function(err) {
           }
           // Authorized, file up a Billet session
           billet.createSession(accessToken, token.userId,
-            socket, dockerImage);
+            socket, billetImage);
         });
       });
 
