@@ -15,18 +15,20 @@ var livedb = require('livedb');
 var loopback = require('loopback');
 var sharejs = require('share');
 
+// Set a few default for ENV
+process.env.RUN_TYPE = process.env.RUN_TYPE || 'dev';
+process.env.PUBLISHED_PORT = process.env.PUBLISHED_PORT || 80;
+process.env.BILLET_IMAGE = process.env.BILLET_IMAGE || 'athilenius/billet:dev';
+
 // Check envinroment for Mongo target, else use docker host
 var mongoTarget = process.env.MONGO_TARGET || childProcess.execSync(
-  '/sbin/ip route|awk \'/default/ { print $3  }\'').toString().trim('\n') +
+    '/sbin/ip route|awk \'/default/ { print $3  }\'').toString().trim('\n') +
   ':27017';
 var db = liveDbMongo(
   'mongodb://' + mongoTarget + '/scorch?auto_reconnect', {
     safe: true
   });
 var backend = livedb.client(db);
-
-// Check ENV for billet image, use billet:dev otherwise
-var billetImage = process.env.BILLET_IMAGE || 'athilenius/billet:dev';
 
 // Setup LoopBack
 var app = module.exports = loopback();
@@ -113,15 +115,14 @@ boot(app, __dirname, function(err) {
           if (err || !token) {
             return callback('Invalid AccessToken');
           }
-          // Authorized, file up a Billet session
-          billet.createSession(accessToken, token.userId,
-            socket, billetImage);
+          // Authorized, file up a Billet session, return once the container is
+          // ready.
+          billet.createSession(accessToken, token.userId, (err, data) => {
+            callback(err, data);
+          });
         });
       });
 
-      socket.on('disconnect', function() {
-        // console.log('user disconnected');
-      });
     });
 
   }
@@ -135,24 +136,26 @@ var loopbackTarget = httpProxy.createProxy({
 });
 
 var proxyServer = http.createServer(function(req, res) {
-  if (!billet.proxyHttp(req, res)) {
+  billet.proxyHttp(req, res, () => {
     loopbackTarget.web(req, res, function(err) {});
-  }
+  });
 });
 
 // Listen to the `upgrade` event and proxy the WebSocket requests as well.
 proxyServer.on('upgrade', function(req, socket, head) {
-  if (!billet.proxyUpgrade(req, socket, head)) {
+  billet.proxyUpgrade(req, socket, head, () => {
     loopbackTarget.ws(req, socket, head, function(err) {});
-  }
+  });
 });
 
 var port = process.env.PORT || 80;
 proxyServer.listen(port);
 
+console.log('          Run Type:', process.env.RUN_TYPE);
 console.log('        Start Time:', new Date());
-console.log('      Billet Image:', billetImage);
+console.log('      Billet Image:', process.env.BILLET_IMAGE);
 console.log('     LoopBack Port: 3000');
 console.log('    MongoDB Target:', mongoTarget);
+console.log('    Published Port:', process.env.PUBLISHED_PORT);
 console.log('  Node Environment:', process.env.NODE_ENV);
 console.log('Reverse Proxy Port:', port);

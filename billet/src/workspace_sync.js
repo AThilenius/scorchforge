@@ -28,8 +28,9 @@ function WorkspaceSync(otDocId) {
   // Get the ip of the Docker host
   var hostIp = childProcess.execSync(
     '/sbin/ip route|awk \'/default/ { print $3  }\'').toString().trim('\n');
-  console.log('Connecting: ', hostIp);
-  var socket = new WebSocket('ws://' + hostIp);
+  var hostTarget = hostIp + ':' + process.env.FORGE_PORT;
+  console.log('Connecting: ', hostTarget);
+  var socket = new WebSocket('ws://' + hostTarget);
   this.sjs_ = new sharejs.client.Connection(socket);
   this.subscribePerson(otDocId);
 };

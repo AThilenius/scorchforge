@@ -35,9 +35,10 @@ forgeApp.controller('forgeController', [
   'otShare',
   'atDockspawn',
   'compiler',
+  'billet',
   function($rootScope, $scope, $location, $mdDialog, $mdToast, $timeout,
     $compile, atTextDialog, metastore, Person, workspaces, projects,
-    sourceFiles, atRateLimiter, otShare, atDockspawn, compiler) {
+    sourceFiles, atRateLimiter, otShare, atDockspawn, compiler, billet) {
     $scope.forgeVersion = window.FORGE_VERSION;
 
     // Global state object (not intended for serialization)
@@ -67,6 +68,7 @@ forgeApp.controller('forgeController', [
     // Allow DockSpawn to setup now
     $timeout(() => {
       atDockspawn.setup();
+      billet.connect();
     });
 
   }

@@ -27,14 +27,15 @@ NC=`tput sgr0 || echo ''`
 #
 #===============================================================================
 
-echo "${GREEN}-> Building Forge...${NC}"
+echo "${GREEN}-> Building Forge [beta]...${NC}"
 pushd forge
 bash build.sh beta
 popd
 
-echo "${GREEN}-> Billet...${NC}"
+echo "${GREEN}-> Building Billet [beta, dev]...${NC}"
 pushd billet
 bash build.sh beta
+bash build.sh dev
 popd
 
 echo "${GREEN}-> Building went well. Will launch Canarie beta build.${NC}"
@@ -47,6 +48,8 @@ docker run                                                                     \
            --env BILLET_IMAGE='athilenius/billet:beta'                         \
            --env MONGO_TARGET='172.17.0.1:27018'                               \
            --env NODE_ENV='production'                                         \
+           --env RUN_TYPE='beta'                                               \
+           --env PUBLISHED_PORT=5001                                           \
            --name forge_beta                                                   \
            --privileged                                                        \
            --publish 5001:80                                                   \
@@ -60,8 +63,10 @@ docker rm -f forge_dev || echo 'Continueing'
 echo "${GREEN}-> Launching Dev build (Secured, non-minified)${NC}"
 docker run                                                                     \
            --detach                                                            \
-           --env BILLET_IMAGE='athilenius/billet:beta'                         \
+           --env BILLET_IMAGE='athilenius/billet:dev'                          \
            --env MONGO_TARGET='172.17.0.1:27019'                               \
+           --env RUN_TYPE='dev'                                                \
+           --env PUBLISHED_PORT=5002                                           \
            --name forge_dev                                                    \
            --privileged                                                        \
            --publish 5002:80                                                   \
