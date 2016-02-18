@@ -23,6 +23,7 @@ fi
 
 pushd src
 echo "${GREEN}-> Building NPM modules${NC}"
+rm -rf ~/.npm && npm cache clear
 npm install --production
 popd
 
