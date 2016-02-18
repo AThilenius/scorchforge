@@ -24,16 +24,14 @@ var newShortUuid = function() {
 };
 
 // create shell process
-var term = pty.fork(
-  process.env.SHELL || 'bash', [], {
-    name: require('fs').existsSync(
-        '/usr/share/terminfo/x/xterm-256color') ?
-      'xterm-256color' : 'xterm',
-    cols: 80,
-    rows: 24,
-    cwd: process.env.HOME
-  }
-);
+var term = pty.fork('bash', [], {
+  name: require('fs').existsSync(
+      '/usr/share/terminfo/x/xterm-256color') ?
+    'xterm-256color' : 'xterm',
+  cols: 80,
+  rows: 24,
+  cwd: process.env.HOME
+});
 
 // store term's output into buffer or emit through socket
 term.on('data', (data) => {
@@ -42,20 +40,25 @@ term.on('data', (data) => {
 
 var expressApp = express();
 var server = http.createServer(expressApp);
-
-// let term.js handle req/res
 expressApp.use(terminal.middleware());
-
-// let server listen on the port
 server.listen(7390);
-
-// let socket.io handle sockets
 io = io.listen(server, {
   log: true
 });
-//io.set('origins', '*');
+
+// Set timeout now incase noone ever connects
+var timeoutFuture = setTimeout(() => {
+  process.exit(0);
+}, 1000 * 60);
+var connectedCount = 0;
 
 io.sockets.on('connection', (s) => {
+  connectedCount++;
+  if (timeoutFuture) {
+    console.log('Client connected, canceling shutdown.');
+    clearTimeout(timeoutFuture);
+    timeoutFuture = null;
+  }
   socket = s;
 
   socket.on('spawn', (data, callback) => {
@@ -104,6 +107,14 @@ io.sockets.on('connection', (s) => {
   });
 
   socket.on('disconnect', () => {
+    connectedCount--;
+    if (connectedCount <= 0 && !timeoutFuture) {
+      // Set 5 min timeout
+      console.log('Billet session went idle. Shutting down in 60 seconds.');
+      timeoutFuture = setTimeout(() => {
+        process.exit(0);
+      }, 1000 * 60);
+    }
     socket = null;
   });
 

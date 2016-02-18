@@ -4,7 +4,7 @@
 var app = angular.module('app');
 
 /**
- * Manages a user's LB Workspaces
+ * Manages a user's ShareJS Workspaces
  */
 app.service('workspaces', ['$rootScope', '$mdToast', 'atTextDialog', 'persons',
   function($rootScope, $mdToast, atTextDialog, persons) {

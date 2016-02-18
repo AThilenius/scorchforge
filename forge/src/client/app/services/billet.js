@@ -71,33 +71,33 @@ app.service('billet', [
   'LoopBackAuth',
   function($timeout, Person, LoopBackAuth) {
 
-    // DEBUG
-    window.billet = this;
-
     this.readyCallbacks = [];
-    this.lastSeenStatus = null;
     this.error = null;
     this.billetSocket = null;
     this.defferedSpawns = [];
 
     // Connect to the LoopBack hosted Socket.IO and request a login
-    this.connect_ = function() {
+    this.connect = function() {
       var lbSocket = io.connect();
       lbSocket.on('connect', () => {
-        console.log('lb connect');
-        lbSocket.on('statusUpdate', (data) => {
-          lastSeenStatus = data;
-          if (lastSeenStatus.stage === 3) {
-            // Connect to the give billet session
-            this.billetSocket = io.connect(location.protocol +
-              '//' +
-              location.hostname, {
-                path: '/billet/' + Person.getCurrentId() +
-                  '/socket.io'
-              });
+        console.log('Connected to the primary LoopBack Socket.io');
+        // Attempt to login with access token
+        lbSocket.emit('login', {
+          accessToken: LoopBackAuth.accessTokenId
+        }, (err, data) => {
+          if (err) {
+            return console.log('Billet login error: ', err);
+          }
+          if (data.ready) {
+            console.log('Connecting to Billet');
+            var url = location.protocol + '//' + location.hostname;
+            this.billetSocket = io.connect(url, {
+              path: '/billet/' + Person.getCurrentId() +
+                '/socket.io'
+            });
             // On Billet-Direct connection
             this.billetSocket.on('connect', () => {
-              console.log('billet connect');
+              console.log('Connected to Billet!');
               this.billetSocket.emit('mount', {
                 otDocId: Person.getCurrentId(),
                 mountPoint: '/root/forge'
@@ -113,18 +113,9 @@ app.service('billet', [
             });
           }
         });
-        // Attempt to login with access token
-        lbSocket.emit('login', {
-          accessToken: LoopBackAuth.accessTokenId
-        }, (err) => {
-          $timeout(function() {
-            this.error = err;
-          });
-        });
 
       });
     };
-    this.connect_();
 
     /**
      * Should be called only when a billet socket is open and active

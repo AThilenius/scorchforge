@@ -70,6 +70,16 @@ module.exports = function(grunt) {
           'formatting': 'PRETTY_PRINT'
         }
       },
+      'app': {
+        'js': ['client/app/**/*.js', '!client/app/*.js'],
+        'jsOutputFile': 'client/build/compiled_app.js',
+        'maxBuffer': 5000,
+        'options': {
+          'compilation_level': 'SIMPLE_OPTIMIZATIONS',
+          'debug': null,
+          'formatting': 'PRETTY_PRINT'
+        }
+      },
       'libs_prod': {
         'js': ['client/build/_bower.js', 'client/build/lb-services.js'],
         'jsOutputFile': 'client_prod/build/01_lib-' + timestamp + '.js',
@@ -88,7 +98,7 @@ module.exports = function(grunt) {
       },
       'app_prod': {
         'js': ['client/app/**/*.js', '!client/app/*.js',
-          '!client/appl/base/**/*.js'
+          '!client/app/base/**/*.js'
         ],
         'jsOutputFile': 'client_prod/build/04_app-' + timestamp + '.js',
         'maxBuffer': 5000,
@@ -167,6 +177,7 @@ module.exports = function(grunt) {
     'loopback_sdk_angular',
     'bower_concat',
     'closure-compiler:libs',
+    'closure-compiler:app',
     'concat:app_css'
   ]);
 
