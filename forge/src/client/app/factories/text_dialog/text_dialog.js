@@ -9,7 +9,8 @@ angular.module('app').factory('atTextDialog', [
       properties.cancel = properties.cancel || 'Cancel';
       properties.noBlank = properties.noBlank || true;
       return $mdDialog.show({
-        controller: function($scope, $mdDialog) {
+        controller: ['$scope', '$mdDialog', function($scope,
+          $mdDialog) {
           $scope.properties = properties;
           $scope.model = properties.placeholder || '';
           if (properties.change) {
@@ -17,7 +18,9 @@ angular.module('app').factory('atTextDialog', [
               properties.change($scope.model);
             });
           }
-          $scope.cancel = function() { $mdDialog.cancel(); };
+          $scope.cancel = function() {
+            $mdDialog.cancel();
+          };
           $scope.okay = function() {
             if ($scope.properties.noBlank && isBlank($scope.model)) {
               $mdDialog.cancel();
@@ -28,7 +31,7 @@ angular.module('app').factory('atTextDialog', [
               }
             }
           };
-        },
+        }],
         templateUrl: 'app/factories/text_dialog/text_dialog.htm',
         parent: angular.element(document.body),
         clickOutsideToClose: true

@@ -34,14 +34,12 @@ angular.module('thilenius.navbar', [])
     };
   }])
   .directive('atNavbar', [
-    '$rootScope',
     '$location',
     '$mdToast',
     'Person',
     'workspaces',
     'projects',
-    function($rootScope, $location, $mdToast, Person, workspaces,
-      projects) {
+    function($location, $mdToast, Person, workspaces, projects) {
       return {
         templateUrl: 'app/directives/navbar/navbar.htm',
         link: function($scope, iElement, iAttrs) {
