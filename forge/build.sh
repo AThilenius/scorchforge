@@ -26,6 +26,7 @@ mkdir bin
 
 pushd src
 echo "${GREEN}-> Running 'npm install' for prod client assets${NC}"
+rm -rf ~/.npm && npm cache clear
 npm install
 echo "${GREEN}-> Running 'bower install' for prod client assets${NC}"
 bower install
