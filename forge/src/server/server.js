@@ -65,35 +65,39 @@ boot(app, __dirname, function(err) {
     });
 
     wss.on('connection', function(client) {
-      var stream = new Duplex({
-        objectMode: true
-      });
-      stream._write = function(chunk, encoding, callback) {
-        client.send(JSON.stringify(chunk), function(error) {
-          if (error) {
-            console.log('Socket error: ', error);
-          }
+      try {
+        var stream = new Duplex({
+          objectMode: true
         });
-        return callback();
-      };
-      stream._read = function() {};
-      stream.headers = client.upgradeReq.headers;
-      stream.remoteAddress = client.upgradeReq.connection.remoteAddress;
-      client.on('message', function(data) {
-        return stream.push(JSON.parse(data));
-      });
-      stream.on('error', function(msg) {
-        return client.close(msg);
-      });
-      client.on('close', function(reason) {
-        stream.push(null);
-        stream.emit('close');
-        return client.close(reason);
-      });
-      stream.on('end', function() {
-        return client.close();
-      });
-      return share.listen(stream);
+        stream._write = function(chunk, encoding, callback) {
+          client.send(JSON.stringify(chunk), function(error) {
+            if (error) {
+              console.log('Socket error: ', error);
+            }
+          });
+          return callback();
+        };
+        stream._read = function() {};
+        stream.headers = client.upgradeReq.headers;
+        stream.remoteAddress = client.upgradeReq.connection.remoteAddress;
+        client.on('message', function(data) {
+          return stream.push(JSON.parse(data));
+        });
+        stream.on('error', function(msg) {
+          return client.close(msg);
+        });
+        client.on('close', function(reason) {
+          stream.push(null);
+          stream.emit('close');
+          return client.close(reason);
+        });
+        stream.on('end', function() {
+          return client.close();
+        });
+        return share.listen(stream);
+      } catch (e) {
+        console.log('Fatal error in ShareJS WebSocket handlers: ', e);
+      }
     });
 
     //===  ShareJS  ============================================================
@@ -102,26 +106,29 @@ boot(app, __dirname, function(err) {
 
     // For requesting a development environment
     app.io.on('connection', function(socket) {
-
-      // Authenticate new connections, and fire up a Billet session
-      socket.on('login', function(data, callback) {
-        var accessToken = data.accessToken;
-        if (!accessToken) {
-          return callback('Missing AccessToken');
-        }
-        // Check the token
-        app.models.AccessToken.findById(accessToken, function(err,
-          token) {
-          if (err || !token) {
-            return callback('Invalid AccessToken');
+      try {
+        // Authenticate new connections, and fire up a Billet session
+        socket.on('login', function(data, callback) {
+          var accessToken = data.accessToken;
+          if (!accessToken) {
+            return callback('Missing AccessToken');
           }
-          // Authorized, file up a Billet session, return once the container is
-          // ready.
-          billet.createSession(accessToken, token.userId, (err, data) => {
-            callback(err, data);
+          // Check the token
+          app.models.AccessToken.findById(accessToken, function(err,
+            token) {
+            if (err || !token) {
+              return callback('Invalid AccessToken');
+            }
+            // Authorized, file up a Billet session, return once the container is
+            // ready.
+            billet.createSession(accessToken, token.userId, (err, data) => {
+              callback(err, data);
+            });
           });
         });
-      });
+      } catch (e) {
+        console.log('Fatal exception in Socket.IO handlers: ', e);
+      }
 
     });
 
