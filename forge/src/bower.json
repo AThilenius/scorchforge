@@ -5,7 +5,6 @@
     "angular": "~1.4.8",
     "angular-animate": "~1.4.8",
     "angular-aria": "~1.4.8",
-    "angular-blockly": "git://github.com/cdjackson/angular-blockly",
     "angular-bootstrap": "~1.0.0",
     "angular-bootstrap-contextmenu": "~0.9.4",
     "angular-cookies": "~1.4.8",
