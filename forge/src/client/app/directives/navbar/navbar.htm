@@ -2,7 +2,8 @@
   <md-toolbar class="md-menu-toolbar" style="min-height: 25px;">
     <md-menu-bar>
 
-      <img src="assets/flame-512-inverse.png" height="24" width="24">
+      <img src="assets/flame-512-inverse.png" height="24" width="24"
+           style="vertical-align: middle;">
 
       <!--Forge-->
       <md-menu>
@@ -87,6 +88,11 @@
           <md-menu-item>
             <md-button ng-click="addProjectFromModal()">
               Create New Project
+            </md-button>
+          </md-menu-item>
+          <md-menu-item>
+            <md-button ng-click="addSharedProjectFromModal()">
+              Add Shared Project
             </md-button>
           </md-menu-item>
 

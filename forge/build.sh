@@ -29,6 +29,7 @@ echo "${GREEN}-> Running 'npm install' for prod client assets${NC}"
 rm -rf ~/.npm && npm cache clear
 npm install
 echo "${GREEN}-> Running 'bower install' for prod client assets${NC}"
+bower cache clean
 bower install
 echo "${GREEN}-> Running 'grunt build' for dev client assets${NC}"
 PORT=9000 grunt build

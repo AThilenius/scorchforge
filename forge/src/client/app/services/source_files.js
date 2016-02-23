@@ -20,10 +20,17 @@ app.service('sourceFiles', [
     this.supressSave_ = false;
     this.ephemeralCache_ = {};
 
+    /**
+     * All otDocs for all source files in the loaded project in the form:
+     * <otDocId, future<otDoc>>
+     */
+    this.otDocCache_ = {};
+
     // Watch for project change events. Need to unload any open source docs
     $rootScope.$watch(() => {
       return projects.active;
     }, (newVal, oldVal) => {
+      // Close all DockSpawn windows
       this.activeEphemeral.forEach((ephemeral) => {
         // Unload the doc
         ephemeral.otDoc.unsubscribe();
@@ -31,6 +38,13 @@ app.service('sourceFiles', [
         delete ephemeral.dsData;
         delete ephemeral.otDoc;
       });
+      // Unsubscribe all source files
+      _.chain(this.otDocCache_).values().each((otDoc) => {
+        otDoc.promise.then((otDoc) => {
+          otDoc.unsubscribe();
+        });
+      });
+      this.otDocCache_ = {};
       this.root_ = this.rootContext_ = null;
       this.activeEphemeral = [];
       if (newVal) {
@@ -39,15 +53,17 @@ app.service('sourceFiles', [
           // I might be leaking contexts here...
           this.rootContext_ = otDoc.createContext().createContextAt(
             []);
-          this.rootContext_.on('child op', () => {
+          var doFn = () => {
             this.root_ = this.rootContext_.get();
             this.supressSave_ = true;
-            this.fileTree = JSON.parse(angular.toJson(this.root_
-              .fileTree));
-          });
-          this.root_ = this.rootContext_.get();
-          this.supressSave_ = true;
-          this.fileTree = JSON.parse(angular.toJson(this.root_.fileTree));
+            this.fileTree = JSON.parse(angular.toJson(this.root_.fileTree));
+            // Load all not-loaded OT Docs into cache
+            this.fileTree.eachRecursive('children', (item) => {
+              this.loadOtDoc_(item.otDocId);
+            });
+          };
+          this.rootContext_.on('child op', doFn);
+          doFn();
         });
       }
     });
@@ -91,6 +107,26 @@ app.service('sourceFiles', [
           );
         }
       });
+    };
+
+    this.loadOtDoc_ = function(otDocId) {
+      if (otDocId && !this.otDocCache_[otDocId]) {
+        var otDoc = otShare.ot.get('source_files', otDocId);
+        var future = $q.defer();
+        otDoc.subscribe();
+        otDoc.whenReady(() => {
+          if (!otDoc.type) {
+            otDoc.create('text');
+          }
+          if (otDoc.type && otDoc.type.name === 'text') {
+            future.$$resolve(otDoc);
+          } else {
+            otDoc.unsubscribe();
+          }
+        });
+        this.otDocCache_[otDocId] = future;
+      }
+      return this.otDocCache_[otDocId];
     };
 
     /**
@@ -155,55 +191,82 @@ app.service('sourceFiles', [
         return e.otDocId === otDocId;
       });
       if (existing) {
-        // Bring the window to front
+        existing.dsData.dockNode.parent.container.tabHost.setActiveTab(
+          existing.dsData.dockNode.container);
         return;
       }
-      // Start by getting/create the OT Document
-      var otDoc = otShare.ot.get('source_files', otDocId);
-      otDoc.subscribe();
-      otDoc.whenReady(() => {
-        if (!otDoc.type) {
-          otDoc.create('text');
+      // Start by getting the OT Document
+      this.loadOtDoc_(otDocId).promise.then((otDoc) => {
+        // Then create the DockSpawn window with ACE in it
+        var dsData = {};
+        var ephemeral = this.getEphemeral(otDocId);
+        ephemeral.otDocId = otDocId;
+        ephemeral.dsData = dsData;
+        ephemeral.otDoc = otDoc;
+        dsData.domElement = angular.element(
+          '<div class="fill" at-ace-editor ephemeral="ephemeral"></div>'
+        )[0];
+        angular.element(document.getElementsByTagName('body')).append(
+          dsData.domElement);
+        $compile(dsData.domElement)({
+          ephemeral
+        });
+        dsData.panelContainer = new dockspawn.PanelContainer(dsData
+          .domElement,
+          atDockspawn.dockManager);
+        // Set panel attributes
+        dsData.panelContainer.setTitle(name);
+        dsData.dockNode = atDockspawn.dockManager.dockFill(
+          atDockspawn.documentNode, dsData.panelContainer);
+        this.activeEphemeral.push(ephemeral);
+        dsData.panelContainer.onClose = (container) => {
+          ephemeral.otDoc.unsubscribe();
+          delete ephemeral.dsData;
+          delete ephemeral.otDoc;
+          this.activeEphemeral = _(this.activeEphemeral).without(
+            ephemeral);
+        };
+      });
+    };
+
+    /**
+     * Snapshots all files into a Zip BLOB. This will be sent back in a callback
+     * because we 'might' not have finished loading all the files yet.
+     */
+    this.snapshotFilesToZip = function(cb) {
+      if (!this.fileTree) {
+        return;
+      }
+      var zip = new JSZip();
+      // Flatten the tree of { relativePath: ..., otDocId: ... }
+      var pathToOtDocId = [];
+      var flatten = (tree, path) => {
+        if (!tree) {
+          return;
         }
-        if (otDoc.type && otDoc.type.name === 'text') {
-          // Then create the DockSpawn window with ACE in it
-          var dsData = {};
-          var ephemeral = this.getEphemeral(otDocId);
-          ephemeral.otDocId = otDocId;
-          ephemeral.dsData = dsData;
-          ephemeral.otDoc = otDoc;
-          dsData.domElement = angular.element(
-            '<div class="fill" at-ace-editor ephemeral="ephemeral"></div>'
-          )[0];
-          angular.element(document.getElementsByTagName('body')).append(
-            dsData.domElement);
-          $compile(dsData.domElement)({
-            ephemeral
-          });
-          dsData.panelContainer = new dockspawn.PanelContainer(dsData
-            .domElement,
-            atDockspawn.dockManager);
-          // Set panel attributes
-          dsData.panelContainer.setTitle(name);
-          dsData.dockNode = atDockspawn.dockManager.dockFill(
-            atDockspawn.documentNode, dsData.panelContainer);
-          this.activeEphemeral.push(ephemeral);
-          dsData.panelContainer.onClose = (container) => {
-            ephemeral.otDoc.unsubscribe();
-            delete ephemeral.dsData;
-            delete ephemeral.otDoc;
-            this.activeEphemeral = _(this.activeEphemeral).without(
-              ephemeral);
-          };
-        } else {
-          otDoc.unsubscribe();
-          $mdToast.show($mdToast.simple()
-            .textContent('Failed to OT Doc for File!')
-            .position('top right')
-            .hideDelay(6000)
-            .theme('error')
-          );
-        }
+        tree.forEach((item) => {
+          if (item.otDocId) {
+            pathToOtDocId.push({
+              relativePath: path + '/' + item.name,
+              otDocId: item.otDocId
+            });
+          }
+          flatten(item.children, path + '/' + item.name);
+        });
+      };
+      flatten(this.fileTree, '');
+      var itemCount = pathToOtDocId.length;
+      pathToOtDocId.forEach((tuple) => {
+        // Get the data from the (potentially not-yet loaded) Ot Doc
+        this.loadOtDoc_(tuple.otDocId).promise.then((otDoc) => {
+          zip.file(tuple.relativePath, otDoc.getSnapshot());
+          if (--itemCount === 0) {
+            // We are done loading, invoke the callback
+            cb(zip.generate({
+              type: 'blob'
+            }));
+          }
+        });
       });
     };
 

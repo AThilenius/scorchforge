@@ -139,8 +139,42 @@ app.service('projects', [
         done: (val) => {
           var project = {
             name: val,
+            sharedWith: [],
             otDocId: newShortUuid()
           };
+          that.rootContext_.push(['items'], project, () => {
+            // Also open the doc and add it to cache
+            this.loadOtDocToCache_(project.otDocId).promise.then(() => {
+              that.active = this.all[this.all.length - 1];
+              $mdToast.show($mdToast.simple()
+                .textContent(`Project ${val} created!`)
+                .position('top right')
+                .hideDelay(3000)
+                .theme('success')
+              );
+            });
+          });
+        }
+      });
+    };
+
+    this.addSharedFromModal = function() {
+      var that = this;
+      atTextDialog({
+        title: 'Project Name',
+        content: 'New Project Name',
+        showSecond: true,
+        secondContent: 'Shared Project ID',
+        done: (val, second) => {
+          var project = {
+            name: val,
+            sharedWith: [],
+            otDocId: second
+          };
+          // Quick sanity check
+          if (!second || second.length < 4) {
+            return;
+          }
           that.rootContext_.push(['items'], project, () => {
             // Also open the doc and add it to cache
             this.loadOtDocToCache_(project.otDocId).promise.then(() => {

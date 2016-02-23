@@ -16,6 +16,15 @@ app.service('workspaces', ['$rootScope', '$mdToast', 'atTextDialog', 'persons',
     this.root_ = null;
     this.context = null;
 
+    const sharedWithMeWorkspace_ = {
+      name: 'Shared With Me',
+      shared: true,
+      projects: {
+        index: -1,
+        items: []
+      }
+    };
+
     /**
      * Watch for persons switches, persons.active so we can reload context
      */
@@ -40,6 +49,60 @@ app.service('workspaces', ['$rootScope', '$mdToast', 'atTextDialog', 'persons',
           this.active = this.root_.items[this.root_.index];
           this.activeIndex = this.root_.index;
         }
+      }
+    });
+
+    /**
+     * Watch for changes to the 'share' doc for sharing projects.
+     */
+    $rootScope.$watch(() => {
+      return persons.shareContext;
+    }, (newVal, oldVal) => {
+      if (newVal && persons.context && this.context) {
+        var addProjectsToSharedWs = (sharedWs, projects) => {
+          projects.forEach((project) => {
+            // See if the workspace already has this project. Go by otDocId
+            var existingProject = _(project.items).find((p) => {
+              return p.otDocId === project.otDocId;
+            });
+            if (!existingProject) {
+              // Add the project
+              sharedWs.push(['items'], {
+                ownerId: project.ownerId,
+                name: project.name,
+                otDocId: project.otDocId
+              }, () => {
+                // Also open the doc and add it to cache
+                this.loadOtDocToCache_(project.otDocId).promise .then(() => {
+                  $mdToast.show($mdToast.simple()
+                    .textContent(project.ownerFullName + ' shared ' +
+                      project.name + ' with you!')
+                    .position('top right')
+                    .hideDelay(3000)
+                    .theme('success')
+                  );
+                });
+              });
+            }
+          });
+        };
+        // Takes in the root JSON node for the 'shared' doc, creates a 'Shared
+        // With Me' workspaces if needed and adds any missing shared docs to
+        // that workspace.
+        var loadShared = (shareRoot) => {
+          var existing = _(this.all).find((ws) => {
+            return ws.shared;
+          });
+          if (!existing) {
+            // Create the shared workspace
+            this.context.push(['items'], sharedWithMeWorkspace_, () => {
+              var newWs = this.all[this.all.length - 1];
+              addProjectsToSharedWs(newWs, newVal.get());
+            });
+          } else {
+            addProjectsToSharedWs(sharedWithMeWorkspace, newVal.get());
+          }
+        };
       }
     });
 

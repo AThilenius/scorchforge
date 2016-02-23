@@ -13,6 +13,7 @@ angular.module('app').factory('atTextDialog', [
           $mdDialog) {
           $scope.properties = properties;
           $scope.model = properties.placeholder || '';
+          $scope.secondModel = properties.secondPlaceholder;
           if (properties.change) {
             $scope.$watch('model', function(oldval, newval) {
               properties.change($scope.model);
@@ -25,9 +26,9 @@ angular.module('app').factory('atTextDialog', [
             if ($scope.properties.noBlank && isBlank($scope.model)) {
               $mdDialog.cancel();
             } else {
-              $mdDialog.hide($scope.model);
+              $mdDialog.hide($scope.model, $scope.secondModel);
               if ($scope.properties.done) {
-                $scope.properties.done($scope.model);
+                $scope.properties.done($scope.model, $scope.secondModel);
               }
             }
           };

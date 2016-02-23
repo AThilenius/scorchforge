@@ -154,6 +154,7 @@ dockspawn.TabHost = function(tabStripDirection, displayCloseButton)
     this.tabListElement.classList.add("tab-handle-list-container");
     this.separatorElement.classList.add("tab-handle-content-seperator");
     this.contentElement.classList.add("tab-content");
+    this.tabChangedHandlers = [];
 };
 
 // constants
@@ -262,8 +263,9 @@ dockspawn.TabHost.prototype.onTabPageSelected = function(page)
     });
 
     // If a callback is defined, then notify it of this event
-    //if (this.onTabChanged)
-    //    this.onTabChanged(this, page);
+    this.tabChangedHandlers.forEach((handler) => {
+      handler(page);
+    });
 };
 
 dockspawn.TabPage = function(host, container)

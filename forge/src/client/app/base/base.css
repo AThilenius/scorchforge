@@ -19,6 +19,10 @@ div:focus {
   border: 0;
 }
 
+img {
+  vertical-align: baseline;
+}
+
 .noselect {
   cursor: default;
   -webkit-touch-callout: none;
@@ -102,6 +106,14 @@ div:focus {
 
 .text-align-center {
   text-align: center;
+}
+
+.panel-titlebar-text {
+  color: white !important;
+}
+
+md-toast {
+  z-index: 10000 !important;
 }
 
 ::-webkit-scrollbar {
