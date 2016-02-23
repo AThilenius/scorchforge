@@ -1,0 +1,44 @@
+<div class="fill tone-cplate-in tone-text-primary settings-wrapper">
+  <div ng-show="projects.active" class="fill">
+    <div ng-show="false" class="animate-show settings-plate">
+      <div class="chipsdemoContactChips" style="position: static;">
+        <div style="width: 100%; text-align: center; padding-bottom: 4px;
+          border-bottom: 1px solid white; font-size: 1.2em;
+          padding-top: 10px;">
+          Shared With
+        </div>
+        <md-content class="md-padding autocomplete" layout="column"
+                    style="background-color: transparent;">
+          <md-contact-chips ng-model="contacts"
+                            md-contacts="querySearch($query)"
+                            md-contact-name="fullName"
+                            md-contact-image="image"
+                            md-contact-email="email"
+                            md-require-match="true"
+                            md-highlight-flags="i"
+                            filter-selected="true"
+                            placeholder="Enter Name Or Email">
+          </md-contact-chips>
+        </md-content>
+
+      </div>
+    </div>
+    <!--Under Construction-->
+    <div class="fill noselect" style="display: table; text-align: center;">
+      <div class="tone-text-secondary"
+        style="display:table-cell; vertical-align:middle;">
+        <img src="assets/white-under-construction-512.png" width="80%"
+             style="vertical-align: middle;">
+      </div>
+    </div>
+  </div>
+
+  <!--No Active Project-->
+  <div ng-show="!projects.active" class="fill noselect"
+    style="display: table; text-align: center;">
+    <div class="tone-text-secondary"
+      style="display:table-cell; vertical-align:middle;">
+      No Project Selected
+    </div>
+  </div>
+</div>

@@ -10,7 +10,7 @@ app.service('persons', ['$rootScope', '$q', '$mdToast', 'Person',
   'atTextDialog', 'otShare',
   function($rootScope, $q, $mdToast, Person, atTextDialog, otShare) {
 
-    const defaultWorkspace = {
+    const personalWorkspace = {
       name: 'Personal',
       projects: {
         index: -1,
@@ -28,8 +28,19 @@ app.service('persons', ['$rootScope', '$q', '$mdToast', 'Person',
      */
     this.otDoc_ = null;
 
+    /**
+     * The root context for this users 'share' document
+     */
+    this.shareContext = null;
+
+    /**
+     * The OT Document for the share
+     */
+    this.shareOtDoc_ =  null;
+
     // Load it up
     if (Person.getCurrentId()) {
+      // Watch persons for workspace/project changes
       var otDoc = otShare.ot.get('persons', Person.getCurrentId());
       otDoc.subscribe();
       otDoc.whenReady(() => {
@@ -37,7 +48,7 @@ app.service('persons', ['$rootScope', '$q', '$mdToast', 'Person',
           otDoc.create('json0', {
             workspaces: {
               index: 0,
-              items: [defaultWorkspace]
+              items: [personalWorkspace]
             }
           });
         }
@@ -52,6 +63,25 @@ app.service('persons', ['$rootScope', '$q', '$mdToast', 'Person',
             .hideDelay(6000)
             .theme('error')
           );
+        }
+      });
+      // Also watch for changes to 'shares' and add them to the shared
+      // workspace, display a toast when that is done.
+      var shareOtDoc = otShare.ot.get('shares', Person.getCurrentId());
+      shareOtDoc.subscribe();
+      shareOtDoc.whenReady(() => {
+        if (!shareOtDoc.type) {
+          shareOtDoc.create('json0', {
+            sharedProjects: [
+              // { ownerFullName, ownderId, name, otDocId }
+            ]
+          });
+        }
+        if (shareOtDoc.type && shareOtDoc.type.name === 'json0') {
+          this.shareContext = shareOtDoc.createContext().createContextAt([]);
+          this.shareOtDoc_ = shareOtDoc;
+        } else {
+          shareOtDoc.unsubscribe();
         }
       });
     }

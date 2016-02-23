@@ -41,6 +41,19 @@ forgeApp.controller('forgeController', [
     sourceFiles, atRateLimiter, otShare, atDockspawn, compiler, billet) {
     $scope.forgeVersion = window.FORGE_VERSION;
 
+    //var toast = $mdToast.simple()
+      //.textContent('Action Toast!')
+      //.action('OK')
+      //.action('Reject')
+      //.highlightAction(false)
+      //.position('top right')
+      //.theme('success');
+    //$mdToast.show(toast).then(function(response) {
+      //if (response == 'ok') {
+        //alert('You clicked \'OK\'.');
+      //}
+    //});
+
     // Global state object (not intended for serialization)
     $scope.state = {
       viewingAsRole: 'student'
@@ -53,6 +66,10 @@ forgeApp.controller('forgeController', [
     // Bind for in-view calling
     $scope.addProjectFromModal = function() {
       projects.addFromModal();
+    };
+
+    $scope.addSharedProjectFromModal = function() {
+      projects.addSharedFromModal();
     };
 
     // Bind for in-view calling

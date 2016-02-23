@@ -24,6 +24,8 @@ app.service('atDockspawn', [function() {
     onresized(null);
     var project = new dockspawn.PanelContainer(document.getElementById(
       'projectWindow'), this.dockManager);
+    var settings = new dockspawn.PanelContainer(document.getElementById(
+      'settingsWindow'), this.dockManager);
     var output = new dockspawn.PanelContainer(document.getElementById(
       'outputWindow'), this.dockManager);
     // Dock the panels on the dock manager
@@ -31,6 +33,11 @@ app.service('atDockspawn', [function() {
     this.projectNode = this.dockManager.dockLeft(this.documentNode,
       project,
       0.3);
+    this.settingsNode = this.dockManager.dockFill(this.projectNode,
+      settings,
+      0.3);
+    this.projectNode.parent.container.tabHost.setActiveTab(
+        this.projectNode.container);
     this.outputNode = this.dockManager.dockDown(this.documentNode,
       output,
       0.3);

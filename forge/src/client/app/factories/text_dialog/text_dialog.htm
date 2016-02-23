@@ -14,6 +14,13 @@
       </div>
     </md-dialog-content>
 
+    <md-dialog-content ng-show="properties.showSecond">
+      <div class="md-dialog-content">
+        <p>{{ properties.secondContent }}</p>
+        <input style="width:100%;" ng-model="secondModel"></input>
+      </div>
+    </md-dialog-content>
+
     <md-dialog-actions layout="row">
       <span flex></span>
       <md-button ng-click="cancel()">

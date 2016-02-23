@@ -30,11 +30,11 @@ angular.module('thilenius.ace_editor', [])
           });
 
           var focus = function(focusEditor) {
-            if ($rootScope.focusedFile) {
-              $rootScope.focusedFile.focused = false;
-            }
-            $scope.ephemeral.focused = true;
-            $rootScope.focusedFile = $scope.ephemeral;
+            //if ($rootScope.focusedFile) {
+            //$rootScope.focusedFile.focused = false;
+            //}
+            //$scope.ephemeral.focused = true;
+            //$rootScope.focusedFile = $scope.ephemeral;
             if (focusEditor) {
               editor.focus();
             }
