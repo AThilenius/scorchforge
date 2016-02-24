@@ -81,7 +81,9 @@ boot(app, __dirname, function(err) {
         stream.headers = client.upgradeReq.headers;
         stream.remoteAddress = client.upgradeReq.connection.remoteAddress;
         client.on('message', function(data) {
-          return stream.push(JSON.parse(data));
+          try {
+            return stream.push(JSON.parse(data));
+          } catch (e) { }
         });
         stream.on('error', function(msg) {
           return client.close(msg);
