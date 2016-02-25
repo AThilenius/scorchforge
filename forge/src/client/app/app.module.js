@@ -150,9 +150,10 @@ app.filter('capitalize', function() {
   }
 });
 
-app.config(function($mdThemingProvider) {
+app.config(['$mdThemingProvider',
+  function($mdThemingProvider) {
     $mdThemingProvider.theme('default')
         .primaryPalette('blue')
         .accentPalette('red')
         .dark();
-  });
+  }]);
