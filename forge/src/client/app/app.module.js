@@ -59,7 +59,7 @@ app.config([
 app.run(['formlyConfig', 'formlyValidationMessages',
   function(formlyConfig, formlyValidationMessages) {
     formlyValidationMessages.addStringMessage('required',
-      'This field is required');
+        'This field is required');
     formlyValidationMessages.addStringMessage('email', 'Email is invalid');
     formlyValidationMessages.addStringMessage('minlength', 'Too short');
 
@@ -94,19 +94,19 @@ app.run(['formlyConfig', 'formlyValidationMessages',
           },
           expressionProperties: {
             'templateOptions.disabled': function(viewValue,
-              modelValue,
-              scope) {
+                                                 modelValue,
+                                                 scope) {
               var matchField = find(scope.fields, 'key', options.data
-                .fieldToMatch);
+                  .fieldToMatch);
               if (!matchField) {
                 throw new Error(
-                  'Could not find a field for the key ' +
-                  options.data.fieldToMatch);
+                    'Could not find a field for the key ' +
+                    options.data.fieldToMatch);
               }
               var model = options.data.modelToMatch || scope.model;
               var originalValue = model[options.data.fieldToMatch];
               var invalidOriginal = matchField.formControl &&
-                matchField.formControl.$invalid;
+                  matchField.formControl.$invalid;
               return !originalValue || invalidOriginal;
             }
           },
@@ -115,11 +115,11 @@ app.run(['formlyConfig', 'formlyValidationMessages',
               expression: function(viewValue, modelValue, fieldScope) {
                 var value = modelValue || viewValue;
                 var model = options.data.modelToMatch || fieldScope
-                  .model;
+                        .model;
                 return value === model[options.data.fieldToMatch];
               },
               message: options.data.matchFieldMessage ||
-                '"Must match"'
+              '"Must match"'
             }
           }
         };
@@ -149,3 +149,10 @@ app.filter('capitalize', function() {
     return (!!input) ? input.charAt(0).toUpperCase() + input.substr(1).toLowerCase() : '';
   }
 });
+
+app.config(function($mdThemingProvider) {
+    $mdThemingProvider.theme('default')
+        .primaryPalette('blue')
+        .accentPalette('red')
+        .dark();
+  });
