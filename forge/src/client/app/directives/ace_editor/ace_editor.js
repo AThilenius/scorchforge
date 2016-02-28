@@ -11,35 +11,25 @@ angular.module('thilenius.ace_editor', [])
     '$timeout',
     '$rootScope',
     'compiler',
-    function($timeout, $rootScope, compiler) {
+    'aceSettings',
+    function($timeout, $rootScope, compiler, aceSettings) {
       return {
         restrict: 'AE',
         templateUrl: 'app/directives/ace_editor/ace_editor.htm',
         link: function($scope, $element, $attr) {
           var editor = ace.edit($element[0]);
-          window.editor = editor;
           editor.$blockScrolling = Infinity;
-          editor.setTheme('ace/theme/twilight');
+          // TODO(skycoop): Add file type detection
           editor.getSession().setMode('ace/mode/python');
           editor.getSession().setTabSize(2);
-          editor.$blockScrolling = Infinity;
-          editor.setOptions({
-            enableBasicAutocompletion: true,
-            enableSnippets: true,
-            enableLiveAutocompletion: true
+          // Manually set the editor's theme to a dark one. For some reson
+          // setOptions gets defered and it causes the editor to flash white
+          // before loading dark themes.
+          editor.setTheme('ace/theme/monokai');
+          editor.setOptions(aceSettings.values);
+          $rootScope.$on('settings:update', (event, s) => {
+            editor.setOptions(s);
           });
-
-          var focus = function(focusEditor) {
-            //if ($rootScope.focusedFile) {
-            //$rootScope.focusedFile.focused = false;
-            //}
-            //$scope.ephemeral.focused = true;
-            //$rootScope.focusedFile = $scope.ephemeral;
-            if (focusEditor) {
-              editor.focus();
-            }
-          };
-
           // Bind the OT Doc to the editor
           var ctx = $scope.ephemeral.otDoc.createContext();
           var editorDoc = editor.getSession().getDocument();
@@ -96,6 +86,12 @@ angular.module('thilenius.ace_editor', [])
           });
           editor.session.setAnnotations(
             compiler.annotations[$scope.ephemeral.otDocId] || []);
+
+          var focus = function(focusEditor) {
+            if (focusEditor) {
+              editor.focus();
+            }
+          };
         }
       };
     }

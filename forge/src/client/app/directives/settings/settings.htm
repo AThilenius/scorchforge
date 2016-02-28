@@ -1,34 +1,222 @@
+<!--TODO(skycoop): This still needs a lot of cleanup :)-->
 <div class="fill tone-cplate-in tone-text-primary settings-wrapper">
-  <div ng-show="projects.active" class="fill">
-    <div ng-show="false" class="animate-show settings-plate">
-      <div class="chipsdemoContactChips" style="position: static;">
-        <div style="width: 100%; text-align: center; padding-bottom: 4px;
-          border-bottom: 1px solid white; font-size: 1.2em;
-          padding-top: 10px;">
-          Shared With
-        </div>
-        <md-content class="md-padding autocomplete" layout="column"
-                    style="background-color: transparent;">
-          <md-contact-chips ng-model="contacts"
-                            md-contacts="querySearch($query)"
-                            md-contact-name="fullName"
-                            md-contact-image="image"
-                            md-contact-email="email"
-                            md-require-match="true"
-                            md-highlight-flags="i"
-                            filter-selected="true"
-                            placeholder="Enter Name Or Email">
-          </md-contact-chips>
-        </md-content>
+  <div class="fill noselect" style="display: table; text-align: left;">
+    <div class="tone-text-secondary"
+         style="display:table-cell; vertical-align:top;">
+      <div ng-show="true" class="fill">
+        <md-tabs md-dynamic-height md-border-bottom>
+          <md-tab label="Project">
+            <div class="fill noselect"
+                 style="display: table; text-align: center;">
+              <div class="tone-text-secondary"
+                   style="display:table-cell; vertical-align:middle;">
+                <img src="assets/white-under-construction-512.png" width="80%"
+                     style="vertical-align: middle;">
+              </div>
+            </div>
+            <div ng-show="false" class="animate-show settings-plate">
+              <div class="chipsdemoContactChips" style="position: static;">
+                <div style="width: 100%; text-align: center; padding-bottom: 4px;
+                            border-bottom: 1px solid white; font-size: 1.2em;
+                            padding-top: 10px;">
+                  Shared With
+                </div>
+                <md-content class="md-padding autocomplete" layout="column"
+                            style="background-color: transparent;">
+                  <md-contact-chips ng-model="contacts"
+                                    md-contacts="querySearch($query)"
+                                    md-contact-name="fullName"
+                                    md-contact-image="image"
+                                    md-contact-email="email"
+                                    md-require-match="true"
+                                    md-highlight-flags="i"
+                                    filter-selected="true"
+                                    placeholder="Enter Name Or Email">
+                  </md-contact-chips>
+                </md-content>
 
-      </div>
-    </div>
-    <!--Under Construction-->
-    <div class="fill noselect" style="display: table; text-align: center;">
-      <div class="tone-text-secondary"
-        style="display:table-cell; vertical-align:middle;">
-        <img src="assets/white-under-construction-512.png" width="80%"
-             style="vertical-align: middle;">
+              </div>
+            </div>
+          </md-tab>
+        <!--Under Construction-->
+        <md-tab label="Appearence">
+        <md-list ng-cloak>
+        <md-list-item>
+        <p>Theme</p>
+        <md-select ng-model="settings.theme" ng-change="onChange()">
+        <md-optgroup label="Bright">
+        <md-option value="ace/theme/chrome">Chrome</md-option>
+        <md-option value="ace/theme/clouds">Clouds</md-option>
+        <md-option value="ace/theme/crimson_editor">Crimson Editor</md-option>
+        <md-option value="ace/theme/dawn">Dawn</md-option>
+        <md-option value="ace/theme/dreamweaver">Dreamweaver</md-option>
+        <md-option value="ace/theme/eclipse">Eclipse</md-option>
+        <md-option value="ace/theme/github">GitHub</md-option>
+        <md-option value="ace/theme/iplastic">IPlastic</md-option>
+        <md-option value="ace/theme/solarized_light">Solarized Light</md-option>
+        <md-option value="ace/theme/textmate">TextMate</md-option>
+        <md-option value="ace/theme/tomorrow">Tomorrow</md-option>
+        <md-option value="ace/theme/xcode">XCode</md-option>
+        <md-option value="ace/theme/kuroir">Kuroir</md-option>
+        <md-option value="ace/theme/katzenmilch">KatzenMilch</md-option>
+        <md-option value="ace/theme/sqlserver">SQL Server</md-option>
+        </md-optgroup>
+        <md-optgroup label="Dark">
+        <md-option value="ace/theme/ambiance">Ambiance</md-option>
+        <md-option value="ace/theme/chaos">Chaos</md-option>
+        <md-option value="ace/theme/clouds_midnight">Clouds Midnight</md-option>
+        <md-option value="ace/theme/cobalt">Cobalt</md-option>
+        <md-option value="ace/theme/idle_fingers">idle Fingers</md-option>
+        <md-option value="ace/theme/kr_theme">krTheme</md-option>
+        <md-option value="ace/theme/merbivore">Merbivore</md-option>
+        <md-option value="ace/theme/merbivore_soft">Merbivore Soft</md-option>
+        <md-option value="ace/theme/mono_industrial">Mono Industrial</md-option>
+        <md-option value="ace/theme/monokai">Monokai</md-option>
+        <md-option value="ace/theme/pastel_on_dark">Pastel on dark</md-option>
+        <md-option value="ace/theme/solarized_dark">Solarized Dark</md-option>
+        <md-option value="ace/theme/terminal">Terminal</md-option>
+        <md-option value="ace/theme/tomorrow_night">Tomorrow Night</md-option>
+        <md-option value="ace/theme/tomorrow_night_blue">
+          Tomorrow Night Blue
+        </md-option>
+        <md-option value="ace/theme/tomorrow_night_bright">
+          Tomorrow Night Bright
+        </md-option>
+        <md-option value="ace/theme/tomorrow_night_eighties">
+          Tomorrow Night 80s
+        </md-option>
+        <md-option value="ace/theme/twilight">Twilight</md-option>
+        <md-option value="ace/theme/vibrant_ink">Vibrant Ink</md-option>
+        </md-optgroup>
+        </md-select>
+        </md-list-item>
+        <md-list-item>
+        <p>Font Size</p>
+        <md-slider flex md-discrete ng-model="settings.fontSize" step="1"
+                        min="8" max="24"
+        ng-change="onChange()"></md-slider>
+        </md-slider>
+        </md-list-item>
+        <md-list-item>
+        <p>Cursor Style</p>
+        <md-select ng-model="settings.cursorStyle" ng-change="onChange()">
+        <md-option value="ace">Default</md-option>
+        <md-option value="slim">Slim</md-option>
+        <md-option value="smooth">Smooth</md-option>
+        <md-option value="wide">Wide</md-option>
+        </md-select>
+        </md-list-item>
+        <md-list-item>
+        <p>Show Gutter</p>
+        <md-switch ng-model="settings.showGutter" ng-change="onChange()">
+        </md-switch>
+        </md-list-item>
+        <md-list-item ng-show="settings.showGutter">
+        <p>Show Line Numbers</p>
+        <md-switch ng-model="settings.showLineNumbers" ng-change="onChange()">
+        </md-switch>
+        </md-list-item>
+        <md-list-item>
+        <p>Highlight Active Line</p>
+        <md-switch ng-model="settings.highlightActiveLine"
+                   ng-change="onChange()">
+        </md-switch>
+        </md-list-item>
+        <md-list-item ng-show="settings.showGutter">
+        <p>Highlight Active Line in Gutter</p>
+        <md-switch ng-model="settings.highlightGutterLine"
+                   ng-change="onChange()">
+        </md-switch>
+        </md-list-item>
+        <md-list-item>
+        <p>Highlight Selected Word</p>
+        <md-switch ng-model="settings.highlightSelectedWord"
+                   ng-change="onChange()">
+        </md-switch>
+        </md-list-item>
+        <md-list-item>
+        <p>Show Invisible Characters</p>
+        <md-switch ng-model="settings.showInvisibles" ng-change="onChange()">
+        </md-switch>
+        </md-list-item>
+        <md-list-item>
+        <p>Show Print Margin</p>
+        <md-switch ng-model="settings.showPrintMargin" ng-change="onChange()">
+        </md-switch>
+        </md-list-item>
+        <md-list-item>
+        <p>Animated Scrolling</p>
+        <md-switch ng-model="settings.animatedScroll" ng-change="onChange()">
+        </md-switch>
+        </md-list-item>
+        <md-list-item>
+        <p>Show Indent Guides</p>
+        <md-switch ng-model="settings.displayIndentGuides"
+                   ng-change="onChange()">
+        </md-switch>
+        </md-list-item>
+        <md-list-item ng-show="settings.showGutter && settings.showFoldWidgets">
+        <p>Auto-hide Folding Indicators</p>
+        <md-switch ng-model="settings.fadeFoldWidgets" ng-change="onChange()">
+        </md-switch>
+        </md-list-item>
+        <md-list-item>
+        <p>Selection Style: {{settings.selectionStyle | capitalize}}</p>
+        <md-switch ng-model="settings.selectionStyle" ng-change="onChange()"
+        ng-true-value="'line'"
+        ng-false-value="'text'"></md-switch>
+        </md-list-item>
+        </md-list>
+        </md-tab>
+        <md-tab label="Behaviour">
+        <md-list ng-cloak>
+        <md-list-item>
+        <p>Keybindings</p>
+        <md-select ng-model="settings.keyboardHandler" ng-change="onChange()">
+        <md-option value="">Default</md-option>
+        <md-option value="ace/keyboard/vim">vim</md-option>
+        <md-option value="ace/keyboard/emacs">Emacs</md-option>
+        </md-select>
+        </md-list-item>
+        <md-list-item>
+        <p>Wrap Text</p>
+        <md-switch ng-model="settings.wrap" ng-change="onChange()"></md-switch>
+        </md-list-item>
+        <md-list-item>
+        <p>Autocompletion</p>
+        <md-switch ng-model="settings.enableBasicAutocompletion"
+        ng-change="onChange()"></md-switch>
+        </md-list-item>
+        <md-list-item ng-show="settings.enableBasicAutocompletion">
+        <p>Live Autocompletion</p>
+        <md-switch ng-model="settings.enableLiveAutocompletion"
+        ng-change="onChange()"></md-switch>
+        </md-list-item>
+        <md-list-item ng-show="settings.enableBasicAutocompletion">
+        <p>Code Snippets</p>
+        <md-switch ng-model="settings.enableSnippets" ng-change="onChange()">
+        </md-switch>
+        </md-list-item>
+        <md-list-item ng-show="settings.showGutter">
+        <p>Code Folding</p>
+        <md-switch ng-model="settings.showFoldWidgets" ng-change="onChange()">
+        </md-switch>
+        </md-list-item>
+        <md-list-item ng-show="settings.showGutter && settings.showFoldWidgets">
+        <p>Folding Style</p>
+        <md-select ng-model="settings.foldStyle" ng-change="onChange()">
+        <md-option value="markbegin">Mark Beginning</md-option>
+        <md-option value="markbeginend">Mark Beginning and End</md-option>
+        </md-select>
+        </md-list-item>
+        <md-list-item>
+        <p>Scroll Past End</p>
+        <md-switch ng-model="settings.scrollPastEnd" ng-change="onChange()">
+        </md-switch>
+        </md-list-item>
+        </md-list>
+        </md-tab>
+        </md-tabs>
       </div>
     </div>
   </div>
