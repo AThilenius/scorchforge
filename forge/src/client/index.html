@@ -2,75 +2,76 @@
 <html ng-app="app" ng-controller="loginController"
       class="{{$root.htmlClass ? $root.htmlClass : 'default-body'}}">
 <head><title ng-bind="$root.title || 'Scorch'"></title>
-    <base href="/">
-    <link rel="shortcut icon" href="assets/flame-512.png"/>
-    <link href="build/_bower.css" rel="stylesheet">
+  <base href="/">
+  <link rel="shortcut icon" href="assets/flame-512.png"/>
+  <link href="build/_bower.css" rel="stylesheet">
 
-    <script src="build/compiled_libs.js"></script>
-    <script>var FORGE_VERSION = "160125.17.4836";</script>
+  <script src="build/compiled_libs.js"></script>
+  <script>var FORGE_VERSION = "160125.17.4836";</script>
 
-    <script src="app/app.module.js"></script>
-    <script src="app/app.route.js"></script>
+  <script src="app/app.module.js"></script>
+  <script src="app/app.route.js"></script>
 
-<link href="//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css" rel="stylesheet">
+  <link href="//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
-    <!--Uncomment this to use debug compiled app-->
-    <!--<script src="build/compiled_app.js"></script>-->
+  <!--Uncomment this to use debug compiled app-->
+  <!--<script src="build/compiled_app.js"></script>-->
 
-    <!-- DO NOT EDIT!!! Auto-import of source files -->
-    <!-- include: "type": "js", "basePath": "client", "files": ["app/**/*.js", "!app/*.js"] -->
-    <script src="app/base/array.js"></script>
-    <script src="app/base/string.js"></script>
-    <script src="app/components/create_user/create_user_controller.js"></script>
-    <script src="app/components/forge/forge_controller.js"></script>
-    <script src="app/components/login/login_controller.js"></script>
-    <script src="app/directives/ace_editor/ace_editor.js"></script>
-    <script src="app/directives/console_window/console_window.js"></script>
-    <script src="app/directives/content_window/content_window.js"></script>
-    <script src="app/directives/history_explorer/history_explorer.js"></script>
-    <script src="app/directives/navbar/navbar.js"></script>
-    <script src="app/directives/settings/settings.js"></script>
-    <script src="app/directives/settings_window/settings_window.js"></script>
-    <script src="app/directives/sidebar/sidebar.js"></script>
-    <script src="app/directives/tty/term.js"></script>
-    <script src="app/directives/tty/tty.js"></script>
-    <script src="app/factories/rate_limiter.js"></script>
-    <script src="app/factories/text_dialog/text_dialog.js"></script>
-    <script src="app/pre_comp_libs/js/01_dockspawn.js"></script>
-    <script src="app/pre_comp_libs/js/02_share.js"></script>
-    <script src="app/services/ace_settings.js"></script>
-    <script src="app/services/billet.js"></script>
-    <script src="app/services/compiler.js"></script>
-    <script src="app/services/dockspawn.js"></script>
-    <script src="app/services/metastore.js"></script>
-    <script src="app/services/ot_share.js"></script>
-    <script src="app/services/persons.js"></script>
-    <script src="app/services/projects.js"></script>
-    <script src="app/services/source_files.js"></script>
-    <script src="app/services/workspaces.js"></script>
-    <!-- /include -->
+  <!-- DO NOT EDIT!!! Auto-import of source files -->
+  <!-- include: "type": "js", "basePath": "client", "files": ["app/**/*.js", "!app/*.js"] -->
+  <script src="app/base/array.js"></script>
+  <script src="app/base/string.js"></script>
+  <script src="app/components/create_user/create_user_controller.js"></script>
+  <script src="app/components/forge/forge_controller.js"></script>
+  <script src="app/components/login/login_controller.js"></script>
+  <script src="app/directives/ace_editor/ace_editor.js"></script>
+  <script src="app/directives/console_window/console_window.js"></script>
+  <script src="app/directives/content_window/content_window.js"></script>
+  <script src="app/directives/history_explorer/history_explorer.js"></script>
+  <script src="app/directives/navbar/navbar.js"></script>
+  <script src="app/directives/settings/settings.js"></script>
+  <script src="app/directives/settings_window/settings_window.js"></script>
+  <script src="app/directives/sidebar/sidebar.js"></script>
+  <script src="app/directives/tty/term.js"></script>
+  <script src="app/directives/tty/tty.js"></script>
+  <script src="app/factories/rate_limiter.js"></script>
+  <script src="app/factories/text_dialog/text_dialog.js"></script>
+  <script src="app/pre_comp_libs/js/01_dockspawn.js"></script>
+  <script src="app/pre_comp_libs/js/02_share.js"></script>
+  <script src="app/services/ace_settings.js"></script>
+  <script src="app/services/billet.js"></script>
+  <script src="app/services/compiler.js"></script>
+  <script src="app/services/dockspawn.js"></script>
+  <script src="app/services/metastore.js"></script>
+  <script src="app/services/ot_share.js"></script>
+  <script src="app/services/persons.js"></script>
+  <script src="app/services/projects.js"></script>
+  <script src="app/services/source_files.js"></script>
+  <script src="app/services/workspaces.js"></script>
+  <!-- /include -->
 
-    <!-- include: "type": "css", "basePath": "client", "files": ["app/**/*.css"] -->
-    <link rel="stylesheet" type="text/css" href="app/base/base.css" />
-    <link rel="stylesheet" type="text/css" href="app/base/colors.css" />
-    <link rel="stylesheet" type="text/css" href="app/base/fonts.css" />
-    <link rel="stylesheet" type="text/css" href="app/components/create_user/create_user.css" />
-    <link rel="stylesheet" type="text/css" href="app/components/forge/forge.css" />
-    <link rel="stylesheet" type="text/css" href="app/components/login/login.css" />
-    <link rel="stylesheet" type="text/css" href="app/directives/ace_editor/ace_editor.css" />
-    <link rel="stylesheet" type="text/css" href="app/directives/blockly_editor/blockly_editor.css" />
-    <link rel="stylesheet" type="text/css" href="app/directives/console_window/console_window.css" />
-    <link rel="stylesheet" type="text/css" href="app/directives/content_window/content_window.css" />
-    <link rel="stylesheet" type="text/css" href="app/directives/history_explorer/history_explorer.css" />
-    <link rel="stylesheet" type="text/css" href="app/directives/navbar/navbar.css" />
-    <link rel="stylesheet" type="text/css" href="app/directives/settings/settings.css" />
-    <link rel="stylesheet" type="text/css" href="app/directives/settings_window/settings_window.css" />
-    <link rel="stylesheet" type="text/css" href="app/directives/sidebar/sidebar.css" />
-    <link rel="stylesheet" type="text/css" href="app/directives/tty/tty.css" />
-    <link rel="stylesheet" type="text/css" href="app/factories/text_dialog/text_dialog.css" />
-    <link rel="stylesheet" type="text/css" href="app/pre_comp_libs/css/dock-manager.css" />
-    <link rel="stylesheet" type="text/css" href="app/pre_comp_libs/css/font-awesome.css" />
-    <!-- /include -->
+  <!-- include: "type": "css", "basePath": "client", "files": ["app/**/*.css"] -->
+  <link rel="stylesheet" type="text/css" href="app/base/base.css" />
+  <link rel="stylesheet" type="text/css" href="app/base/colors.css" />
+  <link rel="stylesheet" type="text/css" href="app/base/fonts.css" />
+  <link rel="stylesheet" type="text/css" href="app/components/create_user/create_user.css" />
+  <link rel="stylesheet" type="text/css" href="app/components/forge/forge.css" />
+  <link rel="stylesheet" type="text/css" href="app/components/login/login.css" />
+  <link rel="stylesheet" type="text/css" href="app/directives/ace_editor/ace_editor.css" />
+  <link rel="stylesheet" type="text/css" href="app/directives/blockly_editor/blockly_editor.css" />
+  <link rel="stylesheet" type="text/css" href="app/directives/console_window/console_window.css" />
+  <link rel="stylesheet" type="text/css" href="app/directives/content_window/content_window.css" />
+  <link rel="stylesheet" type="text/css" href="app/directives/history_explorer/history_explorer.css" />
+  <link rel="stylesheet" type="text/css" href="app/directives/navbar/navbar.css" />
+  <link rel="stylesheet" type="text/css" href="app/directives/settings/settings.css" />
+  <link rel="stylesheet" type="text/css" href="app/directives/settings_window/settings_window.css" />
+  <link rel="stylesheet" type="text/css" href="app/directives/sidebar/sidebar.css" />
+  <link rel="stylesheet" type="text/css" href="app/directives/tty/tty.css" />
+  <link rel="stylesheet" type="text/css" href="app/factories/text_dialog/text_dialog.css" />
+  <link rel="stylesheet" type="text/css" href="app/pre_comp_libs/css/dock-manager.css" />
+  <link rel="stylesheet" type="text/css" href="app/pre_comp_libs/css/font-awesome.css" />
+  <!-- /include -->
 </head>
 <body class="{{$root.bodyClass ? $root.bodyClass : 'default-body'}}">
 <div ui-view></div>

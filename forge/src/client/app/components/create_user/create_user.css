@@ -1,35 +1,65 @@
 .createUser-backdrop {
-  background-color: rgba(41, 41, 41, 1);
-  display: table;
-  height: 100%;
-  position: absolute;
-  width: 100%;
+    background-color: rgba(41, 41, 41, 1);
+    display: table;
+    height: 100%;
+    position: absolute;
+    width: 100%;
 }
 
 .createUser-middle-align {
-  display: table-cell;
-  vertical-align: middle;
+    display: table-cell;
+    vertical-align: middle;
 }
 
 .createUser-window {
-  color: white;
-  margin-left: auto;
-  margin-right: auto;
-  width: 400px;
+    color: white;
+    margin-left: auto;
+    margin-right: auto;
+    width: 400px;
 }
 
 .createUser-button {
-  width: 100px;
+    width: 100px;
 }
 
 .create-button {
-  margin-top: 8px;
+    margin-top: 8px;
 }
 
-.ng-dirty.ng-invalid{
-  border-top-color: red;
+.ng-dirty.ng-invalid {
+    border-top-color: red;
 }
 
-.ng-dirty.ng-valid{
-  border-top-color: green;
+.ng-dirty.ng-valid {
+    border-top-color: green;
+}
+
+/* only required to overide defaults in this demo */
+md-input-container.md-has-icon > label {
+    left: 0;
+    right: 0;
+}
+
+/* fixed classes */
+md-input-container.md-has-icon:not(.md-icon-right) > label,
+md-input-container.md-icon-both > label {
+    left: 36px;
+    right: auto;
+}
+
+md-input-container.md-icon-right:not(.md-icon-both) {
+    padding-right: 36px;
+    padding-left: 0;
+}
+
+md-input-container.md-icon-both {
+    padding-left: 36px;
+    padding-right: 36px;
+}
+
+md-input-container.md-icon-right .md-errors-spacer + md-icon,
+md-input-container.md-icon-both .md-errors-spacer + md-icon {
+    margin: 0;
+    right: 2px;
+    left: auto;
 }

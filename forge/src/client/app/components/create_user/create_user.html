@@ -1,20 +1,62 @@
 <div class="createUser-backdrop">
-    <div class="createUser-middle-align">
-        <div class="createUser-window">
+  <div class="createUser-middle-align">
+    <div class="createUser-window">
 
-            <div ng-show="error" class="alert alert-danger" role="alert">
+      <div ng-show="error" class="alert alert-danger" role="alert">
         <span class="glyphicon glyphicon-exclamation-sign"
               aria-hidden="true"></span>
-                <span class="sr-only">Error:</span>
-                {{error}}
-            </div>
+        <span class="sr-only">Error:</span>
+        {{error}}
+      </div>
 
-            <form novalidate ng-submit="onSubmit()">
-                <h2 class="text-center">Create ScorchForge Account</h2>
-                <formly-form model="credentials" fields="credentialsFields" form="credentialsForm">
-                    <button type="submit" class="btn btn-primary" ng-disabled="credentialsForm.$invalid">Submit</button>
-                </formly-form>
-            </form>
-        </div>
+      <!--TODO: Make this font nicer as well-->
+      <h2 class="text-center">Create ScorchForge Account</h2>
+      <br>
+      <form name="createForm" autocomplete="off">
+        <md-input-container class="md-block">
+          <label>First Name</label>
+          <input ng-model="credentials.firstName" type="text" name="firstName" required>
+          <div ng-messages="createForm.firstName.$error">
+            <div ng-message="required">This field is required.</div>
+          </div>
+        </md-input-container>
+        <md-input-container class="md-block">
+          <label>Last Name</label>
+          <input ng-model="credentials.lastName" type="text" name="lastName" required>
+          <div ng-messages="createForm.lastName.$error">
+            <div ng-message="required">This field is required.</div>
+          </div>
+        </md-input-container>
+        <md-input-container class="md-block">
+          <label>Email Address</label>
+          <input ng-model="credentials.email" type="email" name="email" required>
+          <div ng-messages="createForm.email.$error">
+            <div ng-message="required">This field is required</div>
+            <div ng-message="email">Invalid Email</div>
+          </div>
+        </md-input-container>
+        <md-input-container class="md-icon-right md-block">
+          <label>Password</label>
+          <input ng-model="credentials.password" type="{{showPassword ? 'text' : 'password'}}"
+                 name="password" ng-change="updatePassword()" required minlength="8">
+          <md-icon md-font-set="material-icons" ng-click="togglePassword()">
+            {{showPassword ? 'visibility' : 'visibility_off'}}
+            <md-tooltip class="md-fab md-accent" md-direction="right">
+              {{showPassword ? 'Hide Password' : 'Show Password'}}
+            </md-tooltip>
+          </md-icon>
+          <div ng-messages="createForm.password.$error">
+            <div ng-message="minlength">
+              Your password must be at least 8 characters.
+            </div>
+            <div ng-message="required">This field is required.</div>
+          </div>
+        </md-input-container>
+        <md-button class="md-raised md-primary" ng-click="onSubmit()"
+                   ng-disabled="createForm.$invalid">Create Account
+        </md-button>
+        <md-button class="md-primary pull-right" href="/login">Existing User</md-button>
+      </form>
     </div>
+  </div>
 </div>

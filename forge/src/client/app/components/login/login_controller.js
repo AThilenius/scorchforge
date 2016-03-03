@@ -7,7 +7,6 @@ angular.module('app').controller('loginController', [
   '$scope',
   'Person',
   function($location, $rootScope, $scope, Person) {
-
     $scope.login = function() {
       $scope.loginCredentials.email =
           $scope.loginCredentials.email.toLowerCase();
@@ -15,6 +14,5 @@ angular.module('app').controller('loginController', [
         $location.path('/forge');
       });
     };
-
   }
 ]);
