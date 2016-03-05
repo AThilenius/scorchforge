@@ -1,6 +1,6 @@
 <div class="login-backdrop">
   <div class="login-middle-align">
-    <div class="login-window">
+    <div class="login-window" ng-cloak>
 
       <div ng-show="error" class="alert alert-danger" role="alert">
         <span class="glyphicon glyphicon-exclamation-sign"
@@ -9,25 +9,28 @@
         {{error}}
       </div>
 
-      <form name="loginForm" role="form-signin">
+      <form name="loginForm" autocomplete="off">
+        <!--TODO: We really need something prettier here-->
         <h2 class="text-center">ScorchForge</h2>
         <br>
-        <div class="form-group">
+        <md-input-container class="md-block">
           <label>Email Address</label>
-          <input class="form-control" ng-model="loginCredentials.email"
-                 type="email" name="email" placeholder="Email Address" required>
-        </div>
-        <div class="form-group">
+          <input ng-model="loginCredentials.email" type="email" name="email" required>
+          <div ng-messages="loginForm.email.$error">
+            <div ng-message="required">This field is required</div>
+            <div ng-message="email">Invalid Email</div>
+          </div>
+        </md-input-container>
+        <md-input-container class="md-block">
           <label>Password</label>
-          <input class="form-control" ng-model="loginCredentials.password"
-          type="password" name="password" placeholder="Password" required>
-        </div>
-        <br>
-        <input type="submit" ng-click="login()"
-        class="btn btn-success login-button" value="Sign In">
-        <a href="/create_user" class="create-button pull-right">
-          Create Account
-        </a>
+          <input ng-model="loginCredentials.password"
+          type="password" name="password" required>
+          <div ng-messages="loginForm.password.$error">
+            <div ng-message="required">This field is required.</div>
+          </div>
+        </md-input-container>
+        <md-button class="md-raised md-primary" ng-click="login()" ng-disabled="loginForm.$invalid">Sign In</md-button>
+        <md-button class="md-primary pull-right" href="/create_user">Create Account</md-button>
       </form>
 
     </div>

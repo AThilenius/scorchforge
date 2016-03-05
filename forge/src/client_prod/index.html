@@ -2,9 +2,9 @@
 <html ng-app="app" ng-controller="loginController"
       class="{{$root.htmlClass ? $root.htmlClass : 'default-body'}}">
 <head><title ng-bind="$root.title || 'Scorch'"></title>
-    <base href="/">
-    <link rel="shortcut icon" href="assets/flame-512.png"/>
-    <script>var FORGE_VERSION = "0.1.0";</script>
+  <base href="/">
+  <link rel="shortcut icon" href="assets/flame-512.png"/>
+  <script>var FORGE_VERSION = "0.1.0";</script>
 </head>
 
 <body class="{{$root.bodyClass ? $root.bodyClass : 'default-body'}}">
@@ -29,31 +29,33 @@
     color: black;
   }
 </style>
-  <!--This is the loading screen.-->
-  <!--It will be replaced when Angular finishes loading-->
-  <div class="fill" ui-view>
-    <div class="fill noselect"
-         style="display: table; text-align: center;">
-      <div class="loading-plate"
-           style="display:table-cell; vertical-align:middle;">
-        <img src="assets/flame-512.png" height=128 width=128>
-        <p>Loading</p>
-      </div>
+<!--This is the loading screen.-->
+<!--It will be replaced when Angular finishes loading-->
+<div class="fill" ui-view>
+  <div class="fill noselect"
+       style="display: table; text-align: center;">
+    <div class="loading-plate"
+         style="display:table-cell; vertical-align:middle;">
+      <img src="assets/flame-512.png" height=128 width=128>
+      <p>Loading</p>
     </div>
   </div>
+</div>
 
-  <!-- DO NOT EDIT!!! Auto-import of source files -->
-  <!-- include: "type": "js", "basePath": "client_prod", "files": ["build/*.js"] -->
-  <script src="build/01_lib-2016-1-16-3-48-59.js"></script>
-  <script src="build/02_app-2016-1-16-3-48-59.js"></script>
-  <script src="build/03_templates-2016-1-16-3-48-59.js"></script>
-  <script src="build/04_app-2016-1-16-3-48-59.js"></script>
-  <!-- /include -->
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
-  <!-- include: "type": "css", "basePath": "client_prod", "files": ["build/*.css"] -->
-  <link rel="stylesheet" type="text/css" href="build/01_lib2016-1-16-3-48-59.css" />
-  <link rel="stylesheet" type="text/css" href="build/02_app2016-1-16-3-48-59.css" />
-  <!-- /include -->
+<!-- DO NOT EDIT!!! Auto-import of source files -->
+<!-- include: "type": "js", "basePath": "client_prod", "files": ["build/*.js"] -->
+<script src="build/01_lib-2016-1-16-3-48-59.js"></script>
+<script src="build/02_app-2016-1-16-3-48-59.js"></script>
+<script src="build/03_templates-2016-1-16-3-48-59.js"></script>
+<script src="build/04_app-2016-1-16-3-48-59.js"></script>
+<!-- /include -->
+
+<!-- include: "type": "css", "basePath": "client_prod", "files": ["build/*.css"] -->
+<link rel="stylesheet" type="text/css" href="build/01_lib2016-1-16-3-48-59.css"/>
+<link rel="stylesheet" type="text/css" href="build/02_app2016-1-16-3-48-59.css"/>
+<!-- /include -->
 
 </body>
 </html>
