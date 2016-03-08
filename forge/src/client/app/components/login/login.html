@@ -9,7 +9,7 @@
         {{error}}
       </div>
 
-      <form name="loginForm" autocomplete="off">
+      <form name="loginForm" autocomplete="off" ng-submit="login()">
         <!--TODO: We really need something prettier here-->
         <h2 class="text-center">ScorchForge</h2>
         <br>
@@ -29,7 +29,7 @@
             <div ng-message="required">This field is required.</div>
           </div>
         </md-input-container>
-        <md-button class="md-raised md-primary" ng-click="login()" ng-disabled="loginForm.$invalid">Sign In</md-button>
+        <md-button class="md-raised md-primary" type="submit" ng-disabled="loginForm.$invalid">Sign In</md-button>
         <md-button class="md-primary pull-right" href="/create_user">Create Account</md-button>
       </form>
 

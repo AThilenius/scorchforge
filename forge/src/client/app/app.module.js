@@ -18,7 +18,8 @@ var app = angular.module('app', [
   'thilenius.settings',
   'thilenius.tty',
   'thilenius.sidebar',
-  'thilenius.content_window'
+  'thilenius.content_window',
+  'angular-quiet-console'
 ]);
 
 app.run([
@@ -67,3 +68,8 @@ app.config(['$mdThemingProvider',
         .accentPalette('red')
         .dark();
   }]);
+
+app.config(quietConsoleConfig);
+function quietConsoleConfig($quietConsoleProvider) {
+  $quietConsoleProvider.ignore(/^ARIA:.*$/);
+}

@@ -12,7 +12,7 @@
       <!--TODO: Make this font nicer as well-->
       <h2 class="text-center">Create ScorchForge Account</h2>
       <br>
-      <form name="createForm" autocomplete="off">
+      <form name="createForm" autocomplete="off" ng-submit="onSubmit()">
         <md-input-container class="md-block">
           <label>First Name</label>
           <input ng-model="credentials.firstName" type="text" name="firstName" required>
@@ -52,7 +52,7 @@
             <div ng-message="required">This field is required.</div>
           </div>
         </md-input-container>
-        <md-button class="md-raised md-primary" ng-click="onSubmit()"
+        <md-button class="md-raised md-primary" type="submit"
                    ng-disabled="createForm.$invalid">Create Account
         </md-button>
         <md-button class="md-primary pull-right" href="/login">Existing User</md-button>
