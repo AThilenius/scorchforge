@@ -7,14 +7,12 @@ angular.module('thilenius.settings', [])
       '$log',
       'Person',
       'md5',
-      'projects',
       'aceSettings',
-      function($rootScope, $log, Person, md5, projects, aceSettings) {
+      function($rootScope, $log, Person, md5, aceSettings) {
         return {
           restrict: 'AE',
           templateUrl: 'app/directives/settings/settings.htm',
           link: function($scope, iElement, iAttrs) {
-            $scope.projects = projects;
 
             $scope.settings = aceSettings.values;
             $scope.onChange = function() {

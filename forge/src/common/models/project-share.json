@@ -1,0 +1,23 @@
+{
+  "name": "ProjectShare",
+  "base": "PersistedModel",
+  "idInjection": true,
+  "options": {},
+  "mixins": {
+    "TimeStamp": true
+  },
+  "properties": {},
+  "validations": [],
+  "relations": {
+    "project": {
+      "type": "belongsTo",
+      "model": "Project"
+    },
+    "workspace": {
+      "type": "belongsTo",
+      "model": "Workspace"
+    }
+  },
+  "acls": [],
+  "methods": {}
+}

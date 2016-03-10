@@ -27,20 +27,26 @@
 
       <!--Workspace-->
       <md-menu style="margin-left: 14px;">
-        <button ng-click="$mdOpenMenu()">
+        <button ng-click="$mdOpenMenu()"
+          class="{{ !data.activeWorkspace ?
+                    'bg-highlight-darkblue-grad' : '' }}">
           Workspace -
-          <b>{{ workspaces.active.name }}</b>
+          <b>
+            {{ data.activeWorkspace ?
+               '' + data.activeWorkspace.name : 'None Selected' }}
+          </b>
           <span class="glyphicon glyphicon-triangle-bottom"
             style="position:relative; top: -1px; left: 6px; font-size: 0.7em;"
             aria-hidden="true"></span>
         </button>
+
         <md-menu-content>
 
-          <md-menu-item ng-repeat="workspace in workspaces.all"
-          class="{{ workspace === workspaces.active ?
+          <md-menu-item ng-repeat="workspace in data.workspaces"
+          class="{{ workspace === data.activeWorkspace ?
                     'bg-highlight-darkblue-grad' : '' }}">
-            <md-button ng-click="workspaces.active = workspace"
-                       ng-disabled="workspaces.active === workspace">
+            <md-button ng-click="activateWorkspace(workspace)"
+                       ng-disabled="data.activeWorkspace === workspace">
               {{ workspace.name }}
             </md-button>
           </md-menu-item>
@@ -63,10 +69,13 @@
       <!--Project-->
       <md-menu>
         <button ng-click="$mdOpenMenu()"
-          class="{{ !projects.active ? 'bg-highlight-darkblue-grad' : '' }}">
+          class="{{ data.activeWorkspace && !data.activeProject ?
+                    'bg-highlight-darkblue-grad' : '' }}"
+          ng-disabled="!data.activeWorkspace">
           Project -
           <b>
-            {{ projects.active ? '' + projects.active.name : 'None Selected'}}
+            {{ data.activeProject ?
+               '' + data.activeProject.name : 'None Selected' }}
           </b>
           <span class="glyphicon glyphicon-triangle-bottom"
             style="position:relative; top: -1px; left: 6px; font-size: 0.7em;"
@@ -74,11 +83,11 @@
         </button>
         <md-menu-content>
 
-          <md-menu-item ng-repeat="project in projects.all"
-          class="{{ project === projects.active ?
+          <md-menu-item ng-repeat="project in data.projects"
+          class="{{ project === data.activeProject ?
                     'bg-highlight-darkblue-grad' : '' }}">
-            <md-button ng-click="projects.active = project"
-                       ng-disabled="projects.active === project">
+            <md-button ng-click="activateProject(project)"
+                       ng-disabled="data.activeProject === project">
               {{ project.name }}
             </md-button>
           </md-menu-item>

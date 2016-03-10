@@ -40,55 +40,53 @@ var parsePythonLint = function(line) {
  * Manages all things to do with compilation (and linting) for source files
  */
 app.service('compiler', [
-  '$q', '$rootScope', 'billet', 'atRateLimiter', 'workspaces', 'projects',
-  'sourceFiles',
-  function($q, $rootScope, billet, atRateLimiter, workspaces, projects,
-    sourceFiles) {
+  '$q', '$rootScope', 'billet', 'atRateLimiter',
+  function($q, $rootScope, billet, atRateLimiter) {
 
     // otDocId to annotaion[ ]
     this.annotations = {};
 
     this.lintProjectPython = function(projectPath) {
-      billet.spawn((shell) => {
-        shell.execAndClose(lintPythoCommand(projectPath),
-          (stdOut, stdErr, exitCode) => {
-            // File path to annotation list
-            this.annotations = _.chain(stdOut.split('\n'))
-              // Reduce values into [{lintMessage, ephemeral},...]
-              .reduce((memo, line) => {
-                var lintMessage = parsePythonLint(line);
-                if (lintMessage) {
-                  var ephemeral = sourceFiles.getEphemeralFromPath(
-                    lintMessage.path);
-                  if (ephemeral) {
-                    lintMessage.otDocId = ephemeral.otDocId;
-                    memo.push(lintMessage);
-                  }
-                }
-                return memo;
-              }, [])
-              // Group by otDocId => { otDocId: [lintMessage], ... }
-              .groupBy((lintMessage) => {
-                return lintMessage.otDocId;
-              }).value();
-          });
-      });
+      //billet.spawn((shell) => {
+      //shell.execAndClose(lintPythoCommand(projectPath),
+      //(stdOut, stdErr, exitCode) => {
+      //// File path to annotation list
+      //this.annotations = _.chain(stdOut.split('\n'))
+      //// Reduce values into [{lintMessage, ephemeral},...]
+      //.reduce((memo, line) => {
+      //var lintMessage = parsePythonLint(line);
+      //if (lintMessage) {
+      //var ephemeral = sourceFiles.getEphemeralFromPath(
+      //lintMessage.path);
+      //if (ephemeral) {
+      //lintMessage.otDocId = ephemeral.otDocId;
+      //memo.push(lintMessage);
+      //}
+      //}
+      //return memo;
+      //}, [])
+      //// Group by otDocId => { otDocId: [lintMessage], ... }
+      //.groupBy((lintMessage) => {
+      //return lintMessage.otDocId;
+      //}).value();
+      //});
+      //});
     };
 
-    this.lintCurrentProject = function() {
-      this.lintProjectPython(
-        `/root/forge/${workspaces.active.name}/${projects.active.name}`);
-    };
+    //this.lintCurrentProject = function() {
+    //this.lintProjectPython(
+    //`/root/forge/${workspaces.active.name}/${projects.active.name}`);
+    //};
 
-    // Lint newly opened porjects
-    $rootScope.$watch(() => {
-      return projects.active;
-    }, (newVal, oldVal) => {
-      if (newVal && workspaces.active) {
-        this.lintProjectPython(
-          `/root/forge/${workspaces.active.name}/${newVal.name}`);
-      }
-    });
+    //// Lint newly opened porjects
+    //$rootScope.$watch(() => {
+    //return projects.active;
+    //}, (newVal, oldVal) => {
+    //if (newVal && workspaces.active) {
+    //this.lintProjectPython(
+    //`/root/forge/${workspaces.active.name}/${newVal.name}`);
+    //}
+    //});
 
   }
 ]);

@@ -36,10 +36,10 @@
 </script>
 
 <script type="text/ng-template" id="fileTemplate">
-  <div class="file-plate{{ ephemeral(item).dsData ?
+  <div class="file-plate{{ item.ephemeral.dsData ?
                            '-active bg-highlight-darkblue' : '' }}"
-        ng-dblclick="openFile(item.name, item.otDocId)"
-        style="{{ ephemeral(item).dsData ?
+        ng-dblclick="data.activeFileTree.openFile(item.path)"
+        style="{{ item.ephemeral.dsData ?
                   'margin-left: -' + ((depth * 18) + 10) + 'px;
                   padding-left: ' + ((depth * 18) + 10) + 'px;
                   padding-right: 10px; margin-right: -10px;' : '' }}"
@@ -85,10 +85,10 @@
   </div>
 
   <!--Active Project-->
-  <div ng-show="projects.active" class="noselect">
+  <div ng-show="data.activeProject" class="noselect">
     <div class="files-plate tone-cplate-out">
       <!--Remember that the listTemplate takes in a list-->
-      <div ng-repeat="list in [sourceFiles.fileTree]"
+      <div ng-repeat="list in [data.activeFileTree.treeLayout]"
         ng-include="'listTemplate'"
         ng-init="depth = 0">
       </div>
@@ -103,7 +103,7 @@
   </div>
 
   <!--No Active Project-->
-  <div ng-show="!projects.active" class="fill noselect"
+  <div ng-show="!data.activeProject" class="fill noselect"
     style="display: table; text-align: center;">
     <div class="tone-text-secondary"
       style="display:table-cell; vertical-align:middle;">

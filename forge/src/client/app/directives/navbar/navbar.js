@@ -37,23 +37,18 @@ angular.module('thilenius.navbar', [])
     '$location',
     '$mdToast',
     'Person',
-    'workspaces',
-    'projects',
-    function($location, $mdToast, Person, workspaces, projects) {
+    'data',
+    function($location, $mdToast, Person, data) {
       return {
         templateUrl: 'app/directives/navbar/navbar.htm',
         link: function($scope, iElement, iAttrs) {
 
-          $scope.workspaces = workspaces;
-          $scope.projects = projects;
+          $scope.data = data;
 
           $scope.logout = function() {
+            data.flushData();
             Person.logout();
-            // Force a browser refresh so that all workspace / project.. caches
-            // are cleared out.
-            // TODO(athilenius): This is  hack, fix it
             $location.path('/login');
-            location.reload();
           };
 
           $scope.run = function() {
@@ -63,6 +58,14 @@ angular.module('thilenius.navbar', [])
               .hideDelay(6000)
               .theme('error')
             );
+          };
+
+          $scope.activateWorkspace = function(workspace) {
+            data.activateWorkspace(workspace);
+          };
+
+          $scope.activateProject = function(project) {
+            data.activateProject(project);
           };
 
         }

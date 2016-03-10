@@ -83,7 +83,9 @@ boot(app, __dirname, function(err) {
         client.on('message', function(data) {
           try {
             return stream.push(JSON.parse(data));
-          } catch (e) { }
+          } catch (e) {
+            console.log('Json parse error: ', data);
+          }
         });
         stream.on('error', function(msg) {
           return client.close(msg);
