@@ -38,15 +38,15 @@
     "dataSource": "db",
     "public": true
   },
-  "Class": {
+  "Workspace": {
     "dataSource": "db",
     "public": true
   },
-  "Enrolled": {
+  "Project": {
     "dataSource": "db",
     "public": true
   },
-  "Assignment": {
+  "ProjectShare": {
     "dataSource": "db",
     "public": true
   }

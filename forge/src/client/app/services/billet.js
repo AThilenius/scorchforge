@@ -66,15 +66,16 @@ var app = angular.module('app');
  * billet.onReady(function(io){...}) to bind.
  */
 app.service('billet', [
+  '$rootScope',
   '$timeout',
   'Person',
   'LoopBackAuth',
-  function($timeout, Person, LoopBackAuth) {
+  'data',
+  function($rootScope, $timeout, Person, LoopBackAuth, data) {
 
     this.readyCallbacks = [];
     this.error = null;
     this.billetSocket = null;
-    this.defferedSpawns = [];
 
     // Connect to the LoopBack hosted Socket.IO and request a login
     this.connect = function() {
@@ -98,18 +99,10 @@ app.service('billet', [
             // On Billet-Direct connection
             this.billetSocket.on('connect', () => {
               console.log('Connected to Billet!');
-              this.billetSocket.emit('mount', {
-                otDocId: Person.getCurrentId(),
-                mountPoint: '/root/forge'
-              });
               _(this.readyCallbacks).each((callback) => {
                 callback(this.billetSocket);
               });
-              // Also handle defered spawns
-              this.defferedSpawns.forEach((defered) => {
-                this.spawnNow_(defered);
-              });
-              this.defferedSpawns = [];
+              this.readyCallbacks = [];
             });
           }
         });
@@ -117,31 +110,34 @@ app.service('billet', [
       });
     };
 
-    /**
-     * Should be called only when a billet socket is open and active
-     *
-     * @private
-     */
-    this.spawnNow_ = function(cb) {
-      this.billetSocket.emit('spawn', {}, (err, id) => {
-        cb(new Shell(this.billetSocket, id));
-      });
+    this.onReady = function(cb) {
+      if (this.billetSocket && this.billetSocket.connected) {
+        cb(this.billetSocket);
+      } else {
+        this.readyCallbacks.push(cb);
+      }
     };
 
     this.spawn = function(cb) {
-      if (this.billetSocket && this.billetSocket.connected) {
-        this.spawnNow_(cb);
-      } else {
-        this.defferedSpawns.push(cb);
-      }
+      this.onReady(() => {
+        this.billetSocket.emit('spawn', {}, (err, id) => {
+          cb(new Shell(this.billetSocket, id));
+        });
+      });
     };
 
-    this.onReady = function(cb) {
-      this.readyCallbacks.push(cb);
-      if (this.billetSocket === 3) {
-        cb(this.billetSocket);
+    // Watch for changes to data.activeProject and mount it in Billet
+    $rootScope.$watch(() => {
+      return data.activeProject;
+    }, (newVal, oldVal) => {
+      if (newVal && newVal.id) {
+        this.onReady(() => {
+          this.billetSocket.emit('mount', {
+            projectId: newVal.id
+          });
+        });
       }
-    };
+    });
 
   }
 ]);

@@ -1,5 +1,5 @@
 {
-  "name": "Enrolled",
+  "name": "Workspace",
   "base": "PersistedModel",
   "idInjection": true,
   "options": {},
@@ -7,7 +7,7 @@
     "TimeStamp": true
   },
   "properties": {
-    "role": {
+    "name": {
       "type": "string",
       "required": true
     }
@@ -15,9 +15,17 @@
   "validations": [],
   "relations": {
     "person": {
-      "type": "hasOne",
-      "model": "Person",
-      "foreignKey": ""
+      "type": "belongsTo",
+      "model": "Person"
+    },
+    "projects": {
+      "type": "hasMany",
+      "model": "Project"
+    },
+    "sharedProjects": {
+      "type": "hasMany",
+      "model": "Project",
+      "through": "ProjectShare"
     }
   },
   "acls": [],

@@ -40,17 +40,15 @@ var parsePythonLint = function(line) {
  * Manages all things to do with compilation (and linting) for source files
  */
 app.service('compiler', [
-  '$q', '$rootScope', 'billet', 'atRateLimiter', 'workspaces', 'projects',
-  'sourceFiles',
-  function($q, $rootScope, billet, atRateLimiter, workspaces, projects,
-    sourceFiles) {
+  '$q', '$rootScope', 'billet', 'data', 'atRateLimiter',
+  function($q, $rootScope, billet, data, atRateLimiter) {
 
     // otDocId to annotaion[ ]
     this.annotations = {};
 
-    this.lintProjectPython = function(projectPath) {
+    this.lintProjectPython = function() {
       billet.spawn((shell) => {
-        shell.execAndClose(lintPythoCommand(projectPath),
+        shell.execAndClose(lintPythoCommand('/root/forge'),
           (stdOut, stdErr, exitCode) => {
             // File path to annotation list
             this.annotations = _.chain(stdOut.split('\n'))
@@ -58,35 +56,25 @@ app.service('compiler', [
               .reduce((memo, line) => {
                 var lintMessage = parsePythonLint(line);
                 if (lintMessage) {
-                  var ephemeral = sourceFiles.getEphemeralFromPath(
-                    lintMessage.path);
-                  if (ephemeral) {
-                    lintMessage.otDocId = ephemeral.otDocId;
-                    memo.push(lintMessage);
-                  }
+                  lintMessage.path = lintMessage.path;
+                  memo.push(lintMessage);
                 }
                 return memo;
               }, [])
-              // Group by otDocId => { otDocId: [lintMessage], ... }
+              // Group by path => { path: [lintMessage], ... }
               .groupBy((lintMessage) => {
-                return lintMessage.otDocId;
+                return lintMessage.path;
               }).value();
           });
       });
     };
 
-    this.lintCurrentProject = function() {
-      this.lintProjectPython(
-        `/root/forge/${workspaces.active.name}/${projects.active.name}`);
-    };
-
     // Lint newly opened porjects
     $rootScope.$watch(() => {
-      return projects.active;
+      return data.activeProject;
     }, (newVal, oldVal) => {
-      if (newVal && workspaces.active) {
-        this.lintProjectPython(
-          `/root/forge/${workspaces.active.name}/${newVal.name}`);
+      if (newVal) {
+        this.lintProjectPython();
       }
     });
 

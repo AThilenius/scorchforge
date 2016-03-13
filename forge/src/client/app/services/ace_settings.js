@@ -23,7 +23,7 @@ app.service('aceSettings', ['$cookies', '$log', '$rootScope',
       showGutter: true,
       displayIndentGuides: true,
       scrollPastEnd: true,
-      theme: 'ace/theme/monokai',
+      theme: 'ace/theme/twilight',
       fontSize: 12,
       keyboardHandler: ''
     };

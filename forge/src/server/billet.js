@@ -1,9 +1,6 @@
 // Copyright 2015 Alec Thilenius
 // All rights reserved.
 
-/** @const */
-var dockerHostIp = '172.17.0.1';
-
 var _ = require('underscore');
 var docker = new(require('dockerode'))();
 var httpProxy = require('http-proxy');
@@ -81,7 +78,8 @@ exports.createSession = function(accessToken, userId, callback) {
         runType: process.env.RUN_TYPE
       },
       Env: [
-        'FORGE_PORT=' + process.env.PUBLISHED_PORT.toString()
+        'FORGE_PORT=' + process.env.PUBLISHED_PORT.toString(),
+        'RUN_TYPE=' + process.env.RUN_TYPE.toString()
       ],
       HostConfig: {
         // Added CAPs for FUSE binding

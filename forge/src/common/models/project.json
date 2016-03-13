@@ -1,0 +1,35 @@
+{
+  "name": "Project",
+  "base": "PersistedModel",
+  "idInjection": true,
+  "options": {},
+  "mixins": {
+    "TimeStamp": true
+  },
+  "properties": {
+    "name": {
+      "type": "string",
+      "required": true
+    },
+    "fileTree": {
+      "type": [
+        "object"
+      ],
+      "default": []
+    }
+  },
+  "validations": [],
+  "relations": {
+    "workspace": {
+      "type": "belongsTo",
+      "model": "workspace"
+    },
+    "workspaces": {
+      "type": "hasMany",
+      "model": "Workspace",
+      "through": "ProjectShare"
+    }
+  },
+  "acls": [],
+  "methods": {}
+}

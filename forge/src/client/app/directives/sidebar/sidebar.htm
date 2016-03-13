@@ -36,10 +36,10 @@
 </script>
 
 <script type="text/ng-template" id="fileTemplate">
-  <div class="file-plate{{ ephemeral(item).dsData ?
+  <div class="file-plate{{ item.dsData ?
                            '-active bg-highlight-darkblue' : '' }}"
-        ng-dblclick="openFile(item.name, item.otDocId)"
-        style="{{ ephemeral(item).dsData ?
+        ng-dblclick="data.activeFileTree.openFile(item.path)"
+        style="{{ item.dsData ?
                   'margin-left: -' + ((depth * 18) + 10) + 'px;
                   padding-left: ' + ((depth * 18) + 10) + 'px;
                   padding-right: 10px; margin-right: -10px;' : '' }}"
@@ -49,50 +49,50 @@
     </span>
     {{ item.name }}
     <span class="badge pull-right annotation-badge"
-          ng-show="errorCount(item.otDocId)">
-      {{ errorCount(item.otDocId) }}
+          ng-show="errorCount(item)">
+      {{ errorCount(item) }}
     </span>
   </div>
 </script>
 
 <div class="fill tone-cplate-in tone-text-primary"
      context-menu="activeProjectDropdown">
-  <div class="header-bar">
-
-    <md-toolbar style="background-color: transparent; height: 38px;
-                       min-height: 38px; margin: 0px;">
-      <div class="md-toolbar-tools"
-           style="background-color: transparent; height: 38px;
-                  min-height: 38px; margin: 0px;">
-        <md-button class="md-fab md-tiny md-primary"
-                   aria-label="Download Snapshot"
-                   ng-click="downloadSnapshot()">
-          <md-tooltip md-direction="right">
-            Download Snapshot
-          </md-tooltip>
-          <span class="glyphicon glyphicon-download-alt"></span>
-        </md-button>
-        <md-button class="md-fab md-tiny md-primary"
-                   aria-label="Get Share Id"
-                   ng-click="displayShareId()">
-          <md-tooltip md-direction="right">
-            Get Share Id
-          </md-tooltip>
-          <span class="glyphicon glyphicon-link"></span>
-        </md-button>
-      </div>
-    </md-toolbar>
-  </div>
-
   <!--Active Project-->
-  <div ng-show="projects.active" class="noselect">
+  <div ng-show="data.activeProject" class="noselect">
+    <div class="header-bar">
+      <md-toolbar style="background-color: transparent; height: 38px;
+                         min-height: 38px; margin: 0px;">
+        <div class="md-toolbar-tools"
+             style="background-color: transparent; height: 38px;
+                    min-height: 38px; margin: 0px;">
+          <md-button class="md-fab md-tiny md-primary"
+                     aria-label="Download Snapshot"
+                     ng-click="downloadSnapshot()">
+            <md-tooltip md-direction="right">
+              Download Snapshot
+            </md-tooltip>
+            <span class="glyphicon glyphicon-download-alt"></span>
+          </md-button>
+          <md-button class="md-fab md-tiny md-primary"
+                     aria-label="Get Share Id"
+                     ng-click="displayShareId()">
+            <md-tooltip md-direction="right">
+              Get Share Id
+            </md-tooltip>
+            <span class="glyphicon glyphicon-link"></span>
+          </md-button>
+        </div>
+      </md-toolbar>
+    </div>
+
     <div class="files-plate tone-cplate-out">
       <!--Remember that the listTemplate takes in a list-->
-      <div ng-repeat="list in [sourceFiles.fileTree]"
+      <div ng-repeat="list in [data.activeFileTree.treeLayout]"
         ng-include="'listTemplate'"
         ng-init="depth = 0">
       </div>
-      <div ng-show="!sourceFiles.fileTree.length" class="fill noselect"
+      <div ng-show="!data.activeFileTree.treeLayout.length"
+        class="fill noselect"
         style="display: table; text-align: center;">
         <div class="tone-text-secondary"
           style="display:table-cell; vertical-align:middle;">
@@ -103,7 +103,7 @@
   </div>
 
   <!--No Active Project-->
-  <div ng-show="!projects.active" class="fill noselect"
+  <div ng-show="!data.activeProject" class="fill noselect"
     style="display: table; text-align: center;">
     <div class="tone-text-secondary"
       style="display:table-cell; vertical-align:middle;">
