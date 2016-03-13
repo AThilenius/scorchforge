@@ -49,43 +49,42 @@
     </span>
     {{ item.name }}
     <span class="badge pull-right annotation-badge"
-          ng-show="errorCount(item.otDocId)">
-      {{ errorCount(item.otDocId) }}
+          ng-show="errorCount(item)">
+      {{ errorCount(item) }}
     </span>
   </div>
 </script>
 
 <div class="fill tone-cplate-in tone-text-primary"
      context-menu="activeProjectDropdown">
-  <div class="header-bar">
-
-    <md-toolbar style="background-color: transparent; height: 38px;
-                       min-height: 38px; margin: 0px;">
-      <div class="md-toolbar-tools"
-           style="background-color: transparent; height: 38px;
-                  min-height: 38px; margin: 0px;">
-        <md-button class="md-fab md-tiny md-primary"
-                   aria-label="Download Snapshot"
-                   ng-click="downloadSnapshot()">
-          <md-tooltip md-direction="right">
-            Download Snapshot
-          </md-tooltip>
-          <span class="glyphicon glyphicon-download-alt"></span>
-        </md-button>
-        <md-button class="md-fab md-tiny md-primary"
-                   aria-label="Get Share Id"
-                   ng-click="displayShareId()">
-          <md-tooltip md-direction="right">
-            Get Share Id
-          </md-tooltip>
-          <span class="glyphicon glyphicon-link"></span>
-        </md-button>
-      </div>
-    </md-toolbar>
-  </div>
-
   <!--Active Project-->
   <div ng-show="data.activeProject" class="noselect">
+    <div class="header-bar">
+      <md-toolbar style="background-color: transparent; height: 38px;
+                         min-height: 38px; margin: 0px;">
+        <div class="md-toolbar-tools"
+             style="background-color: transparent; height: 38px;
+                    min-height: 38px; margin: 0px;">
+          <md-button class="md-fab md-tiny md-primary"
+                     aria-label="Download Snapshot"
+                     ng-click="downloadSnapshot()">
+            <md-tooltip md-direction="right">
+              Download Snapshot
+            </md-tooltip>
+            <span class="glyphicon glyphicon-download-alt"></span>
+          </md-button>
+          <md-button class="md-fab md-tiny md-primary"
+                     aria-label="Get Share Id"
+                     ng-click="displayShareId()">
+            <md-tooltip md-direction="right">
+              Get Share Id
+            </md-tooltip>
+            <span class="glyphicon glyphicon-link"></span>
+          </md-button>
+        </div>
+      </md-toolbar>
+    </div>
+
     <div class="files-plate tone-cplate-out">
       <!--Remember that the listTemplate takes in a list-->
       <div ng-repeat="list in [data.activeFileTree.treeLayout]"

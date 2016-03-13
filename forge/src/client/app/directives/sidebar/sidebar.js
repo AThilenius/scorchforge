@@ -20,8 +20,8 @@ angular.module('thilenius.sidebar', [])
           /**
            * Returns the error count (errors only) for a file given by otDocId
            */
-          $scope.errorCount = function(otDocId) {
-            return _(compiler.annotations[otDocId])
+          $scope.errorCount = function(item) {
+            return _(compiler.annotations['/root/forge' + item.path])
               .filter((a) => {
                 return a.type === 'error';
               })
@@ -38,8 +38,7 @@ angular.module('thilenius.sidebar', [])
               title: 'File Name',
               content: 'New File Name',
               done: (val) => {
-                if (!data.activeFileTree.addFile(parentPath + '/' +
-                    val)) {
+                if (!data.activeFileTree.addFile(parentPath + '/' + val)) {
                   $mdToast.show($mdToast.simple()
                     .textContent(`File ${val} already exists!`)
                     .position('top right')
@@ -182,7 +181,7 @@ angular.module('thilenius.sidebar', [])
           $scope.displayShareId = function() {
             $mdToast.show($mdToast.simple()
               .textContent(
-                `Project ShareID: ${projects.active.otDocId}`)
+                `Project ShareID: ${data.activeProject.id}`)
               .position('top right')
               .hideDelay(30000)
               .theme('success')
@@ -191,9 +190,9 @@ angular.module('thilenius.sidebar', [])
 
           $scope.downloadSnapshot = function() {
             // Generate the zip
-            sourceFiles.snapshotFilesToZip((zipBlob) => {
+            data.activeFileTree.snapshotFilesToZip((zipBlob) => {
               var date = new Date();
-              var zipName = projects.active.name + '-' +
+              var zipName = data.activeProject.name + '-' +
                 ('0' + (date.getMonth() + 1)).slice(-2) + '-' +
                 ('0' + date.getDate()).slice(-2) + '-' +
                 ('0' + date.getHours()).slice(-2) + '-' +

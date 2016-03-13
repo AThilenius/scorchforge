@@ -58,7 +58,7 @@ angular.module('thilenius.ace_editor', [])
                   editor.session.setAnnotations([]);
                 }
                 compileTimer = $timeout(() => {
-                  compiler.lintCurrentProject();
+                  compiler.lintProjectPython();
                 }, 1000);
               }
             });
@@ -98,10 +98,10 @@ angular.module('thilenius.ace_editor', [])
             return compiler.annotations;
           }, (newVal, oldVal) => {
             editor.session.setAnnotations(
-              newVal[$scope.otDocId] || []);
+              newVal['/root/forge' + $scope.path] || []);
           });
           editor.session.setAnnotations(
-            compiler.annotations[$scope.otDocId] || []);
+            compiler.annotations['/root/forge' + $scope.path] || []);
 
           var focus = function(focusEditor) {
             if (focusEditor) {

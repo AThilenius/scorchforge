@@ -41,6 +41,7 @@ forgeApp.controller('forgeController', [
     };
 
     $scope.addSharedProjectFromModal = function() {
+      data.addSharedProject();
     };
 
     // Bind for in-view calling

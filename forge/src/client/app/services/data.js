@@ -4,9 +4,9 @@
 var app = angular.module('app');
 
 app.service('data', ['$rootScope', '$mdToast', 'Person', 'Workspace', 'Project',
-  'FileTree', 'atTextDialog',
-  function($rootScope, $mdToast, Person, Workspace, Project, FileTree,
-    atTextDialog) {
+  'ProjectShare', 'FileTree', 'atTextDialog',
+  function($rootScope, $mdToast, Person, Workspace, Project, ProjectShare,
+    FileTree, atTextDialog) {
 
     this.person = null;
 
@@ -67,7 +67,8 @@ app.service('data', ['$rootScope', '$mdToast', 'Person', 'Workspace', 'Project',
 
     this.addProject = function() {
       if (!this.activeWorkspace) {
-        console.error('Cannot create a project without an active workspace');
+        console.error(
+          'Cannot create a project without an active workspace');
         return;
       }
       var that = this;
@@ -88,6 +89,35 @@ app.service('data', ['$rootScope', '$mdToast', 'Person', 'Workspace', 'Project',
               .hideDelay(3000)
               .theme('success')
             );
+          });
+        }
+      });
+    };
+
+    this.addSharedProject = function() {
+      if (!this.activeWorkspace) {
+        console.error(
+          'Cannot create a project without an active workspace');
+        return;
+      }
+      var that = this;
+      atTextDialog({
+        title: 'Project Share ID',
+        content: 'Project Share ID',
+        done: (sharedProjectId) => {
+          ProjectShare.create({
+            workspaceId: that.activeWorkspace.id,
+            projectId: sharedProjectId,
+          }, (projectLink) => {
+            console.log('Created link');
+            //that.projects.push(project);
+            //that.activateProject(project);
+            //$mdToast.show($mdToast.simple()
+            //.textContent(`Project ${val} created!`)
+            //.position('top right')
+            //.hideDelay(3000)
+            //.theme('success')
+            //);
           });
         }
       });
@@ -118,20 +148,12 @@ app.service('data', ['$rootScope', '$mdToast', 'Person', 'Workspace', 'Project',
           })
           .$promise.then((projects) => {
             this.projects = this.projects.concat(projects);
-            projects.forEach((project) => {
-              // Need to load the file tree? Or defer that till the project
-              // is activated?
-            });
           });
         Workspace.sharedProjects({
             id: workspaceId
           })
           .$promise.then((projects) => {
             this.sharedProjects = this.sharedProjects.concat(projects);
-            projects.forEach((project) => {
-              // Need to load the file tree? Or defer that till the project
-              // is activated?
-            });
           });
       };
       // Load Workspaces Lambda

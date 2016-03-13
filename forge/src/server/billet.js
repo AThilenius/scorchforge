@@ -1,9 +1,6 @@
 // Copyright 2015 Alec Thilenius
 // All rights reserved.
 
-/** @const */
-var dockerHostIp = '172.17.0.1';
-
 var _ = require('underscore');
 var docker = new(require('dockerode'))();
 var httpProxy = require('http-proxy');

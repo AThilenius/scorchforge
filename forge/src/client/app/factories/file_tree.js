@@ -8,8 +8,8 @@
  * well as an API to manipulate them.
  */
 angular.module('app').factory('FileTree', [
-  '$timeout', '$compile', 'Project', 'atDockspawn',
-  function($timeout, $compile, Project, atDockspawn) {
+  '$timeout', '$compile', 'Project', 'atDockspawn', 'otShare',
+  function($timeout, $compile, Project, atDockspawn, otShare) {
     return function(project) {
 
       this.treeLayout = [];
@@ -151,7 +151,7 @@ angular.module('app').factory('FileTree', [
               return existing;
             } else {
               return getRecursive(existing.children,
-                  remainingPath.slice(1), currentPath);
+                remainingPath.slice(1), currentPath);
             }
           } else if (!createParent) {
             return null;
@@ -167,7 +167,7 @@ angular.module('app').factory('FileTree', [
             return newNode;
           } else {
             return getRecursive(newNode.children,
-                remainingPath.slice(1), currentPath);
+              remainingPath.slice(1), currentPath);
           }
         };
         return getRecursive(this.treeLayout, path, '');
@@ -186,13 +186,15 @@ angular.module('app').factory('FileTree', [
         // Create the DockSpawn window with ACE in it
         node.dsData = {};
         node.dsData.domElement = angular.element(
-          '<div class="fill" at-ace-editor name="name" otDocId="otDocId"></div>'
+          '<div class="fill" at-ace-editor ' +
+          'name="name" otDocId="otDocId" path="path"></div>'
         )[0];
         angular.element(document.getElementsByTagName('body')).append(
           node.dsData.domElement);
         $compile(node.dsData.domElement)({
           name: node.name,
-          otDocId: node.otDocId
+          otDocId: node.otDocId,
+          path: node.path
         });
         node.dsData.panelContainer = new dockspawn.PanelContainer(
           node.dsData.domElement,
@@ -204,6 +206,34 @@ angular.module('app').factory('FileTree', [
         node.dsData.panelContainer.onClose = (container) => {
           delete node.dsData;
         };
+      };
+
+      /**
+       * Snapshots all files into a Zip BLOB. This will be sent back in a
+       * callback.
+       */
+      this.snapshotFilesToZip = function(callback) {
+        var zip = new JSZip();
+        var files = [];
+        this.treeLayout.eachRecursive('children', (child) => {
+          if (child.type === 'file' && child.otDocId) {
+            files.push(child);
+          }
+        });
+        var pendingCount = files.length;
+        files.forEach((file) => {
+          var otDoc = otShare.ot.get('source_files', file.otDocId);
+          otDoc.subscribe();
+          otDoc.whenReady(() => {
+            zip.file(file.path, (otDoc.type && otDoc.type.name ===
+                'text') ?  otDoc.getSnapshot() : '');
+            if (--pendingCount === 0) {
+              callback(zip.generate({
+                type: 'blob'
+              }));
+            }
+          });
+        });
       };
 
       /**

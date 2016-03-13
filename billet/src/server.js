@@ -94,10 +94,13 @@ io.sockets.on('connection', (s) => {
    * Takes in { projectId } as data
    */
   socket.on('mount', (data, callback) => {
-    if (currentMount) {
-      currentMount.unMount();
+    if (currentMount && currentMount.projectId !== data.projectId) {
+      currentMount.unMount(() => {
+        currentMount = new psm.ProjectMount(data.projectId, '/root/forge');
+      });
+    } else if (!currentMount) {
+      currentMount = new psm.ProjectMount(data.projectId, '/root/forge');
     }
-    currentMount = new psm.ProjectMount(data.projectId, '/root/forge');
   });
 
   // ==== Normal Term.js Stuff  ================================================

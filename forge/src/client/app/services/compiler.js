@@ -40,53 +40,43 @@ var parsePythonLint = function(line) {
  * Manages all things to do with compilation (and linting) for source files
  */
 app.service('compiler', [
-  '$q', '$rootScope', 'billet', 'atRateLimiter',
-  function($q, $rootScope, billet, atRateLimiter) {
+  '$q', '$rootScope', 'billet', 'data', 'atRateLimiter',
+  function($q, $rootScope, billet, data, atRateLimiter) {
 
     // otDocId to annotaion[ ]
     this.annotations = {};
 
-    this.lintProjectPython = function(projectPath) {
-      //billet.spawn((shell) => {
-      //shell.execAndClose(lintPythoCommand(projectPath),
-      //(stdOut, stdErr, exitCode) => {
-      //// File path to annotation list
-      //this.annotations = _.chain(stdOut.split('\n'))
-      //// Reduce values into [{lintMessage, ephemeral},...]
-      //.reduce((memo, line) => {
-      //var lintMessage = parsePythonLint(line);
-      //if (lintMessage) {
-      //var ephemeral = sourceFiles.getEphemeralFromPath(
-      //lintMessage.path);
-      //if (ephemeral) {
-      //lintMessage.otDocId = ephemeral.otDocId;
-      //memo.push(lintMessage);
-      //}
-      //}
-      //return memo;
-      //}, [])
-      //// Group by otDocId => { otDocId: [lintMessage], ... }
-      //.groupBy((lintMessage) => {
-      //return lintMessage.otDocId;
-      //}).value();
-      //});
-      //});
+    this.lintProjectPython = function() {
+      billet.spawn((shell) => {
+        shell.execAndClose(lintPythoCommand('/root/forge'),
+          (stdOut, stdErr, exitCode) => {
+            // File path to annotation list
+            this.annotations = _.chain(stdOut.split('\n'))
+              // Reduce values into [{lintMessage, ephemeral},...]
+              .reduce((memo, line) => {
+                var lintMessage = parsePythonLint(line);
+                if (lintMessage) {
+                  lintMessage.path = lintMessage.path;
+                  memo.push(lintMessage);
+                }
+                return memo;
+              }, [])
+              // Group by path => { path: [lintMessage], ... }
+              .groupBy((lintMessage) => {
+                return lintMessage.path;
+              }).value();
+          });
+      });
     };
 
-    //this.lintCurrentProject = function() {
-    //this.lintProjectPython(
-    //`/root/forge/${workspaces.active.name}/${projects.active.name}`);
-    //};
-
-    //// Lint newly opened porjects
-    //$rootScope.$watch(() => {
-    //return projects.active;
-    //}, (newVal, oldVal) => {
-    //if (newVal && workspaces.active) {
-    //this.lintProjectPython(
-    //`/root/forge/${workspaces.active.name}/${newVal.name}`);
-    //}
-    //});
+    // Lint newly opened porjects
+    $rootScope.$watch(() => {
+      return data.activeProject;
+    }, (newVal, oldVal) => {
+      if (newVal) {
+        this.lintProjectPython();
+      }
+    });
 
   }
 ]);

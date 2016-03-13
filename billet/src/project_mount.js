@@ -7,6 +7,7 @@ var fuse = require('fuse-bindings');
 var pss = require('./project_sync.js');
 
 function ProjectMount(projectId, mountPoint) {
+  this.projectId = projectId;
   this.mountPoint_ = mountPoint;
 
   console.log('Mounting project ', projectId, ' to ', mountPoint);
@@ -94,9 +95,10 @@ function ProjectMount(projectId, mountPoint) {
   });
 }
 
-ProjectMount.prototype.unMount = function() {
+ProjectMount.prototype.unMount = function(callback) {
   fuse.unmount(this.mountPoint_, () => {
     console.log('Unmounted ', this.mountPoint_);
+    callback();
   });
 };
 
