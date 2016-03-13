@@ -102,6 +102,7 @@ app.service('billet', [
               _(this.readyCallbacks).each((callback) => {
                 callback(this.billetSocket);
               });
+              this.readyCallbacks = [];
             });
           }
         });

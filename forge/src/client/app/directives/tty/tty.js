@@ -51,6 +51,15 @@ angular.module('thilenius.tty', [])
             if (!$scope.term) {
               $scope.termConnected = true;
               var size = $scope.getNewRowColSize();
+              if (!size) {
+                // I have no idea why this happens, but it pops up from time to
+                // time. Super fucking anoying
+                console.log('Term::getNewRowColSize() returned null');
+                size = {
+                  cols: 80,
+                  rows: 40
+                };
+              }
               console.log('Creating Term');
               $scope.term = new Terminal({
                 cols: size.cols,
