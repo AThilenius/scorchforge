@@ -12,9 +12,10 @@ angular.module('app').factory('FileTree', [
   function($timeout, $compile, Project, atDockspawn) {
     return function(project) {
 
-      this.project_ = project;
-
       this.treeLayout = [];
+
+      this.project_ = project;
+      this.oldDiffs_ = [];
 
       /**
        * Adds a file (as a diff) to the file tree and computes where it belongs
@@ -26,17 +27,18 @@ angular.module('app').factory('FileTree', [
         if (this.getNodeAtPath(targetPath)) {
           return false;
         }
-        var diff = {
-          targetPath,
-          opType: 'create',
-          metaData: {
-            type: 'file',
-            otDocId: newShortUuid()
+        Project.addDiff({
+          id: this.project_.id,
+          diff: {
+            targetPath,
+            opType: 'create',
+            metaData: {
+              type: 'file',
+              otDocId: newShortUuid()
+            }
           }
-        };
-        this.project_.fileTree.push(diff);
-        this.project_.$save();
-        this.applyDiff_(diff);
+        });
+        // Let the Socket.io event hanle the diff
         return true;
       };
 
@@ -50,16 +52,17 @@ angular.module('app').factory('FileTree', [
         if (this.getNodeAtPath(targetPath)) {
           return false;
         }
-        var diff = {
-          targetPath,
-          opType: 'create',
-          metaData: {
-            type: 'directory'
+        Project.addDiff({
+          id: this.project_.id,
+          diff: {
+            targetPath,
+            opType: 'create',
+            metaData: {
+              type: 'directory'
+            }
           }
-        };
-        this.project_.fileTree.push(diff);
-        this.project_.$save();
-        this.applyDiff_(diff);
+        });
+        // Let the Socket.io event hanle the diff
         return true;
       };
 
@@ -69,14 +72,15 @@ angular.module('app').factory('FileTree', [
         if (this.getNodeAtPath(targetPath)) {
           return false;
         }
-        var diff = {
-          sourcePath,
-          targetPath,
-          opType: 'move'
-        };
-        this.project_.fileTree.push(diff);
-        this.project_.$save();
-        this.applyDiff_(diff);
+        Project.addDiff({
+          id: this.project_.id,
+          diff: {
+            sourcePath,
+            targetPath,
+            opType: 'move'
+          }
+        });
+        // Let the Socket.io event hanle the diff
         return true;
       };
 
@@ -87,13 +91,14 @@ angular.module('app').factory('FileTree', [
             targetPath);
           return false;
         }
-        var diff = {
-          targetPath,
-          opType: 'remove'
-        };
-        this.project_.fileTree.push(diff);
-        this.project_.$save();
-        this.applyDiff_(diff);
+        Project.addDiff({
+          id: this.project_.id,
+          diff: {
+            targetPath,
+            opType: 'remove'
+          }
+        });
+        // Let the Socket.io event hanle the diff
         return true;
       };
 
@@ -145,9 +150,8 @@ angular.module('app').factory('FileTree', [
             if (remainingPath.length === 1) {
               return existing;
             } else {
-              return getRecursive(existing.children, remainingPath.slice(
-                  1),
-                currentPath);
+              return getRecursive(existing.children,
+                  remainingPath.slice(1), currentPath);
             }
           } else if (!createParent) {
             return null;
@@ -156,16 +160,14 @@ angular.module('app').factory('FileTree', [
             type: 'directory',
             name: remainingPath[0],
             path: currentPath,
-            children: [],
-            ephemeral: {}
+            children: []
           };
           children.push(newNode);
           if (remainingPath.length === 1) {
             return newNode;
           } else {
-            return getRecursive(newNode.children, remainingPath.slice(
-                1),
-              currentPath);
+            return getRecursive(newNode.children,
+                remainingPath.slice(1), currentPath);
           }
         };
         return getRecursive(this.treeLayout, path, '');
@@ -276,14 +278,24 @@ angular.module('app').factory('FileTree', [
         return true;
       };
 
-      // Ensure the project has a fileTree field
-      if (!this.project_.fileTree) {
-        this.project_.fileTree = [];
-        this.project_.$save();
-      }
-      // Add all diffs
-      this.project_.fileTree.forEach((diff) => {
-        this.applyDiff_(diff);
+      this.applyNewDiffs_ = function(newDiffs) {
+        newDiffs.slice(this.oldDiffs_.length).forEach((diff) => {
+          this.applyDiff_(diff);
+          this.oldDiffs_.push(diff);
+        });
+      };
+
+      // Watch for changes to the project Socket.io and add new diffs when they
+      // come along
+      var socket = io.connect();
+      socket.on('project-' + this.project_.id + '-fileTree', (diffs) => {
+        this.applyNewDiffs_(diffs);
+      });
+      // Also lookup diffs now
+      socket.emit('get-project-fileTree', {
+        id: this.project_.id
+      }, (err, diffs) => {
+        this.applyNewDiffs_(diffs);
       });
 
     };

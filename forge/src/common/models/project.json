@@ -14,7 +14,8 @@
     "fileTree": {
       "type": [
         "object"
-      ]
+      ],
+      "default": []
     }
   },
   "validations": [],

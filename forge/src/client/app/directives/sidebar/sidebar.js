@@ -32,8 +32,7 @@ angular.module('thilenius.sidebar', [])
            * Add a file to the given scope, by modal
            */
           var addFile = function($itemScope) {
-            var parentPath = $itemScope.item ? $itemScope.item.path + '/' :
-              '';
+            var parentPath = $itemScope.item ? $itemScope.item.path + '/' : '';
             var that = this;
             atTextDialog({
               title: 'File Name',
@@ -126,20 +125,20 @@ angular.module('thilenius.sidebar', [])
             var path = data.activeFileTree.sanitizePath($itemScope.item.path);
             var that = this;
             $mdDialog.show($mdDialog.confirm()
-              .title('Are you sure?')
-              .textContent(`Delete ${path.fullString}, are you sure?`)
-              .ok('Delete')
-              .cancel('Cancel'))
-            .then(function() {
-              if (!data.activeFileTree.removeItem(path.fullString)) {
-                $mdToast.show($mdToast.simple()
-                  .textContent('Something didn\'t go well')
-                  .position('top right')
-                  .hideDelay(3000)
-                  .theme('error')
-                );
-              }
-            });
+                .title('Are you sure?')
+                .textContent(`Delete ${path.fullString}, are you sure?`)
+                .ok('Delete')
+                .cancel('Cancel'))
+              .then(function() {
+                if (!data.activeFileTree.removeItem(path.fullString)) {
+                  $mdToast.show($mdToast.simple()
+                    .textContent('Something didn\'t go well')
+                    .position('top right')
+                    .hideDelay(3000)
+                    .theme('error')
+                  );
+                }
+              });
           };
 
           var removeProject = function($itemScope) {

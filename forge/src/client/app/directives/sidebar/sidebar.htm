@@ -36,10 +36,10 @@
 </script>
 
 <script type="text/ng-template" id="fileTemplate">
-  <div class="file-plate{{ item.ephemeral.dsData ?
+  <div class="file-plate{{ item.dsData ?
                            '-active bg-highlight-darkblue' : '' }}"
         ng-dblclick="data.activeFileTree.openFile(item.path)"
-        style="{{ item.ephemeral.dsData ?
+        style="{{ item.dsData ?
                   'margin-left: -' + ((depth * 18) + 10) + 'px;
                   padding-left: ' + ((depth * 18) + 10) + 'px;
                   padding-right: 10px; margin-right: -10px;' : '' }}"
@@ -92,7 +92,8 @@
         ng-include="'listTemplate'"
         ng-init="depth = 0">
       </div>
-      <div ng-show="!sourceFiles.fileTree.length" class="fill noselect"
+      <div ng-show="!data.activeFileTree.treeLayout.length"
+        class="fill noselect"
         style="display: table; text-align: center;">
         <div class="tone-text-secondary"
           style="display:table-cell; vertical-align:middle;">

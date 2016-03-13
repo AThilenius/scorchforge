@@ -81,7 +81,8 @@ exports.createSession = function(accessToken, userId, callback) {
         runType: process.env.RUN_TYPE
       },
       Env: [
-        'FORGE_PORT=' + process.env.PUBLISHED_PORT.toString()
+        'FORGE_PORT=' + process.env.PUBLISHED_PORT.toString(),
+        'RUN_TYPE=' + process.env.RUN_TYPE.toString()
       ],
       HostConfig: {
         // Added CAPs for FUSE binding

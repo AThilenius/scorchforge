@@ -59,52 +59,36 @@ boot(app, __dirname, function(err) {
     share = sharejs.server.createClient({
       backend
     });
-
-    wss = new WebSocketServer({
-      server
+    var stream = new Duplex({
+      objectMode: true
     });
+    var browserChannel = require('browserchannel').server;
+    app.use(browserChannel((client) => {
+      var stream = new Duplex({
+        objectMode: true
+      });
+      stream._read = function() {};
+      stream._write = function(chunk, encoding, callback) {
+        if (client.state !== 'closed') {
+          client.send(chunk);
+        }
+        callback();
+      };
+      client.on('message', function(data) {
+        stream.push(data);
+      });
+      client.on('close', function(reason) {
+        stream.push(null);
+        stream.emit('close');
+      });
+      stream.on('end', function() {
+        client.close();
+      });
+      // Give the stream to sharejs
+      return share.listen(stream);
+    }));
 
-    wss.on('connection', function(client) {
-      try {
-        var stream = new Duplex({
-          objectMode: true
-        });
-        stream._write = function(chunk, encoding, callback) {
-          client.send(JSON.stringify(chunk), function(error) {
-            if (error) {
-              console.log('Socket error: ', error);
-            }
-          });
-          return callback();
-        };
-        stream._read = function() {};
-        stream.headers = client.upgradeReq.headers;
-        stream.remoteAddress = client.upgradeReq.connection.remoteAddress;
-        client.on('message', function(data) {
-          try {
-            return stream.push(JSON.parse(data));
-          } catch (e) {
-            console.log('Json parse error: ', data);
-          }
-        });
-        stream.on('error', function(msg) {
-          return client.close(msg);
-        });
-        client.on('close', function(reason) {
-          stream.push(null);
-          stream.emit('close');
-          return client.close(reason);
-        });
-        stream.on('end', function() {
-          return client.close();
-        });
-        return share.listen(stream);
-      } catch (e) {
-        console.log('Fatal error in ShareJS WebSocket handlers: ', e);
-      }
-    });
-
-    //===  ShareJS  ============================================================
+    //===  /ShareJS  ===========================================================
 
     app.io = require('socket.io')(server);
 
@@ -112,7 +96,7 @@ boot(app, __dirname, function(err) {
     app.io.on('connection', function(socket) {
       try {
         // Authenticate new connections, and fire up a Billet session
-        socket.on('login', function(data, callback) {
+        socket.on('login', (data, callback) => {
           var accessToken = data.accessToken;
           if (!accessToken) {
             return callback('Missing AccessToken');
@@ -125,9 +109,21 @@ boot(app, __dirname, function(err) {
             }
             // Authorized, file up a Billet session, return once the container is
             // ready.
-            billet.createSession(accessToken, token.userId, (err, data) => {
+            billet.createSession(accessToken, token.userId, (
+              err, data) => {
               callback(err, data);
             });
+          });
+        });
+        socket.on('get-project-fileTree', (data, callback) => {
+          app.models.Project.findById(data.id, (err, instance) => {
+            if (err || !instance) {
+              console.log(
+                'Failed to find project during Project lookup: ',
+                err);
+              return callback(err);
+            }
+            callback(null, instance.fileTree);
           });
         });
       } catch (e) {
