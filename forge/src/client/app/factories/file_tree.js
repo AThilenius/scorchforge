@@ -16,6 +16,7 @@ angular.module('app').factory('FileTree', [
 
       this.project_ = project;
       this.oldDiffs_ = [];
+      this.openWindows_ = [];
 
       /**
        * Adds a file (as a diff) to the file tree and computes where it belongs
@@ -182,6 +183,10 @@ angular.module('app').factory('FileTree', [
           console.error('Failed to find file at path: ', path);
           return false;
         }
+        if (node.dsData) {
+          // Already open
+          return;
+        }
         // TODO(athilenius): Check for open docs? Or leave this to ACE?
         // Create the DockSpawn window with ACE in it
         node.dsData = {};
@@ -204,8 +209,21 @@ angular.module('app').factory('FileTree', [
         node.dsData.dockNode = atDockspawn.dockManager.dockFill(
           atDockspawn.documentNode, node.dsData.panelContainer);
         node.dsData.panelContainer.onClose = (container) => {
-          delete node.dsData;
+          $timeout(() => {
+            this.openWindows_ = _(this.openWindows_).without(node);
+            delete node.dsData;
+          });
         };
+        this.openWindows_.push(node);
+      };
+
+      /**
+       * Closes all open DockSpawn windows
+       */
+      this.closeAllWindows = function() {
+        this.openWindows_.forEach((node) => {
+          node.dsData.panelContainer.onCloseButtonClicked();
+        });
       };
 
       /**

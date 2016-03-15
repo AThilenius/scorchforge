@@ -3,8 +3,7 @@
 
 var FileTree = require('./file_tree.js').FileTree;
 var _ = require('underscore');
-var childProcess = require('child_process');
-var ioClient = require('socket.io-client');
+var scorchSocket = require('./scorch_socket.js');
 var sharejs = require('./scorch_share.js');
 
 function ProjectSync(projectId) {
@@ -69,6 +68,11 @@ ProjectSync.prototype.readItem = function(path, callback) {
   }
 };
 
+ProjectSync.prototype.release = function() {
+  scorchSocket.socket.removeAllListeners('project-' + this.projectId_ +
+    '-fileTree');
+};
+
 /**
  * Uses Socket.IO to load existing diffs, watch for new diffs, and build a file
  * tree from that. Ot Docs are loaded on-demand (once the file contents are
@@ -77,27 +81,12 @@ ProjectSync.prototype.readItem = function(path, callback) {
 ProjectSync.prototype.subscribeProject_ = function(projectId) {
   // Watch for changes to the project Socket.io and add new diffs when they
   // come along
-  var hostIp = childProcess.execSync(
-    '/sbin/ip route|awk \'/default/ { print $3  }\'').toString().trim('\n');
-  var hostTarget = 'http://' + hostIp + ':' + process.env.FORGE_PORT;
-  console.log('Connecting Socket.io to ', hostTarget);
-  var socket = ioClient.connect(hostTarget, {
-    reconnect: true
-  });
-  socket.on('connect_error', (err) => {
-    console.log('Socket.IO client connection error: ', err);
-  });
-  socket.on('error', (err) => {
-    console.log('Socket.IO client error: ', err);
-  });
-  socket.on('connect', (socket) => {
-    console.log('Connected to Forge Socket.io!');
-  });
-  socket.on('project-' + this.projectId_ + '-fileTree', (diffs) => {
-    this.fileTree_.applyDiffs(diffs);
-  });
+  scorchSocket.socket.on('project-' + this.projectId_ + '-fileTree',
+    (diffs) => {
+      this.fileTree_.applyDiffs(diffs);
+    });
   // Also lookup diffs now
-  socket.emit('get-project-fileTree', {
+  scorchSocket.socket.emit('get-project-fileTree', {
     id: this.projectId_
   }, (err, diffs) => {
     this.fileTree_.applyDiffs(diffs);

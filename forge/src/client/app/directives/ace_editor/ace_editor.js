@@ -8,8 +8,8 @@ var Range = requireImpl('ace/range').Range;
 
 angular.module('thilenius.ace_editor', [])
   .directive('atAceEditor', [
-    '$timeout', '$rootScope', 'compiler', 'aceSettings', 'otShare',
-    function($timeout, $rootScope, compiler, aceSettings, otShare) {
+    '$timeout', '$rootScope', 'compiler', 'aceSettings', 'otShare', 'data',
+    function($timeout, $rootScope, compiler, aceSettings, otShare, data) {
       return {
         restrict: 'AE',
         templateUrl: 'app/directives/ace_editor/ace_editor.htm',
@@ -28,6 +28,45 @@ angular.module('thilenius.ace_editor', [])
             editor.setOptions(s);
           });
           editor.setReadOnly(true);
+
+          // Watch for cursor changes
+          var existingMarkers = [];
+          $rootScope.$watch(() => {
+            return data.activeCursorTracker.remoteCurSels;
+          }, (newVal, oldVal) => {
+            if (!newVal || !newVal[$scope.path]) {
+              return;
+            }
+            existingMarkers.forEach((marker) => {
+              editor.session.removeMarker(marker);
+            });
+            existingMarkers = [];
+            newVal[$scope.path].forEach((item) => {
+              if (item.selection) {
+                existingMarkers.push(editor.session.addMarker(item.selection,
+                  'share-selection', 'text'));
+              } else {
+                existingMarkers.push(editor.session.addMarker(new Range(
+                    item.cursor.row, item.cursor.column,
+                    item.cursor.row, item.cursor.column + 1),
+                  'share-cursor',
+                  'text'));
+              }
+            });
+          }, true);
+          // Warch for changes to this users cursors and update state
+          editor.selection.on('changeCursor', function() {
+            data.activeCursorTracker.setState($scope.path,
+              editor.selection.getCursor(),
+              editor.selection.getSelectionAnchor(),
+              editor.selection.getSelectionLead());
+          });
+          editor.selection.on('changeSelection', function() {
+            data.activeCursorTracker.setState($scope.path,
+              editor.selection.getCursor(),
+              editor.selection.getSelectionAnchor(),
+              editor.selection.getSelectionLead());
+          });
 
           /**
            * Binds the Operation Transform Document to the current ACE window
