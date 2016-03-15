@@ -1,0 +1,11 @@
+.share-cursor {
+  position: absolute;
+  border-left: 2px solid gold;
+  border-radius: 0px;
+}
+
+.share-selection {
+  position: absolute;
+  background: rgba(62, 167, 133, 0.72);
+  z-index: 40
+}

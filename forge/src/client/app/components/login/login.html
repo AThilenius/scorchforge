@@ -15,7 +15,8 @@
         <br>
         <md-input-container class="md-block">
           <label>Email Address</label>
-          <input ng-model="loginCredentials.email" type="email" name="email" required>
+          <input ng-model="loginCredentials.email" type="email"
+                 name="email" required>
           <div ng-messages="loginForm.email.$error">
             <div ng-message="required">This field is required</div>
             <div ng-message="email">Invalid Email</div>
@@ -29,17 +30,21 @@
             <div ng-message="required">This field is required.</div>
           </div>
         </md-input-container>
-        <md-button class="md-raised md-primary" ng-click="login()" ng-disabled="loginForm.$invalid">Sign In</md-button>
-        <md-button class="md-primary pull-right" href="/create_user">Create Account</md-button>
+        <md-button class="md-raised md-primary" ng-click="login()"
+                   ng-disabled="loginForm.$invalid">
+          Sign In
+        </md-button>
+        <md-button class="md-primary pull-right" href="/create_user">
+          Create Account
+        </md-button>
       </form>
 
       <div class="text-center">
         <br>
         <br>
         <p><b>ScorchForge is in Alpha.</b></p>
-        <p><b>Accounts and all data is often cleared out!</b></p>
+        <p><b>Both accounts and data are cleared out often!</b></p>
       </div>
-
 
     </div>
   </div>

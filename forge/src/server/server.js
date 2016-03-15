@@ -109,12 +109,12 @@ boot(app, __dirname, function(err) {
             }
             // Authorized, file up a Billet session, return once the container is
             // ready.
-            billet.createSession(accessToken, token.userId, (
-              err, data) => {
+            billet.createSession(accessToken, token.userId, (err, data) => {
               callback(err, data);
             });
           });
         });
+        // HACK(athilenius): This should not be here
         socket.on('get-project-fileTree', (data, callback) => {
           app.models.Project.findById(data.id, (err, instance) => {
             if (err || !instance) {
@@ -125,6 +125,16 @@ boot(app, __dirname, function(err) {
             }
             callback(null, instance.fileTree);
           });
+        });
+        // HACK(athilenius): This is also a hack
+        socket.on('joinRoom', function(data) {
+          socket.join(data.room);
+        });
+        socket.on('leaveRoom', function(data) {
+          socket.leave(data.room);
+        });
+        socket.on('roomMessage', function(data) {
+          socket.broadcast.to(data.room).emit('roomMessage', data);
         });
       } catch (e) {
         console.log('Fatal exception in Socket.IO handlers: ', e);

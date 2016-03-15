@@ -4,9 +4,9 @@
 var app = angular.module('app');
 
 app.service('data', ['$rootScope', '$mdToast', 'Person', 'Workspace', 'Project',
-  'ProjectShare', 'FileTree', 'atTextDialog',
+  'ProjectShare', 'FileTree', 'CursorTracker', 'atTextDialog',
   function($rootScope, $mdToast, Person, Workspace, Project, ProjectShare,
-    FileTree, atTextDialog) {
+    FileTree, CursorTracker, atTextDialog) {
 
     this.person = null;
 
@@ -18,14 +18,29 @@ app.service('data', ['$rootScope', '$mdToast', 'Person', 'Workspace', 'Project',
     this.activeProject = null;
 
     this.activeFileTree = null;
+    this.activeCursorTracker = null;
 
     this.saveActivePerson = function() {};
 
     this.activateWorkspace = function(workspace) {
-      if (!workspace) {
-        this.activeWorkspace = null;
-      } else {
-        this.activeWorkspace = workspace;
+      this.activateProject(null);
+      this.activeWorkspace = workspace;
+      this.projects = [];
+      this.sharedProjects = [];
+      if (workspace) {
+        // Load Projects
+        Workspace.projects({
+            id: workspace.id
+          })
+          .$promise.then((projects) => {
+            this.projects = projects;
+          });
+        Workspace.sharedProjects({
+            id: workspace.id
+          })
+          .$promise.then((projects) => {
+            this.sharedProjects = projects;
+          });
       }
     };
 
@@ -56,12 +71,18 @@ app.service('data', ['$rootScope', '$mdToast', 'Person', 'Workspace', 'Project',
     this.saveActiveWorkspace = function() {};
 
     this.activateProject = function(project) {
-      if (!project) {
-        this.activeProject = null;
-        this.activeFileTree = null;
-      } else {
-        this.activeProject = project;
+      if (this.activeFileTree) {
+        this.activeFileTree.closeAllWindows();
+      }
+      this.activeProject = project;
+      this.activeFileTree = null;
+      if (this.activeCursorTracker) {
+        this.activeCursorTracker.release();
+        this.activeCursorTracker = null;
+      }
+      if (project) {
         this.activeFileTree = new FileTree(project);
+        this.activeCursorTracker = new CursorTracker(this.person, project);
       }
     };
 
@@ -105,19 +126,29 @@ app.service('data', ['$rootScope', '$mdToast', 'Person', 'Workspace', 'Project',
         title: 'Project Share ID',
         content: 'Project Share ID',
         done: (sharedProjectId) => {
-          ProjectShare.create({
-            workspaceId: that.activeWorkspace.id,
-            projectId: sharedProjectId,
-          }, (projectLink) => {
-            console.log('Created link');
-            //that.projects.push(project);
-            //that.activateProject(project);
-            //$mdToast.show($mdToast.simple()
-            //.textContent(`Project ${val} created!`)
-            //.position('top right')
-            //.hideDelay(3000)
-            //.theme('success')
-            //);
+          // Make sure the project exists
+          Project.findById({
+            id: sharedProjectId
+          }, (project) => {
+            ProjectShare.create({
+              workspaceId: that.activeWorkspace.id,
+              projectId: sharedProjectId,
+            }, (projectLink) => {
+              that.projects.push(project);
+              that.activateProject(project);
+              $mdToast.show($mdToast.simple()
+                .textContent(
+                  `Project ${project.name} added!`)
+                .position('top right')
+                .hideDelay(3000)
+                .theme('success'));
+            });
+          }, (err) => {
+            $mdToast.show($mdToast.simple()
+              .textContent('Project does not exist!')
+              .position('top right')
+              .hideDelay(6000)
+              .theme('failure'));
           });
         }
       });
@@ -141,21 +172,6 @@ app.service('data', ['$rootScope', '$mdToast', 'Person', 'Workspace', 'Project',
      * Loads all data from the active LoopBack 'Person'
      */
     this.loadAllData = function() {
-      // Load Project Lambda
-      var loadProjects = (workspaceId) => {
-        Workspace.projects({
-            id: workspaceId
-          })
-          .$promise.then((projects) => {
-            this.projects = this.projects.concat(projects);
-          });
-        Workspace.sharedProjects({
-            id: workspaceId
-          })
-          .$promise.then((projects) => {
-            this.sharedProjects = this.sharedProjects.concat(projects);
-          });
-      };
       // Load Workspaces Lambda
       var loadWorkspaces = (personId) => {
         workspace = Person.workspaces({
@@ -163,9 +179,6 @@ app.service('data', ['$rootScope', '$mdToast', 'Person', 'Workspace', 'Project',
           })
           .$promise.then((workspaces) => {
             this.workspaces = this.workspaces.concat(workspaces);
-            workspaces.forEach((workspace) => {
-              loadProjects(workspace.id);
-            });
           });
       };
       // Load Person Lambda
