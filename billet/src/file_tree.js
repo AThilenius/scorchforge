@@ -3,6 +3,10 @@
 
 var _ = require('underscore');
 var extend = require('util')._extend;
+var fs = require('fs');
+var mkdirp = require('mkdirp');
+var path = require('path');
+var sharejs = require('./scorch_share.js');
 
 /**
  * Manages a file tree backed by a list of diffs. Diffs can be added and a new
@@ -10,6 +14,7 @@ var extend = require('util')._extend;
  */
 function FileTree() {
   this.treeLayout = [];
+  this.pathPrefix_ = '/root/forge';
   this.oldDiffs_ = [];
 };
 
@@ -96,12 +101,65 @@ FileTree.prototype.applyDiffs = function(newDiffs) {
 };
 
 /**
- * Applies a single diff to the treeLayout in a robust way.
+ * Does a few things iff the node is of file type, including adding the
+ * following fields to the node: { otDoc, contents, writeToFs() }
+ */
+FileTree.prototype.processAddedNode_ = function(node) {
+  if (node.otDoc || node.type !== 'file' || !node.otDocId) {
+    return;
+  }
+  node.contents = '';
+  node.writeToFs = () => {
+    var fullPath = path.join(this.pathPrefix_, node.path);
+    console.log('Writing: ', fullPath);
+    fs.writeFile(fullPath, node.contents);
+  };
+  node.otDoc = sharejs.sjs.get('source_files', node.otDocId);
+  node.otDoc.subscribe();
+  node.otDoc.whenReady(() => {
+    if (!node.otDoc.type) {
+      node.otDoc.create('text');
+    }
+    if (node.otDoc.type && node.otDoc.type.name === 'text') {
+      var doFn = () => {
+        node.contents = node.otDoc.getSnapshot();
+        node.writeToFs();
+      };
+      node.otDoc.on('op', doFn);
+      doFn();
+    }
+  });
+};
+
+/**
+ * Releases a OT doc on the node if it exists.
+ */
+FileTree.prototype.releaseNodeOtWatch_ = function(node) {
+  if (!node.otDoc) {
+    return;
+  }
+  node.otDoc.unsubscribe(() => {
+    var fullPath = path.join(this.pathPrefix_, node.path);
+    fs.unlinkSync(fullPath);
+  });
+};
+
+/**
+ * Applies a single diff to the treeLayout in a robust way. Also applies the
+ * diff to the file system, creating and releasing what ever OT Docs are needed.
  */
 FileTree.prototype.applyDiff_ = function(diff) {
   if (diff.opType === 'create') {
     var node = this.getNodeAtPath(diff.targetPath, true);
     extend(node, diff.metaData);
+    var fullPath = path.join(this.pathPrefix_, diff.targetPath);
+    if (node.type === 'file') {
+      mkdirp.sync(path.parse(fullPath).dir);
+      this.processAddedNode_(node);
+    } else {
+      mkdirp.sync(fullPath);
+    }
+    this.processAddedNode_(node);
   } else if (diff.opType === 'move') {
     // Find root of the path, remove it's child, store it in new path
     var sourcePath = this.sanitizePath(diff.sourcePath);
@@ -130,6 +188,8 @@ FileTree.prototype.applyDiff_ = function(diff) {
       // Just rename the file, don't 'move' it
       return true;
     }
+    console.log('WARNING! Moving a file or directory is not yet supported by' +
+      'the FS mapper!');
     var nodeIndex = sourceParentChildren.indexOf(node);
     if (nodeIndex > -1) {
       sourceParentChildren.splice(nodeIndex, 1);
@@ -160,6 +220,14 @@ FileTree.prototype.applyDiff_ = function(diff) {
     var nodeIndex = targetParentChildren.indexOf(node);
     if (nodeIndex > -1) {
       targetParentChildren.splice(nodeIndex, 1);
+    }
+    // Remove it from the FS
+    if (node.type === 'file') {
+      this.releaseNodeOtWatch_(node);
+    } else {
+      console.log(
+        'WARNING! Deleting directories is not yet supported by the ' +
+        'FS mapper!');
     }
   } else {
     console.error('Unsupported File Tree Diff Type! Diff: ', diff);
