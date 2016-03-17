@@ -17,57 +17,6 @@ function ProjectSync(projectId) {
   this.subscribeProject_(projectId);
 };
 
-ProjectSync.prototype.getDirectory = function(path) {
-  var node = this.fileTree_.getNodeAtPath(path);
-  if (!node || node.type !== 'directory') {
-    return null;
-  }
-  return node;
-};
-
-ProjectSync.prototype.getItem = function(path) {
-  return this.fileTree_.getNodeAtPath(path);
-};
-
-/**
- * Reads the contents of a file. This must be async as we aren't sure when
- * ShareJS will connect (could be in the future). Callback will be sent the
- * file's contents or null if it failed to load
- */
-ProjectSync.prototype.readItem = function(path, callback) {
-  var item = this.fileTree_.getNodeAtPath(path);
-  if (!item || item.type !== 'file' || !item.otDocId) {
-    return callback(null);
-  }
-  if (item.otDoc && item.otDocReady) {
-    return callback(item.otDoc.getSnapshot() + '\n');
-  } else {
-    if (!item.otDoc) {
-      // The doc hasn't been loaded yet (cold cache), load it and fire any
-      // deffered callbacks once it's ready
-      item.otDoc = sharejs.sjs.get('source_files', item.otDocId);
-      item.otDoc.subscribe();
-      item.otDoc.whenReady(() => {
-        if (!item.otDoc.type) {
-          item.otDoc.create('text');
-        }
-        if (item.otDoc.type && item.otDoc.type.name === 'text') {
-          item.otDocReady = true;
-          if (item.deferedCallbacks) {
-            var contents = item.otDoc.getSnapshot();
-            item.deferedCallbacks.forEach((deferedCallback) => {
-              deferedCallback(contents + '\n');
-            });
-          }
-        }
-      });
-    }
-    // Loaded or not loaded, add the callback to the defered list
-    item.deferedCallbacks = item.deferedCallbacks || [];
-    item.deferedCallbacks.push(callback);
-  }
-};
-
 ProjectSync.prototype.release = function() {
   scorchSocket.socket.removeAllListeners('project-' + this.projectId_ +
     '-fileTree');
