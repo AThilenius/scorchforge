@@ -16,6 +16,7 @@ var app = angular.module('app', [
   'xeditable',
   'thilenius.navbar',
   'thilenius.settings',
+  'thilenius.three_visualizer',
   'thilenius.tty',
   'thilenius.sidebar',
   'thilenius.content_window'
@@ -56,14 +57,16 @@ app.config([
 
 app.filter('capitalize', function() {
   return function(input) {
-    return (!!input) ? input.charAt(0).toUpperCase() + input.substr(1).toLowerCase() : '';
-  }
+    return (!!input) ? input.charAt(0).toUpperCase() +
+      input.substr(1).toLowerCase() : '';
+  };
 });
 
 app.config(['$mdThemingProvider',
   function($mdThemingProvider) {
     $mdThemingProvider.theme('default')
-        .primaryPalette('blue')
-        .accentPalette('red')
-        .dark();
-  }]);
+      .primaryPalette('blue')
+      .accentPalette('red')
+      .dark();
+  }
+]);

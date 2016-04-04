@@ -67,7 +67,8 @@ module.exports = function(grunt) {
         'options': {
           'compilation_level': 'SIMPLE_OPTIMIZATIONS',
           'debug': null,
-          'formatting': 'PRETTY_PRINT'
+          'formatting': 'PRETTY_PRINT',
+          'language_out': 'ES5'
         }
       },
       'app': {
@@ -85,7 +86,8 @@ module.exports = function(grunt) {
         'jsOutputFile': 'client_prod/build/01_lib-' + timestamp + '.js',
         'maxBuffer': 5000,
         'options': {
-          'compilation_level': 'SIMPLE_OPTIMIZATIONS'
+          'compilation_level': 'SIMPLE_OPTIMIZATIONS',
+          'language_out': 'ES5'
         }
       },
       'app_root_prod': {
@@ -93,7 +95,8 @@ module.exports = function(grunt) {
         'jsOutputFile': 'client_prod/build/02_app-' + timestamp + '.js',
         'maxBuffer': 5000,
         'options': {
-          'compilation_level': 'SIMPLE_OPTIMIZATIONS'
+          'compilation_level': 'SIMPLE_OPTIMIZATIONS',
+          'language_out': 'ES5'
         }
       },
       'app_prod': {
@@ -103,7 +106,8 @@ module.exports = function(grunt) {
         'jsOutputFile': 'client_prod/build/04_app-' + timestamp + '.js',
         'maxBuffer': 5000,
         'options': {
-          'compilation_level': 'SIMPLE_OPTIMIZATIONS'
+          'compilation_level': 'SIMPLE_OPTIMIZATIONS',
+          'language_out': 'ES5'
         }
       }
     },

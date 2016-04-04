@@ -110,14 +110,6 @@ app.service('data', ['$rootScope', '$mdToast', 'Person', 'Workspace', 'Project',
             projectId: sharedProjectId,
           }, (projectLink) => {
             console.log('Created link');
-            //that.projects.push(project);
-            //that.activateProject(project);
-            //$mdToast.show($mdToast.simple()
-            //.textContent(`Project ${val} created!`)
-            //.position('top right')
-            //.hideDelay(3000)
-            //.theme('success')
-            //);
           });
         }
       });

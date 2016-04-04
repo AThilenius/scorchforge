@@ -28,19 +28,19 @@ app.service('atDockspawn', [function() {
       'settingsWindow'), this.dockManager);
     var output = new dockspawn.PanelContainer(document.getElementById(
       'outputWindow'), this.dockManager);
+    var demo = new dockspawn.PanelContainer(document.getElementById(
+      'demoWindow'), this.dockManager);
     // Dock the panels on the dock manager
     this.documentNode = this.dockManager.context.model.documentManagerNode;
-    this.projectNode = this.dockManager.dockLeft(this.documentNode,
-      project,
-      0.3);
-    this.settingsNode = this.dockManager.dockFill(this.projectNode,
-      settings,
-      0.3);
+    this.projectNode = this.dockManager.dockLeft(
+      this.documentNode, project, 0.3);
+    this.settingsNode = this.dockManager.dockFill(
+      this.projectNode, settings, 0.3);
     this.projectNode.parent.container.tabHost.setActiveTab(
-        this.projectNode.container);
+      this.projectNode.container);
     this.outputNode = this.dockManager.dockDown(this.documentNode,
-      output,
-      0.3);
+      output, 0.3);
+    this.demoNode = this.dockManager.dockFill(this.documentNode, demo);
   };
 
 }]);
