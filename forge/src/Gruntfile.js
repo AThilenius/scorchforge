@@ -199,6 +199,10 @@ module.exports = function(grunt) {
     'shell:cp_assets_to_prod'
   ]);
 
+  grunt.registerTask('update_deps', [
+    'includeSource:dev',
+  ]);
+
   grunt.registerTask('check', ['closure-compiler:check']);
 
 };
