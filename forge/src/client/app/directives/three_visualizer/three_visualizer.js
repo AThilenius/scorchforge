@@ -13,6 +13,7 @@ angular.module('thilenius.three_visualizer', [])
         var height = $element[0].clientHeight;
         var aspect = width / height;
         var scene = new THREE.Scene();
+        window.scene = scene;
         var objects = [];
         var raycaster = new THREE.Raycaster();
         var mouse = new THREE.Vector2();
@@ -21,11 +22,6 @@ angular.module('thilenius.three_visualizer', [])
         var camera = new THREE.PerspectiveCamera(45, aspect, 0.1, 1000);
         camera.position.z = 500;
         var renderer = new THREE.WebGLRenderer();
-        //var renderer = new THREE.RaytracingRenderer({
-        //workers: 3,
-        //workerPath: '/app/directives/three_visualizer/RaytracingWorker.js',
-        //blockSize: 64
-        //});
         renderer.setSize(width, height);
         var orbitControls = new THREE.OrbitControls(camera);
         orbitControls.addEventListener('change', render);
@@ -56,31 +52,31 @@ angular.module('thilenius.three_visualizer', [])
         scene.add(light);
 
         // depth
-        var depthShader = THREE.ShaderLib.depthRGBA;
-        var depthUniforms = THREE.UniformsUtils.clone(depthShader.uniforms);
-        depthMaterial = new THREE.ShaderMaterial({
-          fragmentShader: depthShader.fragmentShader,
-          vertexShader: depthShader.vertexShader,
-          uniforms: depthUniforms
-        });
-        depthMaterial.blending = THREE.NoBlending;
+        //var depthShader = THREE.ShaderLib.depthRGBA;
+        //var depthUniforms = THREE.UniformsUtils.clone(depthShader.uniforms);
+        //depthMaterial = new THREE.ShaderMaterial({
+        //fragmentShader: depthShader.fragmentShader,
+        //vertexShader: depthShader.vertexShader,
+        //uniforms: depthUniforms
+        //});
+        //depthMaterial.blending = THREE.NoBlending;
 
-        // postprocessing
-        composer = new THREE.EffectComposer(renderer);
-        composer.addPass(new THREE.RenderPass(scene, camera));
-        depthTarget = new THREE.WebGLRenderTarget(width, height, {
-          minFilter: THREE.NearestFilter,
-          magFilter: THREE.NearestFilter,
-          format: THREE.RGBAFormat
-        });
+        //// postprocessing
+        //composer = new THREE.EffectComposer(renderer);
+        //composer.addPass(new THREE.RenderPass(scene, camera));
+        //depthTarget = new THREE.WebGLRenderTarget(width, height, {
+        //minFilter: THREE.NearestFilter,
+        //magFilter: THREE.NearestFilter,
+        //format: THREE.RGBAFormat
+        //});
 
-        var effect = new THREE.ShaderPass(THREE.SSAOShader);
-        effect.uniforms.tDepth.value = depthTarget;
-        effect.uniforms.size.value.set(width, height);
-        effect.uniforms.cameraNear.value = camera.near;
-        effect.uniforms.cameraFar.value = camera.far;
-        effect.renderToScreen = true;
-        composer.addPass(effect);
+        //var effect = new THREE.ShaderPass(THREE.SSAOShader);
+        //effect.uniforms.tDepth.value = depthTarget;
+        //effect.uniforms.size.value.set(width, height);
+        //effect.uniforms.cameraNear.value = camera.near;
+        //effect.uniforms.cameraFar.value = camera.far;
+        //effect.renderToScreen = true;
+        //composer.addPass(effect);
 
         // Cube
         var rollOverGeo = new THREE.BoxGeometry(10, 10, 10);
@@ -99,6 +95,7 @@ angular.module('thilenius.three_visualizer', [])
 
         document.addEventListener('keydown', (event) => {
           switch (event.keyCode) {
+            case 17:
             case 91:
               ctrlDown = true;
               orbitControls.enableRotate = true;
@@ -110,6 +107,7 @@ angular.module('thilenius.three_visualizer', [])
 
         document.addEventListener('keyup', (event) => {
           switch (event.keyCode) {
+            case 17:
             case 91:
               ctrlDown = false;
               orbitControls.enableRotate = false;
@@ -145,6 +143,9 @@ angular.module('thilenius.three_visualizer', [])
         }, false);
 
         document.addEventListener('mousedown', (event) => {
+          if (event.button === 1) {
+            ctrlDown = true;
+          }
           if (ctrlDown) {
             return;
           }
@@ -178,12 +179,19 @@ angular.module('thilenius.three_visualizer', [])
           }
         }, false);
 
-        function render() {
-          scene.overrideMaterial = depthMaterial;
-          renderer.render(scene, camera, depthTarget);
+        document.addEventListener('mouseup', (event) => {
+          if (event.button === 1) {
+            ctrlDown = false;
+          }
+        }, false);
 
-          scene.overrideMaterial = null;
-          composer.render();
+        function render() {
+          renderer.render(scene, camera);
+          //scene.overrideMaterial = depthMaterial;
+          //renderer.render(scene, camera, depthTarget);
+
+          //scene.overrideMaterial = null;
+          //composer.render();
 
           // For Raytracing
           //renderer.render(scene, camera);
