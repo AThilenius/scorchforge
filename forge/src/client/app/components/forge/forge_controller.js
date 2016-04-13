@@ -24,13 +24,20 @@ forgeApp.controller('forgeController', [
   function($rootScope, $scope, $location, $mdDialog, $mdToast, $timeout,
     $compile, atTextDialog, metastore, Person, data, atRateLimiter, otShare,
     atDockspawn, compiler, billet) {
+
+    // Pull Forge build version number from global.
     $scope.forgeVersion = window.FORGE_VERSION;
 
-    // Global state object (not intended for serialization)
+    // Represents the active content window. This is used for things like
+    // contextual menues (like the toolbar).
+    $scope.activeContent = null;
+
+    // Global state object (not intended for serialization).
     $scope.state = {
       viewingAsRole: 'student'
     };
 
+    // Load up the current person and set their role.
     $scope.person = Person.getCurrent((person) => {
       $scope.state.viewingAsRole = person.role;
     });

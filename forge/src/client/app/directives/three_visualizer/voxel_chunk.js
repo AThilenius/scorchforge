@@ -269,7 +269,8 @@ VoxelChunk.prototype.toVertexList = function() {
 /**
  * Creates a THREE.js Mesh from the chunk using colored verts.
  */
-VoxelChunk.prototype.toThreeMesh = function() {
+VoxelChunk.prototype.toThreeMesh = function(scale) {
+  scale = scale || 10;
   var geometry = new THREE.Geometry();
   var quads = this.toVertexList();
   var face = null;
@@ -279,10 +280,14 @@ VoxelChunk.prototype.toThreeMesh = function() {
     var q3 = quads[i + 2];
     var q4 = quads[i + 3];
     // Verts
-    geometry.vertices.push(new THREE.Vector3(q1.p.x, q1.p.y, q1.p.z));
-    geometry.vertices.push(new THREE.Vector3(q2.p.x, q2.p.y, q2.p.z));
-    geometry.vertices.push(new THREE.Vector3(q3.p.x, q3.p.y, q3.p.z));
-    geometry.vertices.push(new THREE.Vector3(q4.p.x, q4.p.y, q4.p.z));
+    geometry.vertices.push(new THREE.Vector3(q1.p.x * scale, q1.p.y * scale,
+      q1.p.z * scale));
+    geometry.vertices.push(new THREE.Vector3(q2.p.x * scale, q2.p.y * scale,
+      q2.p.z * scale));
+    geometry.vertices.push(new THREE.Vector3(q3.p.x * scale, q3.p.y * scale,
+      q3.p.z * scale));
+    geometry.vertices.push(new THREE.Vector3(q4.p.x * scale, q4.p.y * scale,
+      q4.p.z * scale));
     // Colors
     geometry.colors.push(new THREE.Color(q1.c.r, q1.c.g, q1.c.b));
     geometry.colors.push(new THREE.Color(q2.c.r, q2.c.g, q2.c.b));

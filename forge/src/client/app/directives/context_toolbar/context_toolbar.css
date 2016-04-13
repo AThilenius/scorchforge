@@ -1,0 +1,14 @@
+.accordion-plate {
+  padding-right: 10px;
+  padding-top: 5px;
+  background: #3E3E3E;
+  border-bottom: 1px solid #1D1D1D;
+}
+
+.accordion-plate .dndDraggingSource {
+  display: none;
+}
+
+.accordion-content {
+  padding-top: 4px;
+}

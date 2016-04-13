@@ -16,6 +16,7 @@ var app = angular.module('app', [
   'xeditable',
   'thilenius.navbar',
   'thilenius.settings',
+  'thilenius.context_toolbar',
   'thilenius.three_visualizer',
   'thilenius.tty',
   'thilenius.sidebar',

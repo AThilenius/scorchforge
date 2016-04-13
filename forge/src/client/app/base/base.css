@@ -132,3 +132,35 @@ md-toast {
 ::-webkit-scrollbar-thumb:window-inactive {
   background: rgba(100, 100, 100, 0.4);
 }
+
+
+/*Angular Material List Items (shrink)*/
+
+md-list-item,
+md-list-item .md-list-item-inner {
+  min-height: 0px !important;
+}
+
+md-slider {
+  height: 20px !important;
+  top: -10px !important;
+}
+
+md-option {
+  height: 22px !important;
+}
+
+
+/*Angular Material Tabs (shrink)*/
+
+md-tabs-canvas {
+  height: 28px;
+}
+
+.md-tab {
+  padding: 4px 10px;
+}
+
+md-pagination-wrapper {
+  height: 15%;
+}

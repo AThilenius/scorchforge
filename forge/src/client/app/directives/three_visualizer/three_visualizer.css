@@ -1,0 +1,10 @@
+.three-toggle-button {
+  color: white;
+  background: transparent;
+  height: 22px;
+}
+
+.three-toggle-button.active {
+  color: white;
+  background-color: rgb(17, 108, 214);
+}

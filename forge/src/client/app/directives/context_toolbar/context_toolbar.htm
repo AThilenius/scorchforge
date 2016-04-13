@@ -1,0 +1,86 @@
+<!--Accordion Template-->
+<script type="text/ng-template" id="accordionTemplate">
+  <div class="accordion-plate">
+    <div ng-click="toggleOpen()"
+         class="text-align-center
+         {{isOpen ? 'tone-text-primary' : 'tone-text-secondary'}}">
+      {{heading}}
+    </div>
+    <div class="panel-collapse collapse accordion-content"
+         uib-collapse="!isOpen">
+      <div ng-transclude></div>
+    </div>
+  </div>
+</script>
+
+<!--Scene Graph Item Template-->
+<script type="text/ng-template" id="sceneGraphTemplate">
+  <div dnd-list="list" style="min-height: 20px;">
+    <div ng-repeat="item in list"
+         dnd-draggable="item"
+         dnd-effect-allowed="move"
+         dnd-moved="list.splice($index, 1);"
+         ng-init="depth = depth + 1"
+         style="padding-left: 18px;"
+         ng-include="'sceneGraphItemTemplate'">
+    </div>
+    <div class="dndPlaceholder" style="padding-left: 18px;">
+      <strong>Move Here</strong>
+    </div>
+  </div>
+</script>
+
+<script type="text/ng-template" id="sceneGraphItemTemplate">
+  <div>
+    <div mg-nofocus
+         ng-dblclick="selectItem(item)"
+         context-menu="directoryDropdown"
+         class="{{selectedItem === item ?  'bg-highlight-darkblue' : '' }}"
+         style="{{selectedItem === item ?
+                  'margin-left: -' + ((depth * 18) + 10) + 'px;
+                  padding-left: ' + ((depth * 18) + 10) + 'px;
+                  padding-right: 10px; margin-right: -10px;' : '' }}">
+      <i class="icon-th" style="font-size: 0.8em; margin-right:1px;"></i>
+      {{ item.name }}
+    </div>
+    <span ng-if="item.children"
+      <div ng-repeat="list in [item.children]"
+           ng-include="'sceneGraphTemplate'">
+      </div>
+    </span>
+  </div>
+</script>
+
+<div class="fill tone-cplate-in tone-text-primary ">
+  <div ng-switch on="activeContent.type" class="fill"
+       style="padding-right: 1px; padding-top:1px;">
+    <div ng-switch-when="threeVisualizer" class="fill">
+      <!--THREE.js Visualizer Toolbox-->
+      <uib-accordion close-others="false">
+        <uib-accordion-group heading="Scene Graph"
+                             is-open="true" template-url="accordionTemplate">
+          <div ng-repeat="list in [activeContent.modelTree.children]"
+               ng-include="'sceneGraphTemplate'"
+               ng-init="depth = 0">
+          </div>
+        </uib-accordion-group>
+        <uib-accordion-group heading="Transforms"
+                             template-url="accordionTemplate">
+          Group Content {{group}}
+        </uib-accordion-group>
+        <uib-accordion-group heading="Properties"
+                             template-url="accordionTemplate">
+          Group Content {{group}}
+        </uib-accordion-group>
+      </uib-accordion>
+    </div>
+    <div ng-switch-default class="fill noselect"
+         style="display: table; text-align: center;">
+      <!--No Context Menu-->
+      <div class="tone-text-secondary"
+           style="display:table-cell; vertical-align:middle;">
+        No Content Selected
+      </div>
+    </div>
+  </div>
+</div>

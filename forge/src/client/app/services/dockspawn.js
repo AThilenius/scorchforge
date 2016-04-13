@@ -26,6 +26,8 @@ app.service('atDockspawn', [function() {
       'projectWindow'), this.dockManager);
     var settings = new dockspawn.PanelContainer(document.getElementById(
       'settingsWindow'), this.dockManager);
+    var context = new dockspawn.PanelContainer(document.getElementById(
+      'contextToolbar'), this.dockManager);
     var output = new dockspawn.PanelContainer(document.getElementById(
       'outputWindow'), this.dockManager);
     var demo = new dockspawn.PanelContainer(document.getElementById(
@@ -34,10 +36,12 @@ app.service('atDockspawn', [function() {
     this.documentNode = this.dockManager.context.model.documentManagerNode;
     this.projectNode = this.dockManager.dockLeft(
       this.documentNode, project, 0.3);
+    this.contextNode = this.dockManager.dockDown(
+      this.projectNode, context, 0.5);
     this.settingsNode = this.dockManager.dockFill(
-      this.projectNode, settings, 0.3);
-    this.projectNode.parent.container.tabHost.setActiveTab(
-      this.projectNode.container);
+      this.contextNode, settings);
+    this.contextNode.parent.container.tabHost.setActiveTab(
+      this.contextNode.container);
     this.outputNode = this.dockManager.dockDown(this.documentNode,
       output, 0.3);
     this.demoNode = this.dockManager.dockFill(this.documentNode, demo);

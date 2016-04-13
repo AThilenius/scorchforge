@@ -1,0 +1,51 @@
+<div class="fill" style="position:relative;">
+  <div id="webgl-canvas"
+       ng-mouseenter="mouseEnter($event)"
+       ng-mouseleave="mouseLeave($event)"
+       ng-mousedown="mouseDown($event)"
+       ng-mousemove="mouseMove($event)"
+       ng-mouseup="mouseUp($event)"
+       class="fill" style="top:0; left:0; position:absolute">
+  </div>
+  <div id="overlay" class="fill" style="top:0; left:0; position:absolute;">
+    <!--HUD Controls-->
+    <div class="btn-toolbar" role="toolbar"
+         style="margin-top: 10px; margin-left: 5px;">
+       <div class="btn-group btn-group-xs" role="group">
+        <button type="button"
+                class="btn btn-default three-toggle-button
+                {{activeTool==='voxel' ? 'active' : ''}}"
+                ng-click="activeTool='voxel'">
+          <img src="assets/block_icon.png" height="15" width="15"
+               style="vertical-align: middle;">
+        </button>
+        <button type="button"
+                class="btn btn-default three-toggle-button
+                {{activeTool==='translate' ? 'active' : ''}}"
+                ng-click="activeTool='translate'">
+          <span class="glyphicon glyphicon-move" aria-hidden="true"
+                style="font-size:1.2em; margin-top: 1px;">
+          </span>
+        </button>
+        <button type="button"
+                class="btn btn-default three-toggle-button
+                {{activeTool==='rotate' ? 'active' : ''}}"
+                ng-click="activeTool='rotate'">
+          <span class="glyphicon glyphicon-repeat" aria-hidden="true"
+                style="font-size:1.2em; margin-top: 1px;">
+          </span>
+        </button>
+        <button type="button"
+                class="btn btn-default three-toggle-button
+                {{activeTool==='scale' ? 'active' : ''}}"
+                ng-click="activeTool='scale'">
+          <span class="glyphicon glyphicon-resize-full" aria-hidden="true"
+                style="font-size:1.2em; margin-top: 1px;">
+          </span>
+        </button>
+      </div>
+      <div class="btn-group btn-group-xs" role="group"></div>
+      <div class="btn-group btn-group-xs" role="group"></div>
+    </div>
+  </div>
+</div>

@@ -8,9 +8,14 @@ angular.module('thilenius.three_visualizer', [])
       restrict: 'AE',
       templateUrl: 'app/directives/three_visualizer/three_visualizer.htm',
       link: function($scope, $element, $attr) {
+        $scope.dufuck = function() {
+          console.log('dufuck()');
+        };
+        window.elem = $element;
         // TODO(athilenius): Handle Resize Events
-        var width = $element[0].clientWidth;
-        var height = $element[0].clientHeight;
+        var renderElem = $element.find('#webgl-canvas')[0];
+        var width = renderElem.clientWidth;
+        var height = renderElem.clientHeight;
         var aspect = width / height;
         var scene = new THREE.Scene();
         window.scene = scene;
@@ -28,71 +33,59 @@ angular.module('thilenius.three_visualizer', [])
         orbitControls.enableRotate = false;
         orbitControls.enablePan = false;
         window.orbit = orbitControls;
-        $element[0].appendChild(renderer.domElement);
+        renderElem.appendChild(renderer.domElement);
         scene.add(new THREE.AmbientLight(0x555555));
-        // Scene Stuff
-        var axisHelper = new THREE.AxisHelper(50);
-        axisHelper.position.set(-80, 10, -80);
-        scene.add(axisHelper);
         // Grid
         var gridHelper = new THREE.GridHelper(80, 10);
         scene.add(gridHelper);
-        // Plane (for raycasting only)
-        var planeGeometry = new THREE.PlaneBufferGeometry(160, 160);
-        planeGeometry.rotateX(-Math.PI / 2);
-        var plane = new THREE.Mesh(planeGeometry, new THREE.MeshBasicMaterial({
-          visible: false
-        }));
-        scene.add(plane);
-        objects.push(plane);
         // Light
         var light = new THREE.DirectionalLight(0xffffff);
         light.position.set(0, 20, 20);
         light.target.position.set(0, 0, 0);
         scene.add(light);
-
-        // depth
-        //var depthShader = THREE.ShaderLib.depthRGBA;
-        //var depthUniforms = THREE.UniformsUtils.clone(depthShader.uniforms);
-        //depthMaterial = new THREE.ShaderMaterial({
-        //fragmentShader: depthShader.fragmentShader,
-        //vertexShader: depthShader.vertexShader,
-        //uniforms: depthUniforms
-        //});
-        //depthMaterial.blending = THREE.NoBlending;
-
-        //// postprocessing
-        //composer = new THREE.EffectComposer(renderer);
-        //composer.addPass(new THREE.RenderPass(scene, camera));
-        //depthTarget = new THREE.WebGLRenderTarget(width, height, {
-        //minFilter: THREE.NearestFilter,
-        //magFilter: THREE.NearestFilter,
-        //format: THREE.RGBAFormat
-        //});
-
-        //var effect = new THREE.ShaderPass(THREE.SSAOShader);
-        //effect.uniforms.tDepth.value = depthTarget;
-        //effect.uniforms.size.value.set(width, height);
-        //effect.uniforms.cameraNear.value = camera.near;
-        //effect.uniforms.cameraFar.value = camera.far;
-        //effect.renderToScreen = true;
-        //composer.addPass(effect);
+        // Plane (for raycasting only)
+        //var planeGeometry = new THREE.PlaneBufferGeometry(160, 160);
+        //planeGeometry.rotateX(-Math.PI / 2);
+        //var plane = new THREE.Mesh(planeGeometry, new THREE.MeshBasicMaterial({
+        //visible: false
+        //}));
+        //scene.add(plane);
+        //objects.push(plane);
 
         // Cube
-        var rollOverGeo = new THREE.BoxGeometry(10, 10, 10);
-        var rollOverMaterial = new THREE.MeshBasicMaterial({
-          color: 0xff0000,
-          opacity: 0.5,
-          transparent: true
-        });
-        rollOverMesh = new THREE.Mesh(rollOverGeo, rollOverMaterial);
-        scene.add(rollOverMesh);
+        //var rollOverGeo = new THREE.BoxGeometry(10, 10, 10);
+        //var rollOverMaterial = new THREE.MeshBasicMaterial({
+        //color: 0xff0000,
+        //opacity: 0.5,
+        //transparent: true
+        //});
+        //rollOverMesh = new THREE.Mesh(rollOverGeo, rollOverMaterial);
+        //scene.add(rollOverMesh);
+        //window.cube = rollOverMesh;
+        //var cubeGeo = new THREE.BoxGeometry(10, 10, 10);
+        //var cubeMaterial = new THREE.MeshPhongMaterial({
+        //color: 0x00ff00
+        //});
 
-        var cubeGeo = new THREE.BoxGeometry(10, 10, 10);
-        var cubeMaterial = new THREE.MeshPhongMaterial({
-          color: 0x00ff00
+        // Transform controls for the Model Tree
+        var transformControl = new THREE.TransformControls(camera,
+          renderer.domElement);
+        transformControl.addEventListener('change', () => {
+          // Going to need to do someting here... I think?
+          renderer.render(scene, camera);
         });
-
+        transformControl.setTranslationSnap(5);
+        window.transformControl = transformControl;
+        scene.add(transformControl);
+        var rootObject = new THREE.Object3D();
+        scene.add(rootObject);
+        // Axis Helper
+        var axisHelper = new THREE.AxisHelper(50);
+        scene.add(axisHelper);
+        // Model Tree
+        var modelTree = new ModelTree(rootObject, transformControl, axisHelper,
+          camera, renderer, scene);
+        window.modelTree = modelTree;
         document.addEventListener('keydown', (event) => {
           switch (event.keyCode) {
             case 17:
@@ -100,7 +93,6 @@ angular.module('thilenius.three_visualizer', [])
               ctrlDown = true;
               orbitControls.enableRotate = true;
               orbitControls.enablePan = true;
-              scene.remove(rollOverMesh);
               break;
           }
         }, false);
@@ -112,48 +104,60 @@ angular.module('thilenius.three_visualizer', [])
               ctrlDown = false;
               orbitControls.enableRotate = false;
               orbitControls.enablePan = false;
-              scene.add(rollOverMesh);
               break;
           }
         }, false);
 
-        document.addEventListener('mousemove', (event) => {
-          if (ctrlDown) {
+        $scope.mouseEnter = function(event) {
+          orbitControls.enabled = true;
+        };
+
+        $scope.mouseLeave = function(event) {
+          orbitControls.enabled = false;
+        };
+
+        $scope.mouseMove = function(event) {
+          if (ctrlDown || !orbitControls.enabled) {
             return;
           }
-          event.preventDefault();
-          var x = event.clientX - $element[0].offsetLeft;
-          var y = event.clientY - $element[0].offsetTop;
+          var x = event.clientX - renderElem.offsetLeft;
+          var y = event.clientY - renderElem.offsetTop;
           mouse.x = (x / width) * 2 - 1;
           mouse.y = -((y / height) * 2 - 1);
+          orbitControls.enabled = true;
           raycaster.setFromCamera(mouse, camera);
           var intersects = raycaster.intersectObjects(objects);
           if (intersects.length > 0) {
             var intersect = intersects[0];
-            rollOverMesh.position
-              .copy(intersect.point)
-              .add(intersect.face.normal);
-            rollOverMesh.position
-              .divideScalar(10)
-              .floor()
-              .multiplyScalar(10)
-              .addScalar(5);
+            //rollOverMesh.position
+            //.copy(intersect.point)
+            //.add(intersect.face.normal);
+            //rollOverMesh.position
+            //.divideScalar(10)
+            //.floor()
+            //.multiplyScalar(10)
+            //.addScalar(5);
           }
           render();
-        }, false);
+          orbitControls.update();
+        };
 
-        document.addEventListener('mousedown', (event) => {
+        $scope.mouseDown = function(event) {
           if (event.button === 1) {
             ctrlDown = true;
           }
-          if (ctrlDown) {
+          if (ctrlDown || !orbitControls.enabled || event.clientX) {
             return;
           }
-          event.preventDefault();
-          var x = event.clientX - $element[0].offsetLeft;
-          var y = event.clientY - $element[0].offsetTop;
+          var x = event.clientX - renderElem.offsetLeft;
+          var y = event.clientY - renderElem.offsetTop;
           mouse.x = (x / width) * 2 - 1;
           mouse.y = -((y / height) * 2 - 1);
+          if (mouse.x < 0 && mouse.x > 1 && mouse.y < 0 && mouse.y > 1) {
+            orbitControls.enabled = false;
+            return;
+          }
+          orbitControls.enabled = true;
           raycaster.setFromCamera(mouse, camera);
           var intersects = raycaster.intersectObjects(objects);
           if (intersects.length > 0) {
@@ -176,14 +180,15 @@ angular.module('thilenius.three_visualizer', [])
               objects.push(voxel);
             }
             render();
+            orbitControls.update();
           }
-        }, false);
+        };
 
-        document.addEventListener('mouseup', (event) => {
-          if (event.button === 1) {
+        $scope.mouseUp = function(event) {
+          if (orbitControls.enabled && event.button === 1) {
             ctrlDown = false;
           }
-        }, false);
+        };
 
         function render() {
           renderer.render(scene, camera);
@@ -198,16 +203,15 @@ angular.module('thilenius.three_visualizer', [])
         }
         render();
 
-        function animate() {
-          requestAnimationFrame(animate);
-          orbitControls.update();
-        }
-        animate();
+        //function animate() {
+        //requestAnimationFrame(animate);
+        //orbitControls.update();
+        //}
+        //animate();
+        $scope.activeContent = {
+          type: 'threeVisualizer',
+          modelTree: modelTree
+        };
       }
     };
   }]);
-
-//var control = new THREE.TransformControls(camera, renderer.domElement);
-//control.attach(cube);
-//control.addEventListener('change', render);
-//scene.add(control);
