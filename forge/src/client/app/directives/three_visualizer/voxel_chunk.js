@@ -85,20 +85,20 @@ VoxelChunk.prototype.toVertexList = function() {
           v3c = this.get(x + 1, y, z + 1) ? v3c + 0.2 : v3c;
           v3c = this.get(x + 1, y + 1, z + 1) ? v3c + 0.2 : v3c;
           quads.push({
-            p: v1,
-            c: color.clone().lerp(black, v1c)
+            position: v1.toArray(),
+            color: color.clone().lerp(black, v1c).toArray()
           });
           quads.push({
-            p: v2,
-            c: color.clone().lerp(black, v2c)
+            position: v2.toArray(),
+            color: color.clone().lerp(black, v2c).toArray()
           });
           quads.push({
-            p: v3,
-            c: color.clone().lerp(black, v3c)
+            position: v3.toArray(),
+            color: color.clone().lerp(black, v3c).toArray()
           });
           quads.push({
-            p: v4,
-            c: color.clone().lerp(black, v4c)
+            position: v4.toArray(),
+            color: color.clone().lerp(black, v4c).toArray()
           });
         }
         //Back face
@@ -116,20 +116,20 @@ VoxelChunk.prototype.toVertexList = function() {
           v7c = this.get(x + 1, y, z - 1) ? v7c + 0.2 : v7c;
           v7c = this.get(x + 1, y + 1, z - 1) ? v7c + 0.2 : v7c;
           quads.push({
-            p: v6,
-            c: color.clone().lerp(black, v6c)
+            position: v6.toArray(),
+            color: color.clone().lerp(black, v6c).toArray()
           });
           quads.push({
-            p: v5,
-            c: color.clone().lerp(black, v5c)
+            position: v5.toArray(),
+            color: color.clone().lerp(black, v5c).toArray()
           });
           quads.push({
-            p: v8,
-            c: color.clone().lerp(black, v8c)
+            position: v8.toArray(),
+            color: color.clone().lerp(black, v8c).toArray()
           });
           quads.push({
-            p: v7,
-            c: color.clone().lerp(black, v7c)
+            position: v7.toArray(),
+            color: color.clone().lerp(black, v7c).toArray()
           });
         }
         //Right face
@@ -148,20 +148,20 @@ VoxelChunk.prototype.toVertexList = function() {
           v3c = this.get(x + 1, y, z + 1) ? v3c + 0.2 : v3c;
           v3c = this.get(x + 1, y + 1, z + 1) ? v3c + 0.2 : v3c;
           quads.push({
-            p: v2,
-            c: color.clone().lerp(black, v2c)
+            position: v2.toArray(),
+            color: color.clone().lerp(black, v2c).toArray()
           });
           quads.push({
-            p: v6,
-            c: color.clone().lerp(black, v6c)
+            position: v6.toArray(),
+            color: color.clone().lerp(black, v6c).toArray()
           });
           quads.push({
-            p: v7,
-            c: color.clone().lerp(black, v7c)
+            position: v7.toArray(),
+            color: color.clone().lerp(black, v7c).toArray()
           });
           quads.push({
-            p: v3,
-            c: color.clone().lerp(black, v3c)
+            position: v3.toArray(),
+            color: color.clone().lerp(black, v3c).toArray()
           });
         }
         //Left face
@@ -180,20 +180,20 @@ VoxelChunk.prototype.toVertexList = function() {
           v4c = this.get(x - 1, y, z + 1) ? v4c + 0.2 : v4c;
           v4c = this.get(x - 1, y + 1, z + 1) ? v4c + 0.2 : v4c;
           quads.push({
-            p: v5,
-            c: color.clone().lerp(black, v5c)
+            position: v5.toArray(),
+            color: color.clone().lerp(black, v5c).toArray()
           });
           quads.push({
-            p: v1,
-            c: color.clone().lerp(black, v1c)
+            position: v1.toArray(),
+            color: color.clone().lerp(black, v1c).toArray()
           });
           quads.push({
-            p: v4,
-            c: color.clone().lerp(black, v4c)
+            position: v4.toArray(),
+            color: color.clone().lerp(black, v4c).toArray()
           });
           quads.push({
-            p: v8,
-            c: color.clone().lerp(black, v8c)
+            position: v8.toArray(),
+            color: color.clone().lerp(black, v8c).toArray()
           });
         }
         //Top face
@@ -212,20 +212,20 @@ VoxelChunk.prototype.toVertexList = function() {
           v3c = this.get(x + 1, y + 1, z) ? v3c + 0.2 : v3c;
           v3c = this.get(x + 1, y + 1, z + 1) ? v3c + 0.2 : v3c;
           quads.push({
-            p: v4,
-            c: color.clone().lerp(black, v4c)
+            position: v4.toArray(),
+            color: color.clone().lerp(black, v4c).toArray()
           });
           quads.push({
-            p: v3,
-            c: color.clone().lerp(black, v3c)
+            position: v3.toArray(),
+            color: color.clone().lerp(black, v3c).toArray()
           });
           quads.push({
-            p: v7,
-            c: color.clone().lerp(black, v7c)
+            position: v7.toArray(),
+            color: color.clone().lerp(black, v7c).toArray()
           });
           quads.push({
-            p: v8,
-            c: color.clone().lerp(black, v8c)
+            position: v8.toArray(),
+            color: color.clone().lerp(black, v8c).toArray()
           });
         }
         //Bottom face
@@ -244,20 +244,20 @@ VoxelChunk.prototype.toVertexList = function() {
           v2c = this.get(x + 1, y - 1, z) ? v2c + 0.2 : v2c;
           v2c = this.get(x + 1, y - 1, z + 1) ? v2c + 0.2 : v2c;
           quads.push({
-            p: v1,
-            c: color.clone().lerp(black, v1c)
+            position: v1.toArray(),
+            color: color.clone().lerp(black, v1c).toArray()
           });
           quads.push({
-            p: v5,
-            c: color.clone().lerp(black, v5c)
+            position: v5.toArray(),
+            color: color.clone().lerp(black, v5c).toArray()
           });
           quads.push({
-            p: v6,
-            c: color.clone().lerp(black, v6c)
+            position: v6.toArray(),
+            color: color.clone().lerp(black, v6c).toArray()
           });
           quads.push({
-            p: v2,
-            c: color.clone().lerp(black, v2c)
+            position: v2.toArray(),
+            color: color.clone().lerp(black, v2c).toArray()
           });
         }
       }
@@ -280,31 +280,45 @@ VoxelChunk.prototype.toThreeMesh = function(scale) {
     var q3 = quads[i + 2];
     var q4 = quads[i + 3];
     // Verts
-    geometry.vertices.push(new THREE.Vector3(q1.p.x * scale, q1.p.y * scale,
-      q1.p.z * scale));
-    geometry.vertices.push(new THREE.Vector3(q2.p.x * scale, q2.p.y * scale,
-      q2.p.z * scale));
-    geometry.vertices.push(new THREE.Vector3(q3.p.x * scale, q3.p.y * scale,
-      q3.p.z * scale));
-    geometry.vertices.push(new THREE.Vector3(q4.p.x * scale, q4.p.y * scale,
-      q4.p.z * scale));
+    geometry.vertices.push(new THREE.Vector3(
+      q1.position[0] * scale, q1.position[1] * scale, q1.position[2] *
+      scale));
+    geometry.vertices.push(new THREE.Vector3(
+      q2.position[0] * scale, q2.position[1] * scale, q2.position[2] *
+      scale));
+    geometry.vertices.push(new THREE.Vector3(
+      q3.position[0] * scale, q3.position[1] * scale, q3.position[2] *
+      scale));
+    geometry.vertices.push(new THREE.Vector3(
+      q4.position[0] * scale, q4.position[1] * scale, q4.position[2] *
+      scale));
     // Colors
-    geometry.colors.push(new THREE.Color(q1.c.r, q1.c.g, q1.c.b));
-    geometry.colors.push(new THREE.Color(q2.c.r, q2.c.g, q2.c.b));
-    geometry.colors.push(new THREE.Color(q3.c.r, q3.c.g, q3.c.b));
-    geometry.colors.push(new THREE.Color(q4.c.r, q4.c.g, q4.c.b));
+    geometry.colors.push(
+      new THREE.Color(q1.color[0], q1.color[1], q1.color[2]));
+    geometry.colors.push(
+      new THREE.Color(q2.color[0], q2.color[1], q2.color[2]));
+    geometry.colors.push(
+      new THREE.Color(q3.color[0], q3.color[1], q3.color[2]));
+    geometry.colors.push(
+      new THREE.Color(q4.color[0], q4.color[1], q4.color[2]));
     // First Face + colors
     face = new THREE.Face3(i, i + 2, i + 3);
     geometry.faces.push(face);
-    face.vertexColors[0] = new THREE.Color(q1.c.r, q1.c.g, q1.c.b);
-    face.vertexColors[1] = new THREE.Color(q3.c.r, q3.c.g, q3.c.b);
-    face.vertexColors[2] = new THREE.Color(q4.c.r, q4.c.g, q4.c.b);
+    face.vertexColors[0] = new THREE.Color(q1.color[0], q1.color[1], q1.color[
+      2]);
+    face.vertexColors[1] = new THREE.Color(q3.color[0], q3.color[1], q3.color[
+      2]);
+    face.vertexColors[2] = new THREE.Color(q4.color[0], q4.color[1], q4.color[
+      2]);
     geometry.faces.push(face);
     // Second Face + colors
     face = new THREE.Face3(i, i + 1, i + 2);
-    face.vertexColors[0] = new THREE.Color(q1.c.r, q1.c.g, q1.c.b);
-    face.vertexColors[1] = new THREE.Color(q2.c.r, q2.c.g, q2.c.b);
-    face.vertexColors[2] = new THREE.Color(q3.c.r, q3.c.g, q3.c.b);
+    face.vertexColors[0] = new THREE.Color(q1.color[0], q1.color[1], q1.color[
+      2]);
+    face.vertexColors[1] = new THREE.Color(q2.color[0], q2.color[1], q2.color[
+      2]);
+    face.vertexColors[2] = new THREE.Color(q3.color[0], q3.color[1], q3.color[
+      2]);
     geometry.faces.push(face);
   }
   geometry.computeFaceNormals();

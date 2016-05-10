@@ -17,6 +17,8 @@ var ModelTree = function(rootObject, transformControl, axisHelper, camera,
   this.parentNode = parentNode;
   // The human readable name of the node. Overriden at add time.
   this.name = 'root';
+  // A uuid for this node
+  this.id = newShortUuid();
   // The root ModelTree node. Overriden at add time.
   this.rootNode = this;
   // Child ModelTree instances. Note that this.object3D will also have the same
@@ -33,6 +35,13 @@ var ModelTree = function(rootObject, transformControl, axisHelper, camera,
   this.rootTransform.add(this.pyTransform);
   this.modelOffsetTransform = new THREE.Object3D();
   this.pyTransform.add(this.modelOffsetTransform);
+  this.pyTransformCode = {
+    position: null,
+    rotation: null,
+    scale: null
+  };
+  // PythonCode => Skulpt Module
+  this.skulptCache_ = {};
   //this.modelOffsetTransform.position.set(-8, -8, -8);
   // 'Starter Cube' that is clicked to add a VoxelChunk to the node. Add it to
   // the scene but make it now visible by default. No added to root.
@@ -78,11 +87,15 @@ ModelTree.prototype.activateNode = function(node, raycastObjects) {
   if (this === node) {
     this.isActive = true;
     this.transformControl.attach(this.rootTransform);
-    this.axisHelper.position.copy(this.parentNode.rootTransform.position);
+    if (this.parentNode) {
+      this.axisHelper.position.copy(this.parentNode.rootTransform.position);
+    } else {
+      this.axisHelper.position.set(0, 0, 0);
+    }
     if (this.lastVoxelMesh) {
       this.lastVoxelMesh.visible = true;
       this.lastWireframeHelper.visible = false;
-    } else {
+    } else if (this.starterCubeMesh) {
       this.starterCubeMesh.visible = true;
     }
   } else {
@@ -92,7 +105,7 @@ ModelTree.prototype.activateNode = function(node, raycastObjects) {
       if (this.lastVoxelMesh) {
         this.lastVoxelMesh.visible = false;
         this.lastWireframeHelper.visible = true;
-      } else {
+      } else if (this.starterCubeMesh) {
         this.starterCubeMesh.visible = false;
       }
     }
@@ -119,4 +132,65 @@ ModelTree.prototype.addNode = function(name) {
   this.rootNode.activateNode(newNode);
   this.renderer.render(this.scene, this.camera);
   return newNode;
+};
+
+/**
+ * Updates the entire trees state. This is primarily used to recompute the
+ * pyTransform from python code each time.
+ */
+ModelTree.prototype.update = function() {
+  _(this.pySnipets).keys().forEach(path => {
+    var pythonCode = this.pySnipets[path];
+    var runnable = this.skulptCache_[pythonCode];
+    if (!runnable) {
+      // Convert the python code to a run function
+      pythonCode = 'def run():\n    pass\n' +
+        _(pythonCode.split('\n')).map(v => v ? '----' + v : v).join('\n');
+      // Create a Skulpt module from it
+      var module = Sk.importMainWithBody('<stdin>', false, pythonCode);
+      runnable = module.tp$getattr('run');
+      this.skulptCache_[pythonCode] = runnable;
+    }
+    var out = Sk.misceval.callsim(module);
+    console.log('Out: ', out);
+  });
+};
+
+ModelTree.prototype.toJSON = function() {
+  var obj = {
+    name: this.name,
+    id: this.id
+  };
+  if (!this.rootTransform.position.equals(new THREE.Vector3())) {
+    obj.rootTransform = obj.rootTransform || {};
+    obj.rootTransform.position = this.rootTransform.position.toArray();
+  }
+  if (!this.rootTransform.rotation.equals(new THREE.Euler())) {
+    obj.rootTransform = obj.rootTransform || {};
+    obj.rootTransform.rotation = this.rootTransform.rotation.toArray();
+  }
+  if (!this.rootTransform.scale.equals(new THREE.Vector3(1, 1, 1))) {
+    obj.rootTransform = obj.rootTransform || {};
+    obj.rootTransform.scale = this.rootTransform.scale.toArray();
+  }
+  if (this.pyTransformCode.position) {
+    obj.pyTransformCode = obj.pyTransformCode || {};
+    obj.pyTransformCode.position = this.pyTransformCode.position;
+  }
+  if (this.pyTransformCode.rotation) {
+    obj.pyTransformCode = obj.pyTransformCode || {};
+    obj.pyTransformCode.rotation = this.pyTransformCode.rotation;
+  }
+  if (this.pyTransformCode.scale) {
+    obj.pyTransformCode = obj.pyTransformCode || {};
+    obj.pyTransformCode.scale = this.pyTransformCode.scale;
+  }
+  // TODO(athilenius): Add Python code for pyTransform
+  if (this.children.length) {
+    obj.children = _(this.children).map(v => v.toJSON());
+  }
+  if (this.lastVoxelMesh) {
+    obj.quads = this.voxelChunk.toVertexList();
+  }
+  return obj;
 };

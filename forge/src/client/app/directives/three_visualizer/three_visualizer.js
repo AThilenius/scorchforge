@@ -8,9 +8,8 @@ angular.module('thilenius.three_visualizer', [])
       restrict: 'AE',
       templateUrl: 'app/directives/three_visualizer/three_visualizer.htm',
       link: function($scope, $element, $attr) {
-        $scope.dufuck = function() {
-          console.log('dufuck()');
-        };
+        $scope.activeTool = 'translate';
+        $scope.space = 'local';
         window.elem = $element;
         // TODO(athilenius): Handle Resize Events
         var renderElem = $element.find('#webgl-canvas')[0];
@@ -77,6 +76,17 @@ angular.module('thilenius.three_visualizer', [])
         transformControl.setTranslationSnap(5);
         window.transformControl = transformControl;
         scene.add(transformControl);
+        $scope.$watch('activeTool', (val) => {
+          if (val === 'translate' || val === 'rotate' || val === 'scale') {
+            transformControl.visible = true;
+            transformControl.setMode(val);
+          } else {
+            transformControl.visible = false;
+          }
+        });
+        $scope.$watch('space', (val) => {
+          transformControl.setSpace(val);
+        });
         var rootObject = new THREE.Object3D();
         scene.add(rootObject);
         // Axis Helper
@@ -140,6 +150,7 @@ angular.module('thilenius.three_visualizer', [])
           }
           render();
           orbitControls.update();
+          transformControl.update();
         };
 
         $scope.mouseDown = function(event) {
@@ -181,6 +192,7 @@ angular.module('thilenius.three_visualizer', [])
             }
             render();
             orbitControls.update();
+            transformControl.update();
           }
         };
 

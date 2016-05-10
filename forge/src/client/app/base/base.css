@@ -164,3 +164,11 @@ md-tabs-canvas {
 md-pagination-wrapper {
   height: 15%;
 }
+
+
+/*Angular Material Tooltip (shrink)*/
+
+md-tooltip .md-content {
+  height: 25px;
+  line-height: 25px;
+}
