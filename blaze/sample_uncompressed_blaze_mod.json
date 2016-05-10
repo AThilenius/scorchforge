@@ -1,0 +1,75 @@
+{
+  "sparks": [
+    {
+      "name": "Sample Spark",
+      "id": "VpW5105qtjInvwFv",
+      "controller": "time = 42\ndef server_update():\n    print time",
+      "bindings": {
+        "wcRyJOzkotrH3ipK": {
+          "py_transform.position": {
+            "type": "set",
+            "value": "[42 * time, 0, 0]"
+          }
+        }
+      },
+      "iconId": "5ByJTOQZKQpKt1xa",
+      "sceneGraph": {
+        "name": "root",
+        "id": "d4Y0PcUbVvtYz6Rz",
+        "children": [
+          {
+            "name": "body",
+            "id": "wcRyJOzkotrH3ipK",
+            "rootTransform": {
+              "position": [-24.391952107413044, 5.480208916043022, 0],
+              "rotation": [0, 0, 0.42249810086233947, "XYZ"]
+            },
+            "children": [
+              {
+                "name": "head",
+                "id": "6rlBYJ9M4x6ZN1LY",
+                "rootTransform": {
+                  "position": [0.5827953895228255, 44.118413780902095, 0],
+                  "scale": [1, 1.085706970457453, 1]
+                },
+                "modelId": "5ByJTOQZKQpKt1xa"
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ],
+  "models": [
+    {
+      "id": "5ByJTOQZKQpKt1xa",
+      "name": "Sample Model",
+      "sparseData": [
+        {
+          "color": [255, 0, 0],
+          "position": [0, 1, 0]
+        },
+        {
+          "color": [255, 0, 0],
+          "position": [1, 1, 0]
+        },
+        {
+          "color": [255, 0, 0],
+          "position": [0, 1, 1]
+        },
+        {
+          "color": [0, 255, 0],
+          "position": [1, 0, 1]
+        }
+      ],
+      "size": 4
+    }
+  ],
+  "icons": [
+    {
+      "id": "KHyftP06MppHGpVF",
+      "name": "Wooden Spark Icon",
+      "raw_64": "iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAsklEQVQ4T2NkoBAwUqifAcUABQWF/w8ePCDJUOobYCP6AK+vlpxGdTWGC0AGuLt7YDVk584dDEQbkN6SzDCzZi7YIBibJAOwOYEkA2JbdjAsroF4BcYmyQCYRhANM4igASDFMaYM//FFA95AhNoGNyC2ZQc4lhbXeGCIwSwBK/BngNi6kYGBMZmB4f8bBgYGEQYGBmw0SA2yergBd6BGWuDQCDMQpk4FaiFJ6R5b2FBsAABZXFsRYaA8sAAAAABJRU5ErkJgggAA"
+    }
+  ]
+}
