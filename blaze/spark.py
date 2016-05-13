@@ -1,4 +1,4 @@
-from scene_graph import SceneGraph
+import scene_graph
 from weakref import WeakKeyDictionary
 import utils
 
@@ -26,32 +26,38 @@ class SparkTypeV1(object):
         """
         spark = SparkV1(self)
         self.flyweights[spark] = None
+        # Update all controller
+        try:
+            eval(self.controller_byte_code, self.global_namespace,
+                 spark.local_namespace)
+        except Exception as e:
+            print 'Controller update error: %s' % e
         return spark
 
     def update_all(self):
         """
         Updates all flyweights
         """
-        # Update all controllers first
-        for spark in self.flyweights.iterkeyrefs():
-            try:
-                eval(self.controller_byte_code, self.global_namespace,
-                     spark().local_namespace)
-            except Exception as e:
-                print 'Controller update error: %s' % e
-        # Then update all bindings for each spark
+        # Update all bindings for each spark
         for spark in self.flyweights.iterkeyrefs():
             spark().binding_scope.update_bindings()
+        # Lastly, update the render tree for each spark
+        for spark in self.flyweights.iterkeyrefs():
+            spark().render_tree = spark().scene_graph.get_render_tree()
 
 
 class SparkV1(object):
+    """ A single flywiehgt, representing a single Spark instance. """
+
     def __init__(self, spark_type):
+        self.render_tree = None
         self.local_namespace = {}
         self.binding_scope = utils.BindingScope(spark_type.global_namespace,
                                                 self.local_namespace)
         # Load the Scene Graph
-        self.scene_graph = SceneGraph(self.binding_scope,
-                                      spark_type.json_obj['sceneGraph'])
+        self.scene_graph = utils.global_vtable.SceneGraph(self.binding_scope,
+                                                          spark_type.json_obj[
+                                                              'sceneGraph'])
         # Load Bindings
         # TODO(athilenius): This will result in bindings being recompiled
         # each time. This should be cached an used later.

@@ -8,5 +8,4 @@ utils.global_vtable.set_version_(version)
 blaze = utils.global_vtable.Blaze(blaze_mod_json)
 spark_instance = blaze.spark_types[0].create()
 blaze.update_all()
-print json.dumps(spark_instance.render_tree)
 print 'Wahoo!!'
