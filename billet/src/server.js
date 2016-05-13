@@ -6,7 +6,7 @@ var http = require('http');
 var io = require('socket.io');
 var pty = require('pty.js');
 var terminal = require('term.js');
-var psm = require('./project_mount.js');
+var ProjectSync = require('./project_sync.js').ProjectSync;
 
 var currentMount = null;
 var socket;
@@ -94,13 +94,11 @@ io.sockets.on('connection', (s) => {
    * Takes in { projectId } as data
    */
   socket.on('mount', (data, callback) => {
-    if (currentMount && currentMount.projectId !== data.projectId) {
-      currentMount.unMount(() => {
-        currentMount = new psm.ProjectMount(data.projectId, '/root/forge');
-      });
-    } else if (!currentMount) {
-      currentMount = new psm.ProjectMount(data.projectId, '/root/forge');
+    if (currentMount) {
+      return console.log('WARNING! Switching projects is not yet supported by' +
+        ' the FS mapper!');
     }
+    currentMount = new ProjectSync(data.projectId, '/root/forge');
   });
 
   // ==== Normal Term.js Stuff  ================================================

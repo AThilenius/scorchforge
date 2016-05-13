@@ -4,9 +4,9 @@
 angular.module('thilenius.sidebar', [])
   .directive('atSidebar', [
     '$rootScope', '$mdToast', '$mdDialog', 'FileSaver', 'Blob', 'Person',
-    'data', 'compiler', 'atTextDialog',
+    'data', 'compiler', 'atTextDialog', 'atShareDialog',
     function($rootScope, $mdToast, $mdDialog, FileSaver, Blob, Person, data,
-      compiler, atTextDialog) {
+      compiler, atTextDialog, atShareDialog) {
       return {
         restrict: 'AE',
         templateUrl: 'app/directives/sidebar/sidebar.htm',
@@ -32,13 +32,15 @@ angular.module('thilenius.sidebar', [])
            * Add a file to the given scope, by modal
            */
           var addFile = function($itemScope) {
-            var parentPath = $itemScope.item ? $itemScope.item.path + '/' : '';
+            var parentPath = $itemScope.item ? $itemScope.item.path + '/' :
+              '';
             var that = this;
             atTextDialog({
               title: 'File Name',
               content: 'New File Name',
               done: (val) => {
-                if (!data.activeFileTree.addFile(parentPath + '/' + val)) {
+                if (!data.activeFileTree.addFile(parentPath + '/' +
+                    val)) {
                   $mdToast.show($mdToast.simple()
                     .textContent(`File ${val} already exists!`)
                     .position('top right')

@@ -1,0 +1,35 @@
+<md-dialog aria-label="{{ project.name }}" ng-cloak>
+  <form ng-submit="okay()">
+    <md-toolbar>
+      <div class="md-toolbar-tools">
+        <h3>Share {{ project.name }}</h3>
+      </div>
+    </md-toolbar>
+
+    <md-dialog-content>
+      <div class="chipsdemoContactChips"
+           style="position: static; padding-top: 5px; padding-bottom: 5px;">
+        <md-content class="md-padding autocomplete" layout="column"
+                    style="background-color: transparent;">
+          <md-contact-chips ng-model="contacts"
+                            md-contacts="querySearch($query)"
+                            md-contact-name="fullName"
+                            md-contact-image="image"
+                            md-contact-email="email"
+                            md-require-match="true"
+                            md-highlight-flags="i"
+                            filter-selected="true"
+                            placeholder="Enter Name Or Email">
+          </md-contact-chips>
+        </md-content>
+
+      </div>
+    </md-dialog-content>
+
+    <md-dialog-actions layout="row">
+      <span flex></span>
+      <md-button ng-click="cancel()">Cancel</md-button>
+      <md-button type="submit" style="margin-right:20px;">Share</md-button>
+    </md-dialog-actions>
+  </form>
+</md-dialog>

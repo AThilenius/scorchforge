@@ -45,12 +45,15 @@
                   padding-right: 10px; margin-right: -10px;' : '' }}"
         context-menu="fileDropdown">
     <span class="glyphicon glyphicon-file" style="font-size: 0.8em;
-      margin-right:2px;" aria-hidden="true">
+          margin-right:2px; {{ errorCount(item) ? 'color:red;' : '' }}"
+          aria-hidden="true">
     </span>
     {{ item.name }}
-    <span class="badge pull-right annotation-badge"
-          ng-show="errorCount(item)">
-      {{ errorCount(item) }}
+    <span ng-repeat="user in data.activeCursorTracker.remoteCurSels[item.path]"
+          class="pull-right">
+      <img src="https://www.gravatar.com/avatar/{{user.emailHash}}"
+           class="img-circle" height="20" width="20">
+      <md-tooltip md-direction="right">{{ user.fullName }}</md-tooltip>
     </span>
   </div>
 </script>
